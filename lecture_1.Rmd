@@ -6,6 +6,7 @@ author: "Lecture 1"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: beamer_presentation
 bibliography: references.bib
+fontsize: 11pt
 ---
 
 ```{r setup, include=FALSE}
@@ -13,16 +14,13 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 \newcommand{\rs}{X_1,X_2,\dots,X_n}
-
 \newcommand{\on}{\operatorname}
-
 \newcommand{\enter}{\vspace{0.1in}}
-
 \newcommand{\ds}{\displaystyle}
-
 \renewcommand{\bar}{\overline}
-
 \newcommand{\N}{\text{N}}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\R}{\mathbb{R}}
 
 ## Agenda
 
@@ -90,7 +88,7 @@ How to determine the sampling distribution of $\overline X$?
 
 (i) **Using transformations.** Let ${Y=\sum_{i=1}^n{X_i}}$, so that $\overline{X}=\frac{1}{n}Y$. If $f(x)$ is the pdf of $Y$, then the pdf of $\overline{X}$ is $f_{\overline{X}}(x)=nf(nx)$.
 
-(ii) **Using mfg (Theorem** $5.2.7$**)**. $M_{\overline{X}}(t)=M_Y\left(\frac{t}{n}\right)=\left[M_X\left(\frac{t}{n}\right)\right]^n$ where $M_X(t)$ is the mgf of the underlying population. Then identify the distribution of $\overline X$.
+(ii) **Using mgf (Theorem** $5.2.7$**)**. $M_{\overline{X}}(t)=M_Y\left(\frac{t}{n}\right)=\left[M_X\left(\frac{t}{n}\right)\right]^n$ where $M_X(t)$ is the mgf of the underlying population. Then identify the distribution of $\overline X$.
 
 \vspace{0.1in}
 
@@ -191,8 +189,8 @@ P_i & = p_1+p_2+\cdots+p_i\qquad\text{for }i\geq1\\
 \end{aligned} 
 $$ Then $$
 \begin{aligned}
-P(X_{(j)}\leq x_i) & = \sum_{k=j}^n{{n\choose k}P_i^k(1-P_i)^{n-k}}\\
-P(X_{(j)}=x_i) & = \sum_{k=j}^n{{n\choose k}\left[P_i^k(1-P_i)^{n-k}-P_{i-1}^k(1-P_{i-1})^{n-k}\right]}.
+P(X_{(j)}\leq x_i) & = \sum_{k=j}^n{\binom{n}{k}P_i^k(1-P_i)^{n-k}}\\
+P(X_{(j)}=x_i) & = \sum_{k=j}^n{\binom{n}{ k}\left[P_i^k(1-P_i)^{n-k}-P_{i-1}^k(1-P_{i-1})^{n-k}\right]}.
 \end{aligned}
 $$
 
@@ -200,8 +198,7 @@ $$
 
 ------------------------------------------------------------------------
 
-**Example:**  $\rs\sim\operatorname{iid~Uniform}(0,1)$.
-Find the distribution of the $j^{\text{th}}$ order statistic, along with its mean and variance.
+**Example:** $X_1,X_2,\dots,X_n\sim\operatorname{iid~Uniform}(0,1)$. Find the distribution of the $j^{\text{th}}$ order statistic, along with its mean and variance.
 
 Here $f(x) = I(0 < x < 1)$ and $F(x) = x$ for $0 < x < 1$. Therefore
 
@@ -211,29 +208,25 @@ f_{X_{(j)}}(x) &= \frac{n!}{(j-1)!(n-j)!} \ f(x) \ \left[F(x)\right]^{j-1} \left
 &= \frac{n!}{(j-1)!(n-j)!} \ x^{j-1} \ (1-x)^{n-j} \ I(0 < x < 1) \\
 &= \frac{\Gamma(n)}{\Gamma(j)\Gamma(n-j+1)} \ x^{j-1} \ (1-x)^{n-j} I(0 < x < 1)
 \end{aligned}
-$$
-This shows that $X_{(j)} \sim \on{Beta}(j, n-j+1)$. From this, we can deduce that
-$$
-\on{E}\left[ X_{(j)} \right] = \frac{j}{n+1}
+$$ This shows that $X_{(j)} \sim \operatorname{Beta}(j, n-j+1)$. From this, we can deduce that $$
+\operatorname{E}\left[ X_{(j)} \right] = \frac{j}{n+1}
 $$ and $$
-\on{Var}\left[ X_{(j)} \right] = \frac{j(n-j+1)}{(n+1)^2(n+2)}.
+\operatorname{Var}\left[ X_{(j)} \right] = \frac{j(n-j+1)}{(n+1)^2(n+2)}.
 $$
 
----
+------------------------------------------------------------------------
 
 ## Joint Distribution of Order Statistics
 
-**Theorem 5.4.6.** Let $X_{(1)},X_{(2)},\ldots,X_{(n)}$ denote the order statistics of a random sample $\rs$ from a continuous population with cdf $F(x)$ and pdf $f(x)$. The joint pdf of $X_{(i)}$ and $X_{(j)}$, $1\leq i<j\leq n$, is 
-$$ 
+**Theorem 5.4.6.** Let $X_{(1)},X_{(2)},\ldots,X_{(n)}$ denote the order statistics of a random sample $X_1,X_2,\dots,X_n$ from a continuous population with cdf $F(x)$ and pdf $f(x)$. The joint pdf of $X_{(i)}$ and $X_{(j)}$, $1\leq i<j\leq n$, is $$ 
 f_{X_{(i)},X_{(j)}}(u,v) = c\ f(u)\ f(v) \left[F(u)\right]^{i-1} \left[F(v) - F(u)\right]^{j-1-i} \left[1-F(v)\right]^{n-j}
 $$
 
 for $-\infty<u<v<\infty$, where $c=\frac{n!}{(i-1)!(j-1-i)!(n-j)!}.$
 
-\enter
+\vspace{0.1in}
 
-Joint distribution pdf of all the order statistics from a continuous population:
-$$
+Joint distribution pdf of all the order statistics from a continuous population: $$
 f_{X_{(1)}, \dots, X_{(n)}} (x_1, \dots, x_n) = 
 \begin{cases}
 n! f(x_1) \dots f(x_n), & -\infty < x_1 < \dots < x_n < \infty \\
@@ -241,15 +234,13 @@ n! f(x_1) \dots f(x_n), & -\infty < x_1 < \dots < x_n < \infty \\
 \end{cases}
 $$
 
+------------------------------------------------------------------------
 
----
+**Example:** Let $X_1,X_2,\dots,X_n\sim\operatorname{iid~uniform}(0,a)$, $X_{(1)},X_{(2)},\ldots,X_{(n)}$ denote the order statistics. Find the joint pdf of the sample range $R = X_{(n)} - X_{(1)}$ and the mid-range $V = \frac{X_{(1)}+X_{(n)}}{2}$. Hence find the marginal pdf of $R$.
 
-**Example:** Let $\rs\sim\operatorname{iid~uniform}(0,a)$, $X_{(1)},X_{(2)},\ldots,X_{(n)}$ denote the order statistics. Find the joint pdf of the sample range $R = X_{(n)} - X_{(1)}$ and the mid-range $V = \frac{X_{(1)}+X_{(n)}}{2}$. Hence find the marginal pdf of $R$.
+\vspace{0.1in}
 
-\enter
-
-First obtain the joint pdf of $X_{(1)}$ and $X_{(1)}$:
-$$
+First obtain the joint pdf of $X_{(1)}$ and $X_{(1)}$: $$
 \begin{aligned}
 f_{X_{(1)}, X_{(n)}} (x_1, x_n) 
 &= \frac{n(n-1)}{a^2} \left(\frac{x_n}{a} - \frac{x_1}{a}\right)^{n-2} \ I(0 < x_1 < x_n < a) \\
@@ -257,51 +248,142 @@ f_{X_{(1)}, X_{(n)}} (x_1, x_n)
 \end{aligned}
 $$
 
-Solve for $X_{(1)}, X_{(n)}$ to obtain  $X_{(1)} = V - R/2$ and $X_{(n)} = V + R/2$. Jacobian of this transformation is -1.
+Solve for $X_{(1)}, X_{(n)}$ to obtain $X_{(1)} = V - R/2$ and $X_{(n)} = V + R/2$. Jacobian of this transformation is -1.
 
----
+------------------------------------------------------------------------
 
-Support of $(R, V)$: 
-$$
+Support of $(R, V)$: $$
 \begin{aligned}
 & 0 < x_1 < x_n < a \\
 \implies & 0 < v - r/2 < v + r/2 < a \\  
 \implies & 0 < r < a,\ r/2 < v < a - r/2
 \end{aligned}
-$$
-The joint pdf of $(R, V)$ is 
-$$
+$$ The joint pdf of $(R, V)$ is $$
 f_{R, V}(r, v) = \frac{n(n-1)\ r^{n-2}}{a^n}; \ \ 0 < r < a,\ r/2 < v < a - r/2
-$$
-The marginal pdf of $R$ is 
-$$
+$$ The marginal pdf of $R$ is $$
 \begin{aligned}
 f_R(r) = \int_{r/2}^{a - r/2}  \frac{n(n-1)\ r^{n-2}}{a^n}\ dv = \frac{n(n-1)\ r^{n-2} \ (a-r)}{a^n}; \ 0 < r < a
 \end{aligned}
 $$
 
-It is easy to see that $\frac{R}{a} \sim \on{Beta}(n-1, 2)$ distribution.
+It is easy to see that $\frac{R}{a} \sim \operatorname{Beta}(n-1, 2)$ distribution.
 
-\enter
+\vspace{0.1in}
 
 **HW:** find the marginal pdf of $V$.
 
----
-
+------------------------------------------------------------------------
 
 ## Convergence Concepts
 
-What happens to sample statistics, particularly $\bar X = \bar X_n$, when the sample size $n \to \infty$?    
+What happens to sample statistics, particularly $\overline X = {\overline X}_n$, when the sample size $n \to \infty$?
 
-\enter
+\vspace{0.1in}
 
-For a real sequence $(a_n)_{n=1}^\infty$ defining convergence is somewhat straightforward: $(a_n)_{n=1}^\infty$ is said to converge to a point $a$ if $\lim_{n \to \infty} a_n =  a$.
+For a real sequence $(a_n)_{n=1}^\infty$ defining convergence is straightforward: $(a_n)_{n=1}^\infty$ is said to converge to a point $a$ if $\lim_{n \to \infty} a_n = a$, i.e., $\lim_{n \to \infty} |a_n - a| = 0$.
 
-\enter
+\vspace{0.1in}
 
 How to define convergence of random variables?
 
-- convergence in probability
-- convergence in almost sure sense
-- convergence in distribution (or law)
-- convergence in mean [later]
+-   convergence in probability
+-   convergence in almost sure sense
+-   convergence in distribution (or law)
+-   convergence in mean [later]
+
+------------------------------------------------------------------------
+
+## Convergence in Probability (or Weak Convergence)
+
+**Definition (5.5.1):** A sequence of random variables $X_1,X_2,\dots$ **converges in probability** to a random variable $X$ if, for every $\varepsilon>0$, $$\lim_{n\to\infty}{P\left(|X_n-X|\geq\varepsilon\right)}=0,$$ or, equivalently, $$\lim_{n\to\infty}{P\left(|X_n-X|<\varepsilon\right)}=1.$$ To indicate this, we write $X_n\xrightarrow{P}X.$
+
+\vspace{0.1in}
+
+**Notes:**
+
+1.  The random variables $X_1,X_2,\dots$ are NOT assumed to be $\operatorname{iid}$, i.e., we are in a more general setting than what we have discussed so far.
+
+2.  We are often interested in the case where the "limiting" random variable $X$ is a constant (degenerate)
+
+------------------------------------------------------------------------
+
+## Weak Law of Large Numbers (WLLN)
+
+**Theorem 5.5.1.** Let $X_1,X_2,\dots$ be $\operatorname{iid}$ random variables with $\operatorname{E}(X_i)=\mu$ and $\operatorname{Var}(X_i)=\sigma^2<\infty$. Define $\overline{X}_n=\frac{1}{n}\sum_{i=1}^n{X_i}.$ Then for every $\varepsilon>0$, $$\lim_{n\to\infty}{P\left(|\overline{X}_n-\mu|<\varepsilon\right)}=1,$$ so that $$\overline{X}_n\xrightarrow{P}\mu.$$
+
+**Proof:** Using Chebyshev. For any $\varepsilon> 0$ 
+$$
+P\left(|\overline{X}_n-\mu| \geq \varepsilon\right) \leq \frac{\operatorname{E}\left(\overline{X}_n-\mu\right)^2}{\varepsilon^2} = \frac{\operatorname{Var}(\overline X_n)}{\varepsilon^2} = \frac{\sigma^2}{n\varepsilon^2}.
+$$
+
+Hence $0 \leq P\left(|\overline{X}_n-\mu| \geq \varepsilon\right) \leq \frac{\sigma^2}{n\varepsilon^2} \to 0$ as $n \to \infty$.
+
+---
+
+**Remarks:**
+
+1. In other words, there is a very high probability that the sample mean can be made as close as we'd like to the population mean by taking $n$ sufficiently large.
+
+2. **Consistency:** when a sample quantity (statistic) converges in probability to a constant (more later).
+
+
+\enter
+
+**Example:** Suppose we have a sequence $\rs$ are iid random variables with $\on{E}(X_i) = \mu$ and $\on{Var}(X_i) = \sigma^2$. Define $S_n^2 = \frac{1}{n-1} \sum_{i=1}^n (X_i - \bar X_n)^2$. Can we prove a WLLN for $S_n^2?$
+
+\enter
+
+Using Chebyshev 
+$$
+P\left(|S_n^2-\sigma^2| \geq \varepsilon\right) \leq \frac{\operatorname{E}\left(S_n^2-\sigma^2\right)^2}{\varepsilon^2} = \frac{\operatorname{Var}(S_n^2)}{\varepsilon^2}
+$$
+So a sufficient condition that $S_n^2 \xrightarrow{P} \sigma^2$ is that $\on{Var}(S_n^2) \to 0$ as $n \to  \infty$. 
+
+---
+
+This sufficient condition holds if $\rs \sim \on{iid~N}(\mu, \sigma^2)$. Then
+$(n-1)S_n^2/\sigma^2 \sim \chi^2_{n-1} \implies$ 
+$$
+\on{Var}\left(\frac{(n-1)S_n^2}{\sigma^2}\right) = \frac{(n-1)^2}{\sigma^4} \on{Var}(S_n^2) = \on{Var}( \chi^2_{n-1} ) = 2(n-1)
+$$
+This implies $\on{Var}(S_n^2) = \frac{2\sigma^4}{(n-1)} \to 0$ as $n \to \infty$.
+
+\enter
+
+**Theorem 5.5.4.** Suppose that $X_1,X_2,\dots$ converges in probability to a random variable $X$, and that $h$ is a continuous function. Then $h(X_1),h(X_2),\ldots$ converges in probability to $h(X)$.
+
+**Proof** Homework (see exercise $5.39$).
+
+\enter
+
+**Example (contd.):** If $S_n^2 \to \sigma^2$ then $S_n = \sqrt{S_n^2} \to \sigma$.
+
+---
+
+## Almost Sure Convergence
+
+**Definition (5.5.6):** A sequence of random variables $X_1,X_2,\ldots$ **converges almost surely** to a random variable $X$ if, for every $\epsilon>0$,
+$$P\left(\lim_{n\to\infty}{|X_n-X|<\epsilon}\right)=1.$$
+To indicate this, we write $X_n\xrightarrow{a.s.}X.$
+
+
+**Notes:**
+
+-  Recall that a random variable is a function from a sample space $\mathcal{S}$ into the real numbers: $X_n:\mathcal{S}\longrightarrow\R$.  For each $s\in S$, $X_n(s)=r\in\R$.  
+
+- Definition 5.5.6 states that $X_n\xrightarrow{a.s.}X$ if the functions $X_n(s)\longrightarrow X(s)$ for all $s\in S$, except perhaps for $s\in N$, where $N\subset S$ and $P(N)=0$.
+
+- Contrast the definitions of almost sure convergence with in probability convergence:
+
+ + almost sure: $P\left(\lim_{n\to\infty}{|X_n-X|<\epsilon}\right)=1$
+ + in probability: 
+
+
+
+---
+
+## Homework
+
+- Order Statistics: Read p. $226 - 232$. Exercises $5.22,5.26$.
+
+- Convergence: Read p. $232 - 236$. Exercises $5.32,5.36,5.38,5.39$.
