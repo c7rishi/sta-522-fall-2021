@@ -24,15 +24,13 @@ knitr::opts_chunk$set(echo = FALSE)
 
 \newcommand{\N}{\text{N}}
 
-## Part 1
-
-### Agenda
+## Agenda
 
 -   Review random samples
 
 -   Order Statistics
 
--   
+-   Convergence Concepts
 
 ------------------------------------------------------------------------
 
@@ -246,8 +244,64 @@ $$
 
 ---
 
-**Example:** Let $\rs\sim\operatorname{iid~uniform}(0,a)$, $X_{(1)},X_{(2)},\ldots,X_{(n)}$ denote the order statistics. Find the joint pdf of the sample range $R = X_{(n)} - X_{(1)}$ and mid-range $V = \frac{X_{(1)}+X_{(n)}}{2}$.
+**Example:** Let $\rs\sim\operatorname{iid~uniform}(0,a)$, $X_{(1)},X_{(2)},\ldots,X_{(n)}$ denote the order statistics. Find the joint pdf of the sample range $R = X_{(n)} - X_{(1)}$ and the mid-range $V = \frac{X_{(1)}+X_{(n)}}{2}$. Hence find the marginal pdf of $R$.
 
 \enter
 
-First obtain the joint pdf of $X_{(1)}$ and $X_{(1)}$
+First obtain the joint pdf of $X_{(1)}$ and $X_{(1)}$:
+$$
+\begin{aligned}
+f_{X_{(1)}, X_{(n)}} (x_1, x_n) 
+&= \frac{n(n-1)}{a^2} \left(\frac{x_n}{a} - \frac{x_1}{a}\right)^{n-2} \ I(0 < x_1 < x_n < a) \\
+&= \frac{n(n-1) (x_n - x_1)^{n-2}}{a^n} \ I(0 < x_1 < x_n < a)
+\end{aligned}
+$$
+
+Solve for $X_{(1)}, X_{(n)}$ to obtain  $X_{(1)} = V - R/2$ and $X_{(n)} = V + R/2$. Jacobian of this transformation is -1.
+
+---
+
+Support of $(R, V)$: 
+$$
+\begin{aligned}
+& 0 < x_1 < x_n < a \\
+\implies & 0 < v - r/2 < v + r/2 < a \\  
+\implies & 0 < r < a,\ r/2 < v < a - r/2
+\end{aligned}
+$$
+The joint pdf of $(R, V)$ is 
+$$
+f_{R, V}(r, v) = \frac{n(n-1)\ r^{n-2}}{a^n}; \ \ 0 < r < a,\ r/2 < v < a - r/2
+$$
+The marginal pdf of $R$ is 
+$$
+\begin{aligned}
+f_R(r) = \int_{r/2}^{a - r/2}  \frac{n(n-1)\ r^{n-2}}{a^n}\ dv = \frac{n(n-1)\ r^{n-2} \ (a-r)}{a^n}; \ 0 < r < a
+\end{aligned}
+$$
+
+It is easy to see that $\frac{R}{a} \sim \on{Beta}(n-1, 2)$ distribution.
+
+\enter
+
+**HW:** find the marginal pdf of $V$.
+
+---
+
+
+## Convergence Concepts
+
+What happens to sample statistics, particularly $\bar X = \bar X_n$, when the sample size $n \to \infty$?    
+
+\enter
+
+For a real sequence $(a_n)_{n=1}^\infty$ defining convergence is somewhat straightforward: $(a_n)_{n=1}^\infty$ is said to converge to a point $a$ if $\lim_{n \to \infty} a_n =  a$.
+
+\enter
+
+How to define convergence of random variables?
+
+- convergence in probability
+- convergence in almost sure sense
+- convergence in distribution (or law)
+- convergence in mean [later]
