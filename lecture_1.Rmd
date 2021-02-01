@@ -1,42 +1,253 @@
 ---
-title: "Lecture 1"
-author: "Saptarshi Chakraborty"
-date: "2/1/2021"
+title: |
+  | STA 522, Spring 2021  
+  | Introduction to Theoretical Statistics I
+author: "Lecture 1" 
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: beamer_presentation
+bibliography: references.bib
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-------------------------------------------------------------------------
+\newcommand{\rs}{X_1,X_2,\dots,X_n}
 
-tmp
+\newcommand{\on}{\operatorname}
 
-------------------------------------------------------------------------
+\newcommand{\enter}{\vspace{0.1in}}
 
-## Slide with Bullets
+\newcommand{\ds}{\displaystyle}
 
--   Bullet 1
--   Bullet 2
--   Bullet 3
+\renewcommand{\bar}{\overline}
 
-------------------------------------------------------------------------
+\newcommand{\N}{\text{N}}
 
-## Slide with R Output
+## Part 1
 
-```{r cars, echo = TRUE}
-summary(cars)
-```
+### Agenda
 
-------------------------------------------------------------------------
+-   Review random samples
 
-## Slide with Plot
+-   Order Statistics
 
-```{r pressure}
-plot(pressure)
-```
+-   
 
 ------------------------------------------------------------------------
 
-*New slide without heading*
+## Review: Random Samples
+
+**Definition:** The random variables $X_1,X_2,\dots,X_n$ are called a **random sample** of size $n$ from the population $f(x)$ if $X_1,X_2,\dots,X_n$ are mutually independent random variables and the marginal pdf or pmf of each $X_i$ is the same function $f(x)$.
+
+\vspace{0.1in}
+
+**Notation:** $X_1,X_2,\dots,X_n\sim \operatorname{iid} f$. Joint pdf/pmf: $f_{X_1,X_2,\dots,X_n}(x_1, \dots, x_n) = f(x_1, \dots, x_n) := \prod_{i=1}^n f(x_i)$
+
+\vspace{0.1in}
+
+If $f$ is a member of a parametric family with parameter(s) $\theta$, then we may write $f(x_1, x_2, \dots, x_n \mid \theta)=\prod_{i=1}^n f(x_i \mid \theta)$
+
+\vspace{0.1in}
+
+Example: $X_1,X_2,\dots,X_n\sim \operatorname{iid} \text{N}(\mu, \sigma^2)$ with $f(x \mid \mu, \sigma^2) = \frac{1}{\sqrt{2\pi} \sigma} \exp \left( -\frac{1}{2\sigma^2} (x - \mu)^2 \right)$
+
+------------------------------------------------------------------------
+
+## Review: Statistics and Sampling Distributions
+
+**Definition:** Let $X_1,X_2,\dots,X_n$ be a random sample of size $n$ from a population and let $T(x_1,x_2,\ldots,x_n)$ be a function (real-valued or vector-valued) whose domain includes the sample space of $(X_1,X_2,\dots,X_n)$. The random variable (or vector) $Y=T(X_1,X_2,\dots,X_n)$ is called a **statistic**. The probability distribution of a statistic is called its **sampling distribution**.
+
+\vspace{0.1in}
+
+**Note:** A statistic cannot contain a parameter.
+
+\vspace{0.1in}
+
+Examples:
+
+(i) sample mean $\overline X = \frac1n \sum_{i=1}^n X_i$,
+
+(ii) sample variance $S^2 = \frac{1}{n-1} \sum_{i=1}^n (X_i - \overline X)^2 = \frac{1}{n-1} \sum_{i=1}^n X_i^2 - \frac{n}{n-1} \overline X^2$
+
+(iii) sample standard deviation $S = \sqrt{S^2}$.
+
+(iv) sample minimum, sample maximum, sample quantiles.
+
+------------------------------------------------------------------------
+
+**Result (Lemma 5.2.5):** Let $X_1,X_2,\dots,X_n$ be a random sample from a population, and let $g(x)$ be a function such that $\operatorname{E}{(g(X_1))}$ and $\operatorname{Var}{(g(X_1))}$ exist. Then $$\operatorname{E}{\left(\sum_{i=1}^n{g(X_i)}\right)}=n\operatorname{E}{(g(X_1))}$$and $$\operatorname{Var}{\left(\sum_{i=1}^n{g(X_i)}\right)}=n\operatorname{Var}{(g(X_1))}.$$
+
+**Result (Theorem 5.2.6):** Let $X_1,X_2,\dots,X_n$ be a random sample from a population with mean $\mu$ and variance $\sigma^2<\infty$. Then
+
+(a) $\operatorname{E}{(\overline{X})}=\mu$
+
+(b) $\displaystyle{\operatorname{Var}{(\overline{X})}=\frac{\sigma^2}{n}}$; and
+
+(c) $\operatorname{E}{(S^2)}=\sigma^2$.
+
+------------------------------------------------------------------------
+
+How to determine the sampling distribution of $\overline X$?
+
+(i) **Using transformations.** Let ${Y=\sum_{i=1}^n{X_i}}$, so that $\overline{X}=\frac{1}{n}Y$. If $f(x)$ is the pdf of $Y$, then the pdf of $\overline{X}$ is $f_{\overline{X}}(x)=nf(nx)$.
+
+(ii) **Using mfg (Theorem** $5.2.7$**)**. $M_{\overline{X}}(t)=M_Y\left(\frac{t}{n}\right)=\left[M_X\left(\frac{t}{n}\right)\right]^n$ where $M_X(t)$ is the mgf of the underlying population. Then identify the distribution of $\overline X$.
+
+\vspace{0.1in}
+
+**Theorem 5.3.1.** Let $X_1,X_2,\dots,X_n\sim \operatorname{iid} \text{N}(\mu, \sigma^2)$. Then
+
+a\. $\overline X$ and $S^2$ are independent random variables.
+
+b\. $\overline X \sim \text{N}(\mu, \sigma^2)$.
+
+c\. $(n-1)S^2/\sigma^2 \sim \chi^2_{n-1}$.
+
+------------------------------------------------------------------------
+
+## Order Statistics
+
+**Definition:** The order statistics of a random sample $X_1,X_2,\dots,X_n$ are the sample values placed in ascending order. They are denoted by $X_{(1)},X_{(2)},\ldots,X_{(n)}$ and satisfy $X_{(1)}\leq X_{(2)}\leq\cdots\leq X_{(n)}$.
+
+\vspace{0.1in}
+
+\vspace{0.1in}
+
+**Examples:**
+
+(a) **sample minimum:** $X_{(1)}$ and **sample maximum:** $X_{(n)}$ are called the extreme order statistics.
+(b) **sample range:** $R=X_{(n)}-X_{(1)}$.
+(c) **sample median:** $M$ where$$M=\begin{cases}X_{((n+1)/2)}&\text{if }n\text{ is odd;}\\[1em]
+    \displaystyle{\frac{X_{(n/2)}+X_{(n/2+1)}}{2}}&\text{if }n\text{ is even.}
+    \end{cases}$$
+
+------------------------------------------------------------------------
+
+## Sampling Distributions of Extreme Order Statistics from a Continuous Population
+
+Suppose $X_1,X_2,\dots,X_n$ is a random sample from a population with continuous cdf $F$ and pdf $f$. Then
+
+1.  $\{ X_{(n)} \leq x \} = \{\text{all } X_i \leq x\} = \{X_1 \leq x, \dots, X_n \leq x \}$. So $$ 
+    \begin{aligned}
+    F_{X_{(n)}}(x) 
+    &= P(X_{(n)} \leq x) \\
+    &= P(X_1 \leq x, \dots, X_n \leq x) \\ 
+    &= P(X_1 \leq x) \dots P(X_n \leq x) \\
+    &= F(x) \dots F(x) = [F(x)]^n
+    \end{aligned}
+    $$ Differentiating, $f_{X_{(n)}}(x) = n \ f(x) \left[F(x)\right]^{n-1}$.
+
+\vspace{0.1in}
+
+2.  $\{ X_{(1)} \geq x \} = \{\text{all } X_i \geq x\} = \{X_1 \geq x, \dots, X_n \geq x \}$. Implies $F_{X_{(1)}}(x) = 1 - [1 - F(x)]^n$ & $f_{X_{(1)}} (x) = n\ f(x) \left[1-F(x)\right]^{n-1}$.
+
+------------------------------------------------------------------------
+
+**Example:** $X_1,X_2,\dots,X_n\sim\operatorname{iid~Uniform}(0,\theta)$. Find the pdf and the expected value of $X_{(n)}$. $$
+ \text{Here } f(x \mid \theta) = \frac{1}{\theta}\ I(0 \leq x \leq \theta)
+\text{ and }
+F(x \mid \theta) = 
+\begin{cases} 
+0, & x < 0 \\ 
+\frac{x}{\theta}, & 0 \leq x \leq \theta \\ 
+1, & x > 1  
+\end{cases}
+$$ so that $$
+\begin{aligned}
+f_{X_{(n)}}(x \mid \theta) &= n \ f(x \mid \theta) \left[F(x  \mid \theta)\right]^{n-1} \\
+&= n \left(\frac{1}{\theta} \right) \left(\frac{x}{\theta}\right)^{n-1} I(0 \leq x \leq \theta) \\
+&= \frac{n \ x^{n-1}}{\theta^n} \ I(0 \leq x \leq \theta)
+\end{aligned}
+$$ Find expected value $\operatorname{E} \left[ X_{(n)} \right] = \operatorname{E} \left[ X_{(n)} \mid \theta \right]$ using integration: $$
+\begin{aligned}
+\operatorname{E} \left[ X_{(n)} \right] &= 
+\int_{-\infty}^{\infty} x \ f_{X_{(n)}}(x \mid \theta) \ dx
+= \frac{n}{\theta^n} \int_{0}^{\theta} x^n  \ dx 
+= \frac{n}{n+1}\ \theta
+\end{aligned}
+$$
+
+------------------------------------------------------------------------
+
+## Distribution of a general order statistic from a continuous population
+
+**Theorem 5.4.4.** Let $X_{(1)},X_{(2)},\ldots,X_{(n)}$ denote the order statistics of a random sample $X_1,X_2,\dots,X_n$ from a continuous population with cdf $F(x)$ and pdf $f(x)$. The pdf of $X_{(j)}$ is $$
+f_{X_{(j)}}(x) = \frac{n!}{(j-1)!(n-j)!} \ f(x) \ \left[F(x)\right]^{j-1} \left[1-F(x)\right]^{n-j}.
+$$
+
+**Partial Proof.** Call $\{X_i \leq x\}$ a "success", $\{X_i > x\}$ a "failure". Define $Z_i = I(X_i \leq x)$ and $Y = \sum_{i=1}^n Z_i$. Note that $Z_i \sim \operatorname{iid~Bernoulli} (F(x))$ $\implies$ $Y \sim \operatorname{Binomial}(n, F(x))$. Note that,$$
+F_{X_{(j)}}(x) = P(X_{(j)} \leq x) = P(Y \geq j) = \sum_{k=j}^n \binom{n}{k}\ [F(x)]^k \ [1 - F(x)]^{n-k} 
+$$
+
+The pdf is obtained using differentiation.
+
+------------------------------------------------------------------------
+
+## Distribution of a general order statistic from a discrete population
+
+**Theorem 5.4.3.** Let $X_1,X_2,\dots,X_n$ be a random sample from a discrete distribution with pmf $f(x_i) = p_i$, where $x_1 < x_2 < \dots$ are the possible values of $X$ in ascending order. Let $X_{(1)}, X_{(2)}, \dots, X_{(n)}$ denote the order statistics from the sample. Define $$
+\begin{aligned}
+P_0 & = 0\\
+P_i & = p_1+p_2+\cdots+p_i\qquad\text{for }i\geq1\\
+\end{aligned} 
+$$ Then $$
+\begin{aligned}
+P(X_{(j)}\leq x_i) & = \sum_{k=j}^n{{n\choose k}P_i^k(1-P_i)^{n-k}}\\
+P(X_{(j)}=x_i) & = \sum_{k=j}^n{{n\choose k}\left[P_i^k(1-P_i)^{n-k}-P_{i-1}^k(1-P_{i-1})^{n-k}\right]}.
+\end{aligned}
+$$
+
+**Proof:** cdf is similar to the continuous case. The pmf is obtained from the cdf through $P(X_{(j)} = x_i) = P(X_{(j)} \leq x_i) - P(X_{(j)} \leq x_{i-1})$.
+
+------------------------------------------------------------------------
+
+**Example:**  $\rs\sim\operatorname{iid~Uniform}(0,1)$.
+Find the distribution of the $j^{\text{th}}$ order statistic, along with its mean and variance.
+
+Here $f(x) = I(0 < x < 1)$ and $F(x) = x$ for $0 < x < 1$. Therefore
+
+$$
+\begin{aligned}
+f_{X_{(j)}}(x) &= \frac{n!}{(j-1)!(n-j)!} \ f(x) \ \left[F(x)\right]^{j-1} \left[1-F(x)\right]^{n-j} \\
+&= \frac{n!}{(j-1)!(n-j)!} \ x^{j-1} \ (1-x)^{n-j} \ I(0 < x < 1) \\
+&= \frac{\Gamma(n)}{\Gamma(j)\Gamma(n-j+1)} \ x^{j-1} \ (1-x)^{n-j} I(0 < x < 1)
+\end{aligned}
+$$
+This shows that $X_{(j)} \sim \on{Beta}(j, n-j+1)$. From this, we can deduce that
+$$
+\on{E}\left[ X_{(j)} \right] = \frac{j}{n+1}
+$$ and $$
+\on{Var}\left[ X_{(j)} \right] = \frac{j(n-j+1)}{(n+1)^2(n+2)}.
+$$
+
+---
+
+## Joint Distribution of Order Statistics
+
+**Theorem 5.4.6.** Let $X_{(1)},X_{(2)},\ldots,X_{(n)}$ denote the order statistics of a random sample $\rs$ from a continuous population with cdf $F(x)$ and pdf $f(x)$. The joint pdf of $X_{(i)}$ and $X_{(j)}$, $1\leq i<j\leq n$, is 
+$$ 
+f_{X_{(i)},X_{(j)}}(u,v) = c\ f(u)\ f(v) \left[F(u)\right]^{i-1} \left[F(v) - F(u)\right]^{j-1-i} \left[1-F(v)\right]^{n-j}
+$$
+
+for $-\infty<u<v<\infty$, where $c=\frac{n!}{(i-1)!(j-1-i)!(n-j)!}.$
+
+\enter
+
+Joint distribution pdf of all the order statistics from a continuous population:
+$$
+f_{X_{(1)}, \dots, X_{(n)}} (x_1, \dots, x_n) = 
+\begin{cases}
+n! f(x_1) \dots f(x_n), & -\infty < x_1 < \dots < x_n < \infty \\
+0, & \text{otherwise}
+\end{cases}
+$$
+
+
+---
+
+**Example:** Let $\rs\sim\operatorname{iid~uniform}(0,a)$, $X_{(1)},X_{(2)},\ldots,X_{(n)}$ denote the order statistics. Find the joint pdf of the sample range $R = X_{(n)} - X_{(1)}$ and mid-range $V = \frac{X_{(1)}+X_{(n)}}{2}$.
+
+\enter
+
+First obtain the joint pdf of $X_{(1)}$ and $X_{(1)}$
