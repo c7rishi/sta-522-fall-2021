@@ -1,10 +1,16 @@
 ---
 title: |
   | STA 522, Spring 2021  
-  | Introduction to Theoretical Statistics I
-author: "Lecture 1" 
-date: "`r format(Sys.time(), '%d %B, %Y')`"
-output: beamer_presentation
+  | Introduction to Theoretical Statistics II
+author: | 
+  | Lecture 1
+  | 
+  | Department of Biostatistics
+  | University at Buffalo 
+date: "01 February, 2021"
+output: 
+  beamer_presentation:
+    toc: false
 bibliography: references.bib
 fontsize: 11pt
 ---
@@ -22,7 +28,7 @@ knitr::opts_chunk$set(echo = FALSE)
 \renewcommand{\epsilon}{\varepsilon}
 \newcommand{\R}{\mathbb{R}}
 
-## Agenda
+# Agenda
 
 -   Review random samples
 
@@ -32,7 +38,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ------------------------------------------------------------------------
 
-## Review: Random Samples
+# Review: Random Samples
 
 **Definition:** The random variables $X_1,X_2,\dots,X_n$ are called a **random sample** of size $n$ from the population $f(x)$ if $X_1,X_2,\dots,X_n$ are mutually independent random variables and the marginal pdf or pmf of each $X_i$ is the same function $f(x)$.
 
@@ -50,7 +56,7 @@ Example: $X_1,X_2,\dots,X_n\sim \operatorname{iid} \text{N}(\mu, \sigma^2)$ with
 
 ------------------------------------------------------------------------
 
-## Review: Statistics and Sampling Distributions
+# Review: Statistics and Sampling Distributions
 
 **Definition:** Let $X_1,X_2,\dots,X_n$ be a random sample of size $n$ from a population and let $T(x_1,x_2,\ldots,x_n)$ be a function (real-valued or vector-valued) whose domain includes the sample space of $(X_1,X_2,\dots,X_n)$. The random variable (or vector) $Y=T(X_1,X_2,\dots,X_n)$ is called a **statistic**. The probability distribution of a statistic is called its **sampling distribution**.
 
@@ -96,13 +102,13 @@ How to determine the sampling distribution of $\overline X$?
 
 a\. $\overline X$ and $S^2$ are independent random variables.
 
-b\. $\overline X \sim \text{N}(\mu, \sigma^2)$.
+b\. $\overline X \sim \text{N}(\mu, \sigma^2/n)$.
 
 c\. $(n-1)S^2/\sigma^2 \sim \chi^2_{n-1}$.
 
 ------------------------------------------------------------------------
 
-## Order Statistics
+# Order Statistics
 
 **Definition:** The order statistics of a random sample $X_1,X_2,\dots,X_n$ are the sample values placed in ascending order. They are denoted by $X_{(1)},X_{(2)},\ldots,X_{(n)}$ and satisfy $X_{(1)}\leq X_{(2)}\leq\cdots\leq X_{(n)}$.
 
@@ -120,7 +126,7 @@ c\. $(n-1)S^2/\sigma^2 \sim \chi^2_{n-1}$.
 
 ------------------------------------------------------------------------
 
-## Sampling Distributions of Extreme Order Statistics from a Continuous Population
+# Sampling Distributions of Extreme Order Statistics from a Continuous Population
 
 Suppose $X_1,X_2,\dots,X_n$ is a random sample from a population with continuous cdf $F$ and pdf $f$. Then
 
@@ -166,7 +172,7 @@ $$
 
 ------------------------------------------------------------------------
 
-## Distribution of a general order statistic from a continuous population
+# Distribution of a general order statistic from a continuous population
 
 **Theorem 5.4.4.** Let $X_{(1)},X_{(2)},\ldots,X_{(n)}$ denote the order statistics of a random sample $X_1,X_2,\dots,X_n$ from a continuous population with cdf $F(x)$ and pdf $f(x)$. The pdf of $X_{(j)}$ is $$
 f_{X_{(j)}}(x) = \frac{n!}{(j-1)!(n-j)!} \ f(x) \ \left[F(x)\right]^{j-1} \left[1-F(x)\right]^{n-j}.
@@ -180,7 +186,7 @@ The pdf is obtained using differentiation.
 
 ------------------------------------------------------------------------
 
-## Distribution of a general order statistic from a discrete population
+# Distribution of a general order statistic from a discrete population
 
 **Theorem 5.4.3.** Let $X_1,X_2,\dots,X_n$ be a random sample from a discrete distribution with pmf $f(x_i) = p_i$, where $x_1 < x_2 < \dots$ are the possible values of $X$ in ascending order. Let $X_{(1)}, X_{(2)}, \dots, X_{(n)}$ denote the order statistics from the sample. Define $$
 \begin{aligned}
@@ -206,7 +212,7 @@ $$
 \begin{aligned}
 f_{X_{(j)}}(x) &= \frac{n!}{(j-1)!(n-j)!} \ f(x) \ \left[F(x)\right]^{j-1} \left[1-F(x)\right]^{n-j} \\
 &= \frac{n!}{(j-1)!(n-j)!} \ x^{j-1} \ (1-x)^{n-j} \ I(0 < x < 1) \\
-&= \frac{\Gamma(n)}{\Gamma(j)\Gamma(n-j+1)} \ x^{j-1} \ (1-x)^{n-j} I(0 < x < 1)
+&= \frac{\Gamma(n+1)}{\Gamma(j)\Gamma(n-j+1)} \ x^{j-1} \ (1-x)^{n-j} I(0 < x < 1)
 \end{aligned}
 $$ This shows that $X_{(j)} \sim \operatorname{Beta}(j, n-j+1)$. From this, we can deduce that $$
 \operatorname{E}\left[ X_{(j)} \right] = \frac{j}{n+1}
@@ -216,7 +222,7 @@ $$
 
 ------------------------------------------------------------------------
 
-## Joint Distribution of Order Statistics
+# Joint Distribution of Order Statistics
 
 **Theorem 5.4.6.** Let $X_{(1)},X_{(2)},\ldots,X_{(n)}$ denote the order statistics of a random sample $X_1,X_2,\dots,X_n$ from a continuous population with cdf $F(x)$ and pdf $f(x)$. The joint pdf of $X_{(i)}$ and $X_{(j)}$, $1\leq i<j\leq n$, is $$ 
 f_{X_{(i)},X_{(j)}}(u,v) = c\ f(u)\ f(v) \left[F(u)\right]^{i-1} \left[F(v) - F(u)\right]^{j-1-i} \left[1-F(v)\right]^{n-j}
@@ -240,7 +246,7 @@ $$
 
 \vspace{0.1in}
 
-First obtain the joint pdf of $X_{(1)}$ and $X_{(1)}$: $$
+First obtain the joint pdf of $X_{(1)}$ and $X_{(n)}$: $$
 \begin{aligned}
 f_{X_{(1)}, X_{(n)}} (x_1, x_n) 
 &= \frac{n(n-1)}{a^2} \left(\frac{x_n}{a} - \frac{x_1}{a}\right)^{n-2} \ I(0 < x_1 < x_n < a) \\
@@ -274,13 +280,13 @@ It is easy to see that $\frac{R}{a} \sim \operatorname{Beta}(n-1, 2)$ distributi
 
 ------------------------------------------------------------------------
 
-## Convergence Concepts
+# Convergence Concepts
 
 What happens to sample statistics, particularly $\overline X = {\overline X}_n$, when the sample size $n \to \infty$?
 
 \vspace{0.1in}
 
-For a real sequence $(a_n)_{n=1}^\infty$ defining convergence is straightforward: $(a_n)_{n=1}^\infty$ is said to converge to a point $a$ if $\lim_{n \to \infty} a_n = a$, i.e., $\lim_{n \to \infty} |a_n - a| = 0$.
+For a real sequence $(a_n)_{n=1}^\infty$ defining convergence is straightforward: $(a_n)_{n=1}^\infty$ is said to converge to a point $a$ if $\lim_{n \to \infty} |a_n - a| = 0$.
 
 \vspace{0.1in}
 
@@ -289,11 +295,11 @@ How to define convergence of random variables?
 -   convergence in probability
 -   convergence in almost sure sense
 -   convergence in distribution (or law)
--   convergence in mean [later]
+-   convergence in mean (or norm) [may be later]
 
 ------------------------------------------------------------------------
 
-## Convergence in Probability (or Weak Convergence)
+# Convergence in Probability (or Weak Convergence)
 
 **Definition (5.5.1):** A sequence of random variables $X_1,X_2,\dots$ **converges in probability** to a random variable $X$ if, for every $\varepsilon>0$, $$\lim_{n\to\infty}{P\left(|X_n-X|\geq\varepsilon\right)}=0,$$ or, equivalently, $$\lim_{n\to\infty}{P\left(|X_n-X|<\varepsilon\right)}=1.$$ To indicate this, we write $X_n\xrightarrow{P}X.$
 
@@ -307,7 +313,7 @@ How to define convergence of random variables?
 
 ------------------------------------------------------------------------
 
-## Weak Law of Large Numbers (WLLN)
+# Weak Law of Large Numbers (WLLN)
 
 **Theorem 5.5.1.** Let $X_1,X_2,\dots$ be $\operatorname{iid}$ random variables with $\operatorname{E}(X_i)=\mu$ and $\operatorname{Var}(X_i)=\sigma^2<\infty$. Define $\overline{X}_n=\frac{1}{n}\sum_{i=1}^n{X_i}.$ Then for every $\varepsilon>0$, $$\lim_{n\to\infty}{P\left(|\overline{X}_n-\mu|<\varepsilon\right)}=1,$$ so that $$\overline{X}_n\xrightarrow{P}\mu.$$
 
@@ -360,7 +366,7 @@ This implies $\on{Var}(S_n^2) = \frac{2\sigma^4}{(n-1)} \to 0$ as $n \to \infty$
 
 ---
 
-## Almost Sure Convergence
+# Almost Sure Convergence (or Strong Convergence)
 
 **Definition (5.5.6):** A sequence of random variables $X_1,X_2,\ldots$ **converges almost surely** to a random variable $X$ if, for every $\epsilon>0$,
 $$P\left(\lim_{n\to\infty}{|X_n-X|<\epsilon}\right)=1.$$
@@ -369,21 +375,74 @@ To indicate this, we write $X_n\xrightarrow{a.s.}X.$
 
 **Notes:**
 
+- Contrast this with the definition of convergence in probability.
+
 -  Recall that a random variable is a function from a sample space $\mathcal{S}$ into the real numbers: $X_n:\mathcal{S}\longrightarrow\R$.  For each $s\in S$, $X_n(s)=r\in\R$.  
 
-- Definition 5.5.6 states that $X_n\xrightarrow{a.s.}X$ if the functions $X_n(s)\longrightarrow X(s)$ for all $s\in S$, except perhaps for $s\in N$, where $N\subset S$ and $P(N)=0$.
+- Definition 5.5.6 states that $X_n\xrightarrow{a.s.}X$ if the functions $X_n(s)\longrightarrow X(s)$ for all $s\in S$, except perhaps for $s\in N$, where $N \subseteq \mathcal{S}$ and $P(N)=0$ (point-wise convergence on all but a few "null" points).
 
-- Contrast the definitions of almost sure convergence with in probability convergence:
+<!-- --- -->
 
- + almost sure: $P\left(\lim_{n\to\infty}{|X_n-X|<\epsilon}\right)=1$
- + in probability: 
+<!-- **Example:** Let the sample space $\mathcal{S}$ be the closed interval $[0,1]$ with the uniform probability distribution. Let $X_n(s)=s+s^n$ and $X(s)=s$.  Show that $X_n\xrightarrow{a.s.}X$. Does this sequence converge in probability? -->
+
+<!-- \enter -->
+
+<!-- For every $s \in [0, 1)$, $n \to \infty \implies s^n \to 0 \implies$   $X_n(s) \to s = X(s)$.  -->
+
+<!-- For $s = 1$, $n \to \infty \implies s^n \to 1 \implies$   $X_n(s) \to 2 \neq 1 = X(s)$.  -->
+
+<!-- But the convergence occurs on the set $[0, 1)$ and $P([0, 1)) = 1$. -->
+
+<!-- So $X_n$ converges to $X$ almost surely. -->
 
 
+<!-- --- -->
+
+
+<!-- **Example:** Same $\mathcal{S} = [0,1]$ with the uniform probability distribution as before. Define the sequence $X_1,X_2,\dots$ as follows: -->
+<!-- \begin{center} -->
+<!-- \begin{tabular}{lll} -->
+<!-- $X_1(s)=s+I_{[0,1]}(s)$ && $X_2(s)=s+I_{[0,1/2]}(s)$\\[1em] -->
+<!-- $X_3(s)=s+I_{[1/2,1]}(s)$ && $X_4(s)=s+I_{[0,1/3]}(s)$\\[1em] -->
+<!-- $X_5(s)=s+I_{[1/3,2/3]}(s)$ && $X_6(s)=s+I_{[2/3,1]}(s)$,\\ -->
+<!-- \end{tabular} -->
+<!-- \end{center} -->
+<!-- and so on, and let $X(s)=s$. Show that this sequence converges in probability, but not almost surely. For any $\epsilon > 0$ -->
+
+<!-- $P\left(|X_n-X|\geq\varepsilon\right) = P(\text{interval whose length is going to zero})$ $\to 0$. -->
+
+<!-- For every $s$ the value $X_n(s)$ alternates between $s$ sand $s + 1$ infinitely often. For example, if $s = 3/8$, $X_1(s) = 11/8$ , $X_2(s) = 11/8$, $X_3(s) = 3/8$, $X_4(s) = 3/8$, $X_5(s) = 11/8$, $X_6(s) = 3/8$ etc. So no point-wise convergence occurs for this sequence. So $X_n$ does not converge almost surely. -->
+
+<!-- --- -->
+
+<!-- # Relationship between convergence in probability and convergence almost surely -->
+
+<!-- - convergence almost surely _implies_ convergence in probability, but the converse is not true in general -->
+
+<!-- \enter -->
+
+<!-- - However, a sequence that converges in probability has a _sub-sequence_ that converges almost surely. -->
+
+<!-- --- -->
+
+<!-- # Strong Law of Large Numbers (SLLN) -->
+
+<!-- Let $X_1,X_2,\ldots$ be $\on{iid}$ random variables with $\on{E}(X_i)=\mu$ and $\on{Var}(X_i)=\sigma^2<\infty$. Define -->
+<!-- $\overline{X}_n=\frac{1}{n}\sum_{i=1}^n{X_i}.$ Then for every $\epsilon>0$, -->
+<!-- $$P\left(\lim_{n\to\infty}{|\overline{X}_n-\mu|<\epsilon}\right)=1,$$ -->
+<!-- so that -->
+<!-- $$\overline{X}_n\xrightarrow{a.s.}\mu.$$ -->
+<!-- **Remarks** -->
+
+<!-- 1. "Stronger" analog of SLLN -->
+
+<!-- 2. For both the WLLN and SLLN we had the assumption of a finite variance is sufficient but not necessary. The only moment condition needed is that -->
+<!-- $\on{E}|X_i| < \infty$. -->
 
 ---
 
-## Homework
+# Homework
 
-- Order Statistics: Read p. $226 - 232$. Exercises $5.22,5.26$.
+- Order Statistics: Read p. $226 - 232$. Exercises $5.22, 5.26$.
 
-- Convergence: Read p. $232 - 236$. Exercises $5.32,5.36,5.38,5.39$.
+- Convergence: Read p. $232 - 236$. Exercises $5.32, 5.38, 5.39a$.

@@ -1,0 +1,105 @@
+---
+title: |
+  | STA 522, Spring 2021  
+  | Introduction to Theoretical Statistics II
+author: | 
+  | Lecture 2
+  | 
+  | Department of Biostatistics
+  | University at Buffalo 
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  beamer_presentation:
+    toc: false
+bibliography: references.bib
+fontsize: 11pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+\newcommand{\rs}{X_1,X_2,\dots,X_n}
+\newcommand{\on}{\operatorname}
+\newcommand{\enter}{\vspace{0.1in}}
+\newcommand{\ds}{\displaystyle}
+\renewcommand{\bar}{\overline}
+\newcommand{\N}{\text{N}}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\R}{\mathbb{R}}
+
+
+
+# Almost Sure Convergence (or Strong Convergence)
+
+**Definition (5.5.6):** A sequence of random variables $X_1,X_2,\ldots$ **converges almost surely** to a random variable $X$ if, for every $\epsilon>0$,
+$$P\left(\lim_{n\to\infty}{|X_n-X|<\epsilon}\right)=1.$$
+To indicate this, we write $X_n\xrightarrow{a.s.}X.$
+
+
+**Notes:**
+
+- Contrast this with the definition of convergence in probability.
+
+-  Recall that a random variable is a function from a sample space $\mathcal{S}$ into the real numbers: $X_n:\mathcal{S}\longrightarrow\R$.  For each $s\in S$, $X_n(s)=r\in\R$.  
+
+- Definition 5.5.6 states that $X_n\xrightarrow{a.s.}X$ if the functions $X_n(s)\longrightarrow X(s)$ for all $s\in S$, except perhaps for $s\in N$, where $N \subseteq \mathcal{S}$ and $P(N)=0$ (point-wise convergence on all but a few "null" points).
+
+---
+
+
+**Example:** Let the sample space $\mathcal{S}$ be the closed interval $[0,1]$ with the uniform probability distribution. Let $X_n(s)=s+s^n$ and $X(s)=s$.  Show that $X_n\xrightarrow{a.s.}X$. Does this sequence converge in probability?
+
+\enter
+
+For every $s \in [0, 1)$, $n \to \infty \implies s^n \to 0 \implies$   $X_n(s) \to s = X(s)$. 
+
+For $s = 1$, $n \to \infty \implies s^n \to 1 \implies$   $X_n(s) \to 2 \neq 1 = X(s)$. 
+
+But the convergence occurs on the set $[0, 1)$ and $P([0, 1)) = 1$.
+
+So $X_n$ converges to $X$ almost surely.
+
+
+---
+
+
+**Example:** Same $\mathcal{S} = [0,1]$ with the uniform probability distribution as before. Define the sequence $X_1,X_2,\dots$ as follows:
+\begin{center}
+\begin{tabular}{lll}
+$X_1(s)=s+I_{[0,1]}(s)$ && $X_2(s)=s+I_{[0,1/2]}(s)$\\[1em]
+$X_3(s)=s+I_{[1/2,1]}(s)$ && $X_4(s)=s+I_{[0,1/3]}(s)$\\[1em]
+$X_5(s)=s+I_{[1/3,2/3]}(s)$ && $X_6(s)=s+I_{[2/3,1]}(s)$,\\
+\end{tabular}
+\end{center}
+and so on, and let $X(s)=s$. Show that this sequence converges in probability, but not almost surely. For any $\epsilon > 0$
+
+$P\left(|X_n-X|\geq\varepsilon\right) = P(\text{interval whose length is going to zero})$ $\to 0$.
+
+For every $s$ the value $X_n(s)$ alternates between $s$ sand $s + 1$ infinitely often. For example, if $s = 3/8$, $X_1(s) = 11/8$ , $X_2(s) = 11/8$, $X_3(s) = 3/8$, $X_4(s) = 3/8$, $X_5(s) = 11/8$, $X_6(s) = 3/8$ etc. So no point-wise convergence occurs for this sequence. So $X_n$ does not converge almost surely.
+
+---
+
+# Relationship between convergence in probability and convergence almost surely
+
+- convergence almost surely _implies_ convergence in probability, but the converse is not true in general
+
+\enter
+
+- However, a sequence that converges in probability has a _sub-sequence_ that converges almost surely.
+
+---
+
+# Strong Law of Large Numbers (SLLN)
+
+Let $X_1,X_2,\ldots$ be $\on{iid}$ random variables with $\on{E}(X_i)=\mu$ and $\on{Var}(X_i)=\sigma^2<\infty$. Define
+$\overline{X}_n=\frac{1}{n}\sum_{i=1}^n{X_i}.$ Then for every $\epsilon>0$,
+$$P\left(\lim_{n\to\infty}{|\overline{X}_n-\mu|<\epsilon}\right)=1,$$
+so that
+$$\overline{X}_n\xrightarrow{a.s.}\mu.$$
+**Remarks**
+
+1. "Stronger" analog of SLLN
+
+2. For both the WLLN and SLLN we had the assumption of a finite variance is sufficient but not necessary. The only moment condition needed is that
+$\on{E}|X_i| < \infty$.
