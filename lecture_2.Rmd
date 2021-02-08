@@ -7,17 +7,23 @@ author: |
   | 
   | Department of Biostatistics
   | University at Buffalo 
-date: "`r format(Sys.time(), '%d %B, %Y')`"
+date: "08 February, 2021"
 output: 
   beamer_presentation:
     toc: false
+header-includes:
+  - \usepackage{bm}
 bibliography: references.bib
 fontsize: 11pt
+editor_options: 
+  markdown: 
+    wrap: 80
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
+
 
 \newcommand{\rs}{X_1,X_2,\dots,X_n}
 \newcommand{\on}{\operatorname}
@@ -27,44 +33,80 @@ knitr::opts_chunk$set(echo = FALSE)
 \newcommand{\N}{\text{N}}
 \renewcommand{\epsilon}{\varepsilon}
 \newcommand{\R}{\mathbb{R}}
+\newcommand{\Ss}{\mathcal{S}}
+\newcommand{\E}{\on{E}}
+\newcommand{\var}{\on{Var}}
+<!-- \renewcommand{\vec}[1]{{\underaccent{\tilde}{#1}}} -->
+\renewcommand{\vec}{\underline}
 
 
+# Review: Convergence of random variables
 
-# Almost Sure Convergence (or Strong Convergence)
+- A sequence of random variables $X_1,X_2,\dots$ **converges in probability** to a random variable $X$ (written as $X_n\xrightarrow{P}X$) if, for every $\varepsilon>0$,
+$$
+\lim_{n\to\infty}{P\left(|X_n-X|\geq\varepsilon\right)}=0,
+$$
+or, equivalently, 
+$$
+\lim_{n\to\infty}{P\left(|X_n-X|<\varepsilon\right)}=1.
+$$
 
-**Definition (5.5.6):** A sequence of random variables $X_1,X_2,\ldots$ **converges almost surely** to a random variable $X$ if, for every $\epsilon>0$,
-$$P\left(\lim_{n\to\infty}{|X_n-X|<\epsilon}\right)=1.$$
-To indicate this, we write $X_n\xrightarrow{a.s.}X.$
-
-
-**Notes:**
-
-- Contrast this with the definition of convergence in probability.
-
--  Recall that a random variable is a function from a sample space $\mathcal{S}$ into the real numbers: $X_n:\mathcal{S}\longrightarrow\R$.  For each $s\in S$, $X_n(s)=r\in\R$.  
-
-- Definition 5.5.6 states that $X_n\xrightarrow{a.s.}X$ if the functions $X_n(s)\longrightarrow X(s)$ for all $s\in S$, except perhaps for $s\in N$, where $N \subseteq \mathcal{S}$ and $P(N)=0$ (point-wise convergence on all but a few "null" points).
-
----
-
-
-**Example:** Let the sample space $\mathcal{S}$ be the closed interval $[0,1]$ with the uniform probability distribution. Let $X_n(s)=s+s^n$ and $X(s)=s$.  Show that $X_n\xrightarrow{a.s.}X$. Does this sequence converge in probability?
 
 \enter
 
-For every $s \in [0, 1)$, $n \to \infty \implies s^n \to 0 \implies$   $X_n(s) \to s = X(s)$. 
 
-For $s = 1$, $n \to \infty \implies s^n \to 1 \implies$   $X_n(s) \to 2 \neq 1 = X(s)$. 
+- A sequence of random variables $X_1,X_2,\ldots$ **converges almost surely** to a random variable $X$ (written $X_n\xrightarrow{a.s.}X$) if, for every $\varepsilon>0$, 
+$$ 
+P\left(\lim_{n\to\infty}{|X_n-X|<\varepsilon}\right)=1, \text{ i.e., }
+|X_n-X| < \varepsilon \text{ with probability } 1
+$$
+This is  same as saying 
+$$
+P(\lim_{n\to \infty} X_n = X) = 1 \text{ i.e., } 
+P(\{s \in \Ss: \lim_{n\to \infty} X_n(s) = X(s)\}) = 1
+$$
+
+--------------------------------------------------------------------------------
+
+**Example:** Let the sample space $\mathcal{S}$ be the closed interval $[0,1]$
+with the uniform probability distribution. Let $X_n(s)=s+s^n$ and $X(s)=s$. Show
+that $X_n\xrightarrow{a.s.}X$. Does this sequence converge in probability?
+
+\vspace{0.1in}
+
+
+**a.s. convergence:** For every $s \in [0, 1)$, $n \to \infty \implies s^n \to 0 \implies$
+$X_n(s) \to s = X(s)$.
+
+For $s = 1$, $n \to \infty \implies s^n \to 1 \implies$
+$X_n(s) \to 2 \neq 1 = X(s)$.
 
 But the convergence occurs on the set $[0, 1)$ and $P([0, 1)) = 1$.
 
 So $X_n$ converges to $X$ almost surely.
 
 
----
+\enter
+
+**convergence in probability:** Fix $\epsilon > 0$. we have 
+$$
+\begin{aligned}
+P(|X_n - X| \geq \epsilon) 
+&= P(\{s \in [0, 1]: |s^n| \geq \epsilon\}) \\ 
+&= P(\{s \in [0, 1]:  s \geq \epsilon^{1/n}\}) \\
+&= \int_{\epsilon^{1/n}}^{1} ds = 1 - \epsilon^{1/n} \to 1 - 1 = 0 \text{ as } n \to \infty
+\end{aligned}
+$$ 
+So, yes, $X_n$ does converge to $X$ in probability.
 
 
-**Example:** Same $\mathcal{S} = [0,1]$ with the uniform probability distribution as before. Define the sequence $X_1,X_2,\dots$ as follows:
+
+--------------------------------------------------------------------------------
+
+**Example:** Same $\mathcal{S} = [0,1]$ with the uniform probability
+distribution as before. Define the sequence $X_1,X_2,\dots$ as follows:
+
+```{=tex}
 \begin{center}
 \begin{tabular}{lll}
 $X_1(s)=s+I_{[0,1]}(s)$ && $X_2(s)=s+I_{[0,1/2]}(s)$\\[1em]
@@ -72,34 +114,323 @@ $X_3(s)=s+I_{[1/2,1]}(s)$ && $X_4(s)=s+I_{[0,1/3]}(s)$\\[1em]
 $X_5(s)=s+I_{[1/3,2/3]}(s)$ && $X_6(s)=s+I_{[2/3,1]}(s)$,\\
 \end{tabular}
 \end{center}
-and so on, and let $X(s)=s$. Show that this sequence converges in probability, but not almost surely. For any $\epsilon > 0$
+```
+and so on, and let $X(s)=s$. Show that this sequence converges in probability,
+but not almost surely. For any $\varepsilon> 0$
 
-$P\left(|X_n-X|\geq\varepsilon\right) = P(\text{interval whose length is going to zero})$ $\to 0$.
+$P\left(|X_n-X|\geq\varepsilon\right) = P(\text{interval whose length is going to zero})$
+$\to 0$.
 
-For every $s$ the value $X_n(s)$ alternates between $s$ sand $s + 1$ infinitely often. For example, if $s = 3/8$, $X_1(s) = 11/8$ , $X_2(s) = 11/8$, $X_3(s) = 3/8$, $X_4(s) = 3/8$, $X_5(s) = 11/8$, $X_6(s) = 3/8$ etc. So no point-wise convergence occurs for this sequence. So $X_n$ does not converge almost surely.
+For every $s$ the value $X_n(s)$ alternates between $s$ and $s + 1$ infinitely
+often. For example, if $s = 3/8$, $X_1(s) = 11/8$ , $X_2(s) = 11/8$,
+$X_3(s) = 3/8$, $X_4(s) = 3/8$, $X_5(s) = 11/8$, $X_6(s) = 3/8$ etc. So no
+point-wise convergence occurs for this sequence. So $X_n$ does not converge
+almost surely.
 
----
+--------------------------------------------------------------------------------
 
 # Relationship between convergence in probability and convergence almost surely
 
-- convergence almost surely _implies_ convergence in probability, but the converse is not true in general
+-   convergence almost surely *implies* convergence in probability, but the
+    converse is not true in general
 
-\enter
+\vspace{0.1in}
 
-- However, a sequence that converges in probability has a _sub-sequence_ that converges almost surely.
+-   However, a sequence that converges in probability has a *sub-sequence* that
+    converges almost surely.
 
----
+--------------------------------------------------------------------------------
 
 # Strong Law of Large Numbers (SLLN)
 
-Let $X_1,X_2,\ldots$ be $\on{iid}$ random variables with $\on{E}(X_i)=\mu$ and $\on{Var}(X_i)=\sigma^2<\infty$. Define
-$\overline{X}_n=\frac{1}{n}\sum_{i=1}^n{X_i}.$ Then for every $\epsilon>0$,
-$$P\left(\lim_{n\to\infty}{|\overline{X}_n-\mu|<\epsilon}\right)=1,$$
-so that
-$$\overline{X}_n\xrightarrow{a.s.}\mu.$$
-**Remarks**
+Let $X_1,X_2,\ldots$ be $\operatorname{iid}$ random variables with
+$\operatorname{E}(X_i)=\mu$ and $\operatorname{Var}(X_i)=\sigma^2<\infty$.
+Define $\overline{X}_n=\frac{1}{n}\sum_{i=1}^n{X_i}.$ Then for every
+$\varepsilon>0$,
+$$P\left(\lim_{n\to\infty}{|\overline{X}_n-\mu|<\varepsilon}\right)=1,$$ so that
+$$\overline{X}_n\xrightarrow{a.s.}\mu.$$ **Remarks**
 
-1. "Stronger" analog of SLLN
+1.  "Stronger" analog of WLLN. SLLN $\implies$ WLLN.
 
-2. For both the WLLN and SLLN we had the assumption of a finite variance is sufficient but not necessary. The only moment condition needed is that
-$\on{E}|X_i| < \infty$.
+2.  For both the WLLN and SLLN the assumption of a finite variance is sufficient but not necessary. The only moment condition needed is that  $\operatorname{E}|X_i| < \infty$.
+    
+3.  SLLN and WLLN may hold for non-iid random variables under certain regularity conditions. We can also create examples with non-iid random variables where WLLN holds but not SLLN.
+
+
+
+---
+
+# Frequentist Definition of Probability
+
+
+Given an event $A \subseteq \Ss$, consider an infinite sequence of independent random experiments/trials, and in each trial check whether or not $A$ occurs.  Let $f_n(A)$ be the frequency of the event $A$ in the first $n$ trials. Then the frequentist probability of $A$ is defined as $P_{n}(A) = \lim_{n \to \infty} \frac{f_n(A)}{n}$ ("long-run relative frequency of $A$").
+
+\enter
+
+
+## Justification via SLLN 
+
+Let $X_i = I(A \text{ occurs in trial-}i)$, $i = 1, \dots, n$. Then $\rs \sim \on{iid~Bernoulli}(p = P(A))$ with $\on{E}(X_i) = P(A)$ and $\on{Var}(X_i) = P(A) [1 - P(A)] < \infty$. Also, $\sum_{i=1}^n X_i =$ frequency of $A$ in first $n$ trials = $f_n(A) \implies \bar X_n =  \frac{f_n(A)}{n}$.
+
+Hence, by SLLN,
+$$
+P_{n}(A) = \frac{f_n(A)}{n} = \overline{X}_n\xrightarrow{a.s.} \on{E}(X_1) = P(A)
+$$
+
+---
+
+# Convergence in Distribution
+
+**Definition:** A sequence of random variables $X_1,X_2,\ldots$ **converges in distribution** to a random variable $X$ if 
+$$
+\lim_{n\to\infty}{F_{X_n}(x)}=F_X(x)
+$$
+at all points $x$ where $F_X(x)$ is continuous. In this case, we write
+$$
+X_n \xrightarrow{d} X.
+$$
+
+## Note
+
+This definition is actually about the cdfs of the random variables converge and not the random variables themselves.
+
+<!-- - This is the weakest form of convergence of random variables.  -->
+
+<!-- - almost sure convergence $\implies$ convergence in probability $\implies$ convergence in distribution. Reverse implications may not hold in general. -->
+
+---
+
+**Example:** Let $X_1,X_2,\ldots$ be a sequence of continuous random variables with cdf given by $$F_{X_n}(x)=1-\left(1-\frac{x}{n}\right)^n \text{ for } 0 < x \leq n.$$
+Then For $x > 0$, $F_{X_n}(x) = 1-\left(1-\frac{x}{n}\right)^n \to 1 - e^{-x} =: F(x)$ as $n \to \infty$. Note that $F(x)$ is the cdf of Exponential(1) distribution, i.e., $X_n \xrightarrow{d} \on{Exponential}(\lambda = 1)$.
+
+\enter
+
+**Example:** Let $X_1,X_2,\ldots$ be a sequence of continuous random variables with cdf given by
+$$F_{X_n}(x)=\left(\frac{x}{1+x}\right)^n \text{ for } x > 0.$$
+Then $F_{X_n}(x) \rightarrow 0$ for all $x$. But a function equal to 0 everywhere is not a cdf (if $F$ is a cdf then $\lim_{x\to\infty} F(x)$ must be 1), so $X_n$ **does not** converge in distribution.
+
+---
+
+
+**Example (contd.)** Consider $V_n=\frac{X_n}{n}$ in previous example. Does $V_n$ converge in distribution?
+$$
+\begin{aligned}
+F_{V_n}(v) &= F_{X_n}(nv) \\ 
+&= \left(\frac{nv}{1+nv}\right)^n \\
+&= \left[\left(1 - \frac{1}{1+nv}\right)^{nv}\right]^{1/v} \to e^{-1/v} \text{ for } v > 0 
+\end{aligned}
+$$
+Since $F(v) = e^{-1/v} I(v > 0)$ is a cdf (verify), so $V_n$ converges in distribution to $V \sim F$. 
+
+**NOTE:** $F$ is the cdf of the inverse-Gamma($\alpha = 1$, $\beta = 1$) distribution. 
+
+---
+
+
+**Example:** Suppose $X_1,X_2,\ldots$ are $\on{iid~Uniform}(0,1)$, and let
+$X_{(n)}=\max_{1\leq i\leq n}{X_i}.$ Does $X_{(n)}$ converge in probability?
+Can we say anything about the convergence of $n(1 - X_{(n)})$?
+
+Heuristically, $X_{(n)}$ will get closer and closer to 1 as $n \to \infty$. To prove this formally, fix $\epsilon > 0.$ We have 
+$$
+\begin{aligned}
+P(|X_{(n)} - 1| \geq \epsilon) 
+&= P(X_{(n)} \geq 1 + \epsilon) + P(X_{(n)} \leq 1 - \epsilon) \\
+&= 0 + P(X_{(n)} \leq 1 - \epsilon) \\
+&= P(X_i \leq 1 - \epsilon,\ \ i = 1, \dots, n) = (1 - \epsilon)^n \to 0
+\end{aligned}
+$$
+as $n \to \infty$. This means $X_{(n)} \xrightarrow{P} 1$. 
+
+
+Let $Y_n = n(1 - X_{(n)})$. Then for $t > 0$
+$$
+\begin{aligned}
+F_{Y_n} (t) &= P\left(n(1 - X_{(n)}) \leq t \right) \\
+&= P\left(X_{(n)} \geq 1 - t/n\right) = 1 - (1 - t/n)^{n} \to 1 - e^{-t}
+\end{aligned}
+$$
+as $n \to \infty$. This means that $Y_n = n(1 - X_{(n)}) \xrightarrow{d} \on{Exponential}(1)$. 
+
+---
+
+# Relationship between convergence in probability & convergence in distribution
+
+## Theorem 5.5.12 
+If the sequence of random variables $X_1,X_2,\ldots$ converges in probability to a random variable $X$, the sequence also converges in distribution to $X$.
+
+\enter
+
+**Proof** See exercise 5.40 (homework).
+
+
+\enter
+
+## Remark
+almost sure convergence $\implies$ convergence in probability $\implies$ convergence in distribution. Reverse implications may not hold in general.
+
+
+---
+
+
+## Theorem 5.5.13
+The sequence of random variables $X_1,X_2,\ldots$ converges in probability to a constant $\mu$ if and only if the sequence also converges in distribution to $\mu$. That is, the statement
+$$P\left(|X_n-\mu| > \epsilon \right) \longrightarrow0 \qquad \text{for every } \epsilon>0$$
+is equivalent to 
+$$	
+P(X_n\leq x)\longrightarrow\begin{cases}0&\text{if }x<\mu\\1&\text{if }x>\mu.\end{cases}
+$$
+
+---
+
+
+# Central Limit Theorem
+
+## Theorem 5.5.14
+Let $X_1,X_2,\ldots$ be a sequence of $\operatorname{iid}$ random variables whose mgfs exist in a neighborhood of $0$ (that is, $M_{X_i}(t)$ exists for $|t|<h$, for some positive $h$). Let $\E{(X_i})=\mu$ and $\var{(X_i)}=\sigma^2>0$ (both $\mu$ and $\sigma^2$ must be finite since the mgf exists).
+
+
+\enter
+
+Define $\displaystyle \overline{X}_n=\frac{1}{n}\sum_{i=1}^n{X_i}.$ and $\displaystyle Z_n = \frac{\sqrt{n}(\overline{X}_n-\mu)}{\sigma}.$ 
+
+\enter
+Let $G_n(x)$ denote the cdf of $Z_n$. Then for any $x$,
+$$\lim_{n\to\infty}{G_n(x)}=\int_{-\infty}^x{\frac{1}{\sqrt{2\pi}}e^{-y^2/2}\,dy}.$$
+In other words,
+$$\ds{Z_n = \frac{ \sqrt{n}(\overline{X}_n - \mu) }{\sigma} \xrightarrow{d} Z \sim \operatorname{N}(0,1)} \ \ (\text{or simply } Z_n \xrightarrow{d} \on{N}(0, 1)).$$
+
+---
+
+## Remarks
+
+\enter
+
+- Note that no assumption on the distribution of $X_i$ is being made, only requirement is that they are iid and the mgf exists. Existence of mgf can be relaxed by just assuming $\var(X_1) = \sigma^2 < \infty$ (next theorem).
+
+\enter
+
+- Heuristic idea: normality comes from sums of "small" (finite variance), independent disturbances.
+
+\enter
+
+- DOES NOT hold in general if the regularity conditions are not satisfied. Example: $X_1, X_2, \dots \sim \on{iid~Cauchy}(0, 1)$. Then $\sum_{i=1}^n X_i \sim \on{Cauchy}(0, n)$ (see Example 5.2.10 in CB 2E; discussed last semester) and $\bar X_n = \frac{1}{n} \sum_{i=1}^n X_i \sim \on{Cauchy}(0, 1)$.
+
+
+---
+
+
+**Proof of Theorem 5.5.14.** Using Taylor's series on the mgf. Define $Y_i = (X_i - \mu)/\sigma$,  $M_Y(t)$ = common mgf of the $Y_i$s which exists for $|t|  < \sigma h$. Then
+$$
+\begin{aligned}
+M_{\sqrt{n}(\bar X_n - \mu)/\sigma}(t) &= M_{\sum_{i=1}^n Y_i/\sqrt{n}}(t) \\ 
+&=  \E\left( e^{\frac{(\sum_{i=1}^n Y_i)}{\sqrt{n}}\ t} \right) \\
+&= \left[\E\left( e^{ Y_1 \left(\frac{t}{\sqrt{n}}\right)} \right) \right] = \left[M_Y\left(\frac{t}{\sqrt{n}}\right)\right]^n
+\end{aligned}
+$$
+Consider a Taylor series expansion of $M_Y(s)$ around 0. 
+<!-- \sum_{k = 0}^\infty M_Y^{(k)} (0) \frac{(t/\sqrt{n})^k}{k!} = -->
+$$
+M_Y(s) = M_Y(0) + M_Y^{(1)} (0) \frac{s}{1!} + M_Y^{(2)} (0) \frac{s^2}{2!} + R_n(s) \frac{s^2}{2!} 
+$$
+where $M_Y^{(k)} (0) := \left.\frac{d^k}{dt^k}M_Y(t)\right|_{t=0}$ and $R_n(s) \to 0$ as $n \to \infty$. The expansion is valid for $|s| < \sigma h$.
+
+---
+
+Note that
+$$
+\begin{aligned}
+M_Y(0) &= 1 \\
+M_Y^{(1)}(0) &= 0 \\
+M_Y^{(2)}(0) &= 1
+\end{aligned}
+$$
+So that
+$$
+\begin{aligned}
+\left[M_Y\left(\frac{t}{\sqrt{n}}\right)\right]^n = \left[ 1 + \left(1 + R_n\left(\frac{t}{\sqrt{n}}\right)\right) \frac{t^2}{2n} \right]^n \to e^{\frac{t^2}{2}} = M_Z(t)
+\end{aligned}
+$$
+where $M_Z(t)$ denotes the mgf of $\on{N}(0, 1)$ distribution. This completes the proof since a mgf uniquely identifies a cdf. 
+
+
+---
+
+## Theorem 5.5.15 (Stronger version of Theorem 5.5.14)
+
+Let $X_1,X_2,\ldots$ be a sequence of $\operatorname{iid}$ random variables with $\E(X_i)=\mu$ and $0<\var{(X_i)}=\sigma^2<\infty$.
+
+
+\enter
+
+Define $\displaystyle \overline{X}_n=\frac{1}{n}\sum_{i=1}^n{X_i}.$ and $\displaystyle Z_n = \frac{\sqrt{n}(\overline{X}_n-\mu)}{\sigma}.$ 
+
+\enter
+Let $G_n(x)$ denote the cdf of $Z_n$. Then for any $x$,
+$$\lim_{n\to\infty}{G_n(x)}=\int_{-\infty}^x{\frac{1}{\sqrt{2\pi}}e^{-y^2/2}\,dy}.$$
+In other words,
+$$\ds{Z_n = \frac{ \sqrt{n}(\overline{X}_n - \mu) }{\sigma} \xrightarrow{d}  \operatorname{N}(0,1)} .$$
+
+**Proof** Exactly similar to Theorem 5.5.15, but uses characteristic function ($\phi(t) := E(e^{it})$) instead of mgf. Omitted.
+
+---
+
+
+# Slutsky's Theorem and Applications
+
+## Theorem 5.5.17 (Slutsky's Theorem)
+If $X_n\xrightarrow{d}X$ and $Y_n\xrightarrow{P}a$, where $a$ is a constant, then
+
+- $X_nY_n\xrightarrow{d}aX$; and
+
+- $X_n+Y_n\xrightarrow{d}X+a$.
+
+\enter
+
+**Proof:** Omitted. 
+
+
+## Normal Approximation with estimated variance
+
+Suppose that
+$\ds \frac{\sqrt{n}(\overline{X}_n-\mu)}{\sigma}\xrightarrow{d}\operatorname{N}{(0,1)},$ with  $\sigma$ unknown. Define $S_n^2 = \frac{1}{n-1} \sum_{i=1}^n ( X_i - \bar X_n)^2$. Then
+$\ds\frac{\sqrt{n}(\overline{X}_n-\mu)}{S_n}\xrightarrow{d}\operatorname{N}{(0,1)}.$
+
+\enter
+
+**Proof.** Relies on two facts:
+(a) $S_n^2\xrightarrow{P}\sigma^2$ as long as $\var{(S_n^2)}\to0$ (Lecture 1); and
+
+(b) $\ds{\frac{\sigma}{S_n}\xrightarrow{P}1}$ (see Exercise $5.32$)
+
+---
+
+# Principles of Data Reduction
+
+**Data reduction** involves the use of statistics to summarize information (data) on a parameter $\theta$. We study methods that retain important information about $\theta$, and/or  discard information that is irrelevant to $\theta$.
+
+- sufficiency principle, in which no information about $\theta$ is discarded  while achieving some summarization of the data (section $6.2$);
+
+- likelihood methods, in which we study functions that contain all information about $\theta$ available from a sample (section $6.3$); and
+
+- the equivariance principle, another method that preserves important features of the data (section $6.4$).
+
+
+**Notation:**  Underline $\vec{X}$ for the entire sample, i.e., $\vec{X} = (X_1, \dots, X_n)$, $\vec{x} = (x_1, \dots, x_n)$, $T(\vec{X}) = T(X_1, \dots, X_n)$, $T(\vec{x}) = T(x_1, \dots, x_n)$, $T(\vec{X})$, etc. 
+
+---
+
+# Sufficiency
+
+
+
+
+
+
+---
+
+# Homework
+
+
+- Read pp. $236-240$ (convergence concepts).\vfill
+-
