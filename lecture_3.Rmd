@@ -492,7 +492,7 @@ Suppose $T(\mathbf{X})$ is a minimal sufficient statistic for a parameter $\thet
 
 \enter
 
-Example: $\ds{\left(\sum_{i=1}^n{X_i},\sum_{i=1}^n{X_i^2}\right)}$ is a minimal sufficient statistic for $(\mu,\sigma^2)$.
+**Example:** $\ds{\left(\sum_{i=1}^n{X_i},\sum_{i=1}^n{X_i^2}\right)}$ is a minimal sufficient statistic for $(\mu,\sigma^2)$.
 
 
 ---
