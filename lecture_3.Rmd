@@ -1,0 +1,506 @@
+---
+title: |
+  | STA 522, Spring 2021  
+  | Introduction to Theoretical Statistics II
+author: | 
+  | Lecture 3
+  | 
+  | Department of Biostatistics
+  | University at Buffalo 
+date: "15 February, 2021"
+output: 
+  beamer_presentation:
+    toc: false
+header-includes:
+  - \usepackage{bm}
+bibliography: references.bib
+fontsize: 10pt
+editor_options: 
+  markdown: 
+    wrap: 80
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+\newcommand{\rs}{X_1,X_2,\dots,X_n}
+\newcommand{\on}{\operatorname}
+\newcommand{\enter}{\vspace{0.1in}}
+\newcommand{\ds}{\displaystyle}
+\renewcommand{\bar}{\overline}
+\newcommand{\N}{\text{N}}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Ss}{\mathcal{S}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\E}{\on{E}}
+\newcommand{\var}{\on{Var}}
+<!-- \renewcommand{\vec}[1]{{\underaccent{\tilde}{#1}}} -->
+\renewcommand{\vec}{\underline}
+\newcommand{\asim}{\stackrel{a}{\sim}}
+
+
+# AGENDA
+
+- almost sure convergence & SLLN
+
+\enter
+
+- convergence in distribution
+
+\enter
+
+- central limit theorem
+
+\enter
+
+- sufficiency
+
+
+---
+
+# Review: Sufficiency
+
+- A statistic $T(\vec{x})$ is a \textbf{sufficient statistic} for a parameter $\theta$ if the conditional distribution of the sample $\vec{X}$ given that $T(\vec{x})=t$ does not depend on $\theta$.
+
+\enter
+
+- **Checking sufficiency:**  $T(\vec{x})$ is a sufficient statistic for $\theta$ if, for every $\vec{x}$ in the sample space, the ratio  $\ds \frac{p(\vec{x} \mid \theta)}{q(T(\vec{x}) \mid \theta)}$ is constant as a function of $\theta$. Here
+$p(\vec{x} \mid \theta)$ = joint pdf/pmf of $\vec{X}$ and $q(t \mid \theta)$ = pdf/pmf of $T(\vec{x})$.
+
+\enter
+
+- **Example:** Let $\rs$ be $\operatorname{iid}$ Bernoulli random variables with parameter $\theta$, $0< \theta <1$. Then
+$\ds T(\vec{x})=\sum_{i=1}^n{X_i}$ is sufficient for $\theta$.
+
+---
+
+**Example (sufficient order statistics).**  Let $\rs$ be $\operatorname{iid}$ from a distribution with pdf $f(x)$, where we are unable to specify any more information about the pdf (as is the case in nonparametric estimation). Then the order statistics are a sufficient statistic.
+
+
+To verify this, first let $\theta$ be the vector of all parameters in the density $f$ and define $T(\vec{x}) = \left(X_{(1)}, \dots, X_{(n)}\right)$ where $X_{(i)}$ are the order statistics. Then $\ds p(\vec{x} \mid \theta) = \prod_{i=1}^n f(x_i \mid \theta) = \prod_{i=1}^n f(x_{(i)} \mid \theta)$ and 
+$\ds q(T(\vec{x}) \mid \theta) = n! \prod_{i=1}^n f(x_{(i)} \mid \theta)$, which means 
+$\ds \frac{p(\vec{x} \mid \theta)}{q(T(\vec{x}) \mid \theta)} = \frac{1}{n!}$.
+
+
+\enter
+
+\enter
+
+## Notes
+
+- this is not much of a reduction, but we shouldn't expect more with so little information about the density
+
+- for specific specific parametric densities substantial reduction is possible.
+
+
+---
+
+# How to find sufficient statistics?
+
+
+- The previous theorem allows one to check _if_ a statistic is sufficient, but doesn't say _how_ to find a sufficient statistic (requires guesswork).
+
+- The following theorem provides _one way_ to find a sufficient statistic. The following form is due to Halmos and Savage (1949), but the original idea can be traced back to Neyman and Fisher (1930-39).
+
+
+\enter 
+
+\enter
+
+## Theorem 6.2.6 (Factorization Theorem)
+
+Let $f(\vec{x} \mid \theta)$ denote the joint pdf or pmf of a sample $\vec{X}$.
+A statistic $T(\vec{x})$ is a sufficient statistic for $\theta$ _if and only if_ there exist functions $g(t \mid \theta)$ and $h(\vec{x})$ such that, for all sample points $\vec{x}$ and all parameter points $\theta$,
+$$f(\vec{x} \mid \theta)=g(T(\vec{x}) \mid \theta)\cdot h(\vec{x}).$$
+
+
+---
+
+
+## Notes
+
+1. Thus the Factorization Theorem says that to find a sufficient statistic we first factor $f$  into $g . h$, where (i) $h$ is free of $\theta$, and (ii) $g$ depends on $\theta$ and on $\vec{x}$ only through some function $T(\vec{x})$. This function is a sufficient statistic for $\theta$.
+
+2. $h(\vec{x})$ can be 1 in some situations.
+
+
+\enter
+
+**Example:**  Let $\rs$ be $\operatorname{iid}$ Bernoulli random variables with parameter $\theta$, $0< \theta <1$. We know that $\ds T(\vec{x})=\sum_{i=1}^n{X_i}$ is sufficient for $\theta$. To obtain this through the Factorization Theorem, note that for $x_i \in \{0, 1\}$, $i = 1, \dots, n$,
+$$
+\begin{aligned}
+f(\vec{x} \mid \theta) 
+&= \prod_{i=1}^n \left\{ \theta^{x_i} \ (1-\theta)^{1-x_i} \right\} \\ 
+&= \theta^{\sum_{i=1}^n x_i} \ (1-\theta)^{n-\sum_{i=1}^n x_i} = g(T(\vec{x}) \mid \theta)\ h(\vec{x})
+\end{aligned}
+$$
+where $h(\vec{x}) = 1$, $T(\vec{x}) = \sum_{i=1}^n x_i$, and $g(t \mid \theta) = \theta^t (1 - \theta)^{n - t}$.
+
+---
+
+**Example:** Let $\rs$ be $\operatorname{iid~Weibull}{(\gamma,\beta)}$ with common pdf
+$\ds f(x \mid \beta) = \frac{\gamma}{\beta} x^{\gamma-1} e^{-x^\gamma/\beta}$ for $x > 0$ where $\gamma > 0$ is known and $\beta > 0$ is unknown.
+
+\enter
+
+To find a sufficient statistic for $\beta$, write for $\vec{x}$ with $x_i > 0$, all $i$,
+$$
+\begin{aligned}
+f(\vec{x} \mid \beta) 
+&= \prod_{i=1}^n \left\{ \frac{\gamma}{\beta}\  x_i^{\gamma-1} \ e^{-x_i^\gamma/\beta} \right\} \\ 
+&= \left(\frac{1}{\beta^n}\  e^{- \frac{1}{\beta} \sum_{i=1}^n x_i^\gamma}\right)  \left(\prod_{i=1}^n \gamma \ x_i^{\gamma-1}\right)  = g(T(\vec{x}) \mid \beta) \ h(\vec{x})
+\end{aligned}
+$$
+where $\ds h(\vec{x}) = \prod_{i=1}^n \gamma \ x_i^{\gamma-1}$, $\ds T(\vec{x}) = \sum_{i=1}^n x_i^\gamma$, and $\ds g(t \mid \beta) = \frac{1}{\beta^n} \ e^{- t/ \beta}$. 
+
+
+Therefore, from the Factorization Theorem it follows that $\ds T(\vec{x}) = \sum_{i=1}^n X_i^\gamma$ is sufficient for $\beta$.
+
+
+---
+
+
+## Note
+
+If the support of $f$ involves $\theta$, then we must appropriately define $h$ and $g$ to ensure that the product is 0 where $f$ is 0. 
+
+
+\enter
+\enter
+
+
+**Example:** Let $\rs$ be $\operatorname{iid~Discrete-Uniform}{(1, \dots, \theta)}$, where $\theta$ is a positive integer. To find a sufficient statistic for $\theta$, write
+
+$$
+\begin{aligned}
+f(\vec{x} \mid \theta) 
+&= \prod_{i=1}^n f(x_i \mid \theta)  \\
+&= \prod_{i=1}^n \left\{ \frac{1}{\theta} \ I(x_i \in \{1, \dots, \theta\}) \right\} \\
+&= \frac{1}{\theta^n} \ I \left(\max_{1\leq i \leq n} x_i \leq \theta \right) \\
+&= g(T(\vec{x}) \mid \theta) \ h(\vec{x})
+\end{aligned}
+$$
+where $h(\vec{x}) = 1$, $T(\vec{x}) = \max_{1 \leq i \leq n} x_i$, and $g(t \mid \theta) = \frac{1}{\theta^n} I(t \leq \theta)$.
+
+---
+
+**Example:** Let $\rs$ be $\operatorname{iid~N}{(\mu,\sigma^2)}$ random variables, where $\sigma^2$ is known. We want a sufficient statistic for $\mu$. 
+
+The joint pdf of $\vec X$ is given by:
+$$
+\begin{aligned}
+f(\vec x \mid \mu)  &= \left(\frac{1}{\sqrt{2\pi} \sigma}\right)^n \ \exp\left( -\frac{1}{2\sigma^2} \sum_{i=1}^n (x_i - \mu)^2 \right) \\
+&= \left(\frac{1}{\sqrt{2\pi} \sigma}\right)^n \ \exp\left( -\frac{1}{2\sigma^2} \left\{ \sum_{i=1}^n{(x_i-\overline{x})^2} + n(\overline{x}-\mu)^2 \right\}  \right) \\
+&= \underbrace{\exp\left( -\frac{n}{2\sigma^2} (\overline{x}-\mu)^2  \right)}_{= g(T(\vec x) \mid \mu)} \ \underbrace{\left[ \left(\frac{1}{\sqrt{2\pi} \sigma}\right)^n \exp\left( -\frac{1}{2\sigma^2} \sum_{i=1}^n{(x_i-\overline{x})^2}  \right) \right]}_{= h(\vec x)}   
+\end{aligned}
+$$
+This means that $T(\vec X) = \bar X$ is sufficient for $\mu$.
+
+---
+
+## Proof of Theorem 6.2.6 
+
+\enter
+
+We'll prove this only for discrete cases. 
+
+\enter
+
+**Only if Part:** Let $T(\vec{x})$ be a sufficient statistic for $\theta$. Choose 
+$$
+g(t \mid \theta) = P_\theta\left(T(\vec{X}) = t \right) \text{ and } h(\vec{x}) = P\left(\vec{X} = \vec{x} \mid T(\vec{X}) = T(\vec{x})\right).
+$$ 
+
+
+Since $T(\vec{X})$ is sufficient, the conditional probability $P\left(\vec{X} = \vec{x} \mid T(\vec{X}) = T(\vec{x})\right)$ doesn't depend on $\theta$ (definition), and so this choice of $h$ is legitimate. 
+
+
+\enter
+
+Therefore
+$$
+\begin{aligned}
+f(\vec{x} \mid \theta) 
+&= P_\theta(\vec X = \vec x)  \\
+&= P_\theta \left(\vec X = \vec x \text{ and } T(\vec X) = T(\vec x) \right) \\
+&= P_\theta \left( T(\vec X) = T(\vec x) \right) P \left(\vec X = \vec x \mid T(\vec X) = T(\vec x) \right)  \\
+&= g(T(\vec{x}) \mid \theta) \ h(\vec{x})
+\end{aligned}
+$$
+i.e., factorization holds.
+
+
+
+
+---
+
+**If part:** Suppose factorization holds. 
+
+\enter
+
+Let $q(t \mid \theta)$ be the pmf of $T(\vec X)$. Define $A_{T(\vec x)} = \{\vec y: T(\vec y) = T(\vec x)\}$. 
+
+\enter
+
+Then
+
+$$
+\begin{aligned}
+\frac{f(\vec{x} \mid \theta)}{q(T(\vec X) \mid \theta)} 
+&= \frac{g(T(\vec{x}) \mid \theta) \ h(\vec{x})}{q(T(\vec X) \mid \theta)}  \\
+&= \frac{g(T(\vec{x}) \mid \theta) \ h(\vec{x})} {\sum_{\vec y \in A_T} g(T(\vec{y}) \mid \theta) \ h(\vec{y})} \\
+&= \frac{g(T(\vec{x}) \mid \theta) \ h(\vec{x})} { g(T(\vec{x}) \mid \theta)  \  \sum_{\vec y \in A_T} h(\vec{y})}  \\
+&= \frac{h(\vec{x})} {\sum_{\vec y \in A_T} h(\vec{y})}
+\end{aligned}
+$$
+is free of $\theta$. 
+
+\enter
+
+Therefore, $T(\vec X)$ is sufficient for $\theta$.
+
+---
+
+# Joint Sufficiency
+
+**Definition:** Let $\rs$ be a random sample from the density $f(x \mid \theta)$. The statistics $T_1(\vec{X}),\ldots,T_r(\vec{X})$ are **jointly sufficient for $\theta$** if and only if the conditional distribution of $\rs$ given $T_1(\vec{X})=t_1,\ldots,T_r(\vec{X})=t_r$ does not depend on $\theta$.
+
+
+\enter
+\enter
+
+## Notes
+
+-  A set of jointly sufficient statistics may also be referred to as a **vector-valued sufficient statistic**.
+
+
+-  The sample itself, $\rs$, is always jointly sufficient since the conditional distribution of the sample given the sample does not depend on $\theta$.  Also, as seen in a previous example, the order statistics are jointly sufficient as well.
+
+-  The Factorization Theorem can still be used to find jointly sufficient statistics.
+
+
+---
+
+**Example:** Let $\rs$ be $\operatorname{iid~Uniform}{\left(\theta-\frac{1}{2},\theta+\frac{1}{2}\right)}$. We want a sufficient statistic for $\theta$.
+
+$$
+\begin{aligned}
+f(\vec{x} \mid \theta)
+&= \prod_{i=1}^n \left\{ I\left(\theta-\frac{1}{2} < x_i < \theta+\frac{1}{2} \right) \right\}  \\
+&= I\left(\theta-\frac{1}{2} < x_{(1)}  < x_{(n)} < \theta+\frac{1}{2} \right) \\
+&= g(T_1(\vec x), T_2(\vec x) \mid \theta) \  h(\vec x)
+\end{aligned}
+$$
+where $T_1(\vec x) = x_{(1)}$, $T_2(\vec x) = x_{(n)}$, and  $h(\vec x) = 1$. This shows that $(T_1, T_2) = (X_{(1)}, X_{(n)})$ are jointly sufficient for $\theta$.
+
+
+\enter
+\enter
+
+
+## Notes
+
+-  It is likely that a set of jointly sufficient statistics $(T_1(\vec{X}),\ldots,T_r(\vec{X}))$ is needed when the parameter is also a vector, say $\boldsymbol{\theta} = (\theta_1, \ldots, \theta_s)$.  
+
+-  Usually  the sufficient statistic and the parameter vectors are of equal lengths ($r=s$), but different combinations of lengths are possible.
+
+---
+
+**Example (Contd.):** Suppose that $\rs$ are $\operatorname{iid~N}{(\mu,\sigma^2)}$ with both $\mu$ and $\sigma^2$  unknown. Then
+$$
+\begin{aligned}
+f(\vec x \mid \mu, \sigma^2)  &= \left(\frac{1}{\sqrt{2\pi} \sigma}\right)^n \ \exp\left( -\frac{1}{2\sigma^2} \sum_{i=1}^n (x_i - \mu)^2 \right) \\
+&= \left(\frac{1}{\sqrt{2\pi}}\right)^n \ \left(\frac{1}{\sigma^2}\right)^{n/2} \! \exp\left( -\frac{1}{2\sigma^2} \left\{ \sum_{i=1}^n{(x_i-\overline{x})^2} + n(\overline{x}-\mu)^2 \right\}  \right) \\
+&= \underbrace{\left(\frac{1}{\sigma^2}\right)^{n/2} \! \exp\left( -\frac{1}{2\sigma^2} \left\{ (n-1) s^2 + n(\overline{x}-\mu)^2 \right\}  \right)}_{= g(T_1(\vec x), T_2(\vec x) \mid \mu, \sigma^2)} \ \underbrace{\left(\frac{1}{\sqrt{2\pi}}\right)^n}_{= h(\vec x)}   
+\end{aligned}
+$$
+where $T_1(\vec x) = \bar x = \frac{1}{n} \sum_{i=1}^n x_i$ and $T_2(\vec x) = s^2 = \frac{1}{n-1} \sum_{i=1}^n (x_i - \bar x)^2$. This shows that $(\bar X, S^2)$ are jointly sufficient for $(\mu, \sigma^2)$.
+
+
+---
+
+**Example (Sufficient Statistic for Exponential Family):** Let $\rs$ be $\operatorname{iid}$ observations from a pdf/pmf $f(x \mid \boldsymbol{\theta})$ that belongs to an exponential family given by
+$$f(x \mid \boldsymbol{\theta})=h(x)c(\boldsymbol{\theta})\operatorname{exp}{\left(\sum_{i=1}^k{w_i(\boldsymbol{\theta})t_i(x)}\right)},$$
+where $\boldsymbol{\theta}=(\theta_1,\ldots,\theta_d)$ and $d\leq k$.
+
+\enter 
+
+Then
+$$T(\vec{X})=\left(\sum_{j=1}^n{t_1(X_j)},\ldots,\sum_{j=1}^n{t_k(X_j)}\right)$$
+is a sufficient statistic for $\boldsymbol{\theta}$.
+
+
+---
+
+# Invariance Principle for Sufficient Statistics
+
+## Theorem 
+Suppose $T(\vec{X})$ is sufficient for a parameter $\theta$, and let $u$ be a one-to-one function. Then $T^*(\vec X) = u(T(\vec{X}))$ is also sufficient for $\theta$.
+
+\enter
+\enter
+
+**Proof:** Since $u$ is one-to-one, $u^{-1}$ exists as a function and $T(\vec X) = u^{-1}(T^*(\vec{X}))$  Then by the Factorization Theorem there exists $g$ and $h$ such that
+$$
+f(\vec x \mid \theta) = g(T(\vec x) \mid \theta) \ h(\vec x) = g(u^{-1} (T^*(\vec x)) \mid \theta) \ h(\vec x) = g^*(T^*(\vec x) \mid \theta) \ h(\vec x)
+$$
+where $g^*(t \mid \theta) = g(u^{-1} (t) \mid \theta)$. Again from the Factorization theorem this shows that $T^*(\vec X)$ is also sufficient for $\theta$.
+
+
+---
+
+# Sufficient Statistics are NOT unique
+
+-  Based on the Invariance Principle, we see that sufficient statistics are not unique.
+
+\enter 
+
+-  Note that the sample itself, i.e., $T(\vec{X})=\vec{X}$, is a sufficient statistic. So are the order statistics $T(\vec X) = \left( X_{(1)}, \dots, X_{(n)} \right)$.
+
+\enter
+
+-  Question: Is one sufficient statistic better than another?
+
+\enter
+
+-  Recall that the purpose of sufficient statistics is to achieve data reduction without loss of information about the parameter $\theta$.
+
+\enter
+
+-  A statistic that achieves the most data reduction while still retaining all the information about $\theta$ might be preferable.
+
+
+---
+
+# Minimal Sufficient Statistic
+
+**Definition:** A sufficient statistic $T(\vec{X})$ is called a \textbf{minimal sufficient statistic} if, for any other sufficient statistic $T'(\vec{X})$, $T(\vec{x})$ is a function of $T'(\vec{x})$, i.e., whenever $T'(\vec{x})=T'(\vec{y})$, then $T(\vec{x})=T(\vec{y})$.
+
+
+Among all sufficient statistics, a minimal sufficient statistic achieves the greatest possible data reduction.
+
+
+\enter
+
+**Example:** Suppose that $\rs$ are $\operatorname{iid~N}{(\mu,\sigma^2)}$, with $\sigma$ known.
+
+We have seen that $T(\vec{X})=\overline{X}$ is sufficient for $\mu$.
+
+We can also show that the statistic $T'(\vec{X})=(\overline{X},S^2)$ is sufficient for $\mu$.
+
+Since both $T(\vec{X})$ and $T'(\vec{X})$ are sufficient for $\mu$, they each contain the same information about $\mu$.  But clearly $T(\vec{X})$ achieves greater data reduction than $T'(\vec{X})$.
+
+If $\sigma$ were unknown, however, things would be different.
+
+---
+
+# Checking for Minimal Sufficiency
+
+## Theorem 6.2.13
+
+Let $f(\vec{x} \mid \theta)$ be the pdf/pmf of a sample $\vec{X}$. Suppose there exists a function $T(\vec{X})$ such that, for every $\vec{x}$ and $\vec{y}$, the ratio
+$$\frac{f(\vec{x} \mid \theta)}{f(\vec{y} \mid \theta)}$$
+is constant as a function of $\theta$ if and only if $T(\vec{x}) = T(\vec{y})$. Then $T(\vec{X})$ is a minimal sufficient statistic for $\theta$.
+
+\enter
+
+**Proof:** To simplify proof assume $f(x \mid \theta) > 0$ for all $x \in \X$ and $\theta$.
+
+\enter
+
+**$T(\vec X)$ is sufficient:**  Let $\mathcal{T} = \{t: t = T(\vec x) \text{ for some } \vec x \in \X \}$ be the image of $\X$ under $T(\vec x)$. 
+
+Define the partition set $A_t = \{\vec x: T(\vec x) = t\}$, and choose and fix $\vec x_t \in A_t$ for each $t$. 
+
+For any $\vec x \in \X$, $\vec x_{T(\vec x)}$ is the fixed element that is in the same set, $A_t$, as $\vec x$. Since both $\vec x \in A_t$ and $\vec x_{T(\vec x)} \in A_t$, so $T(\vec x) = T(\vec x_{T(\vec x)})$, and hence $h(\vec x) = f(\vec x \mid \theta)/f(\vec x_{T(\vec x)} \mid \theta)$ is a constant function of $\theta$. 
+
+
+---
+
+
+Define $g(t \mid \theta) = f(\vec x_t \mid \theta)$. Then 
+$$
+f(\vec x \mid \theta) = \frac{f(\vec x_{T(\vec x)} \mid \theta) \ f(\vec x \mid \theta)}{f(\vec x_{T(\vec x)} \mid \theta)} = g(T(\vec x) \mid \theta) \ h(\vec x)
+$$
+which implies sufficiency of $T(\vec X)$ by the Factorization Theorem. 
+
+\enter
+
+
+**$T(\vec X)$ is minimal:** Let $T'(X)$ be any other sufficient statistic. By the Factorization Theorem, there exist functions $g'$ and $h'$ such that $f(\vec x \mid \theta) = g'(T'(\vec x) \mid \theta) \ h'(\vec x)$. Let $x$ and $y$ be two sample points with $T'(\vec x) = T'(\vec y)$. Then
+$$
+\frac{f(\vec x \mid \theta)}{f(\vec y \mid \theta)} = \frac{g'(T'(\vec x) \mid \theta) \ h'(\vec x)}{g'(T'(\vec y) \mid \theta) \ h'(\vec y)} = \frac{h'(\vec x)}{h'(\vec y)}
+$$
+Since this ratio does not depend on $\theta$ from the assertion of the theorem, we have $T(\vec x) = T(\vec y)$. So, $T(\vec x)$ is a function of $T'(\vec x)$ and $T(\vec x)$ is a minimal sufficient statistic.
+
+
+
+---
+
+**Example:** Let $\rs$ be $\operatorname{iid~N}{(\mu,\sigma^2)}$, with both $\mu$ and $\sigma^2$ unknown. Given a sample $\vec X$ we saw that $(\bar X, S^2)$ is sufficient for $(\mu, \sigma^2)$. To show that $(\bar X, S^2)$ is minimal sufficient, consider two sample points $\vec x$ and $\vec y$ with sample mean and variances $(\bar x, s_x^2)$ and $(\bar x, s_x^2)$ respectively.  Then
+$$
+\begin{aligned}
+\frac{f(\vec x \mid \mu, \sigma^2)}{f(\vec y \mid \mu, \sigma^2)} &= \frac{(2\pi\sigma^2)^{-n/2} \exp\left( -[n(\bar x - \mu)^2 + (n-1)s_x^2]/(2\sigma^2) \right)}{(2\pi\sigma^2)^{-n/2} \exp\left( -[n(\bar y - \mu)^2 + (n-1)s_y^2]/(2\sigma^2) \right)} = \frac{h'(\vec x)}{h'(\vec y)} \\
+&= \exp\left([-n(\bar x^2 - \bar y^2) + 2n\mu (\bar x - \bar y) - (n-1) (s_x^2 - s_y^2) ] /(2\sigma^2) \right)
+\end{aligned}
+$$
+is constant as a function of $(\mu, \sigma^2)$ if and only if $\bar x = \bar y$ and $s_x^2 = s_y^2$. 
+
+
+---
+
+**Example:** Let $\rs$ be $\operatorname{iid~beta}{(\alpha,\beta)}$. Show that
+$\ds \left(\sum_{i=1}^n{\log{X_i}},\sum_{i=1}^n{\log{(1-X_i)}}\right)$
+is a minimal sufficient statistic for $(\alpha,\beta)$.
+
+\enter
+
+Verify sufficiency using Factorization Theorem:
+$$
+\begin{aligned}
+f(\vec x \mid \alpha, \beta) 
+&= \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha) \ \Gamma(\beta)} \prod_{i=1}^n \left\{x_i^{\alpha-1} (1 - x_i)^{\beta-1} \right\}\\ 
+&= \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha) \ \Gamma(\beta)} \ \exp\left[ (\alpha-1) \sum_{i=1}^n \log x_i + (\beta-1) \sum_{i=1}^n \log(1-x_i) \right] \times 1 \\
+&= g\left(\sum_{i=1}^n \log x_i, \sum_{i=1}^n{\log{(1-x_i)}} \mid \alpha, \beta \right) \ h(\vec x)
+\end{aligned}
+$$
+
+---
+
+Show minimal sufficiency:
+$$
+\begin{aligned}
+\frac{f(\vec x \mid \alpha, \beta)}{f(\vec y \mid \alpha, \beta)} 
+&= \frac{\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha) \ \Gamma(\beta)} \exp\left[ (\alpha-1) \sum_{i=1}^n \log x_i + (\beta-1) \sum_{i=1}^n \log(1-x_i) \right]}
+{\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha) \ \Gamma(\beta)} \exp\left[ (\alpha-1) \sum_{i=1}^n \log y_i + (\beta-1) \sum_{i=1}^n \log(1-y_i) \right]} \\ 
+&= \exp\left[ (\alpha-1)\left(\sum_{i=1}^n \log x_i  - \sum_{i=1}^n \log y_i \right) \right. \\ 
+&\qquad \qquad +\left. (\beta - 1) \left(\sum_{i=1}^n \log (1-x_i)  - \sum_{i=1}^n \log (1-y_i) \right) \right].
+\end{aligned}
+$$
+This is constant in $(\alpha, \beta)$ if and only if $\sum_{i=1}^n \log x_i  = \sum_{i=1}^n \log y_i$ and $\sum_{i=1}^n \log (1-x_i) = \sum_{i=1}^n \log (1-y_i)$.
+
+---
+
+# Invariance Principle for Minimal Sufficient Statistics
+
+
+## Theorem
+Suppose $T(\mathbf{X})$ is a minimal sufficient statistic for a parameter $\theta$, and let $u$ be a one-to-one function. Then $T^*(\mathbf{X}) = u(T(\mathbf{X}))$ is also a minimal sufficient statistic for $\theta$.
+
+\enter
+
+Example: $\ds{\left(\sum_{i=1}^n{X_i},\sum_{i=1}^n{X_i^2}\right)}$ is a minimal sufficient statistic for $(\mu,\sigma^2)$.
+
+
+---
+
+# Homework
+
+
+- Convergence: Read p. $235-240$ Exercises 5.33, 5.34, 5.39b, 5.41.
+
+
+- Sufficiency: Read p. $271 - 274$.

@@ -14,7 +14,7 @@ output:
 header-includes:
   - \usepackage{bm}
 bibliography: references.bib
-fontsize: 11pt
+fontsize: 10pt
 editor_options: 
   markdown: 
     wrap: 80
@@ -38,7 +38,27 @@ knitr::opts_chunk$set(echo = FALSE)
 \newcommand{\var}{\on{Var}}
 <!-- \renewcommand{\vec}[1]{{\underaccent{\tilde}{#1}}} -->
 \renewcommand{\vec}{\underline}
+\newcommand{\asim}{\stackrel{a}{\sim}}
 
+
+# AGENDA
+
+- almost sure convergence & SLLN
+
+\enter
+
+- convergence in distribution
+
+\enter
+
+- central limit theorem
+
+\enter
+
+- sufficiency
+
+
+---
 
 # Review: Convergence of random variables
 
@@ -118,8 +138,12 @@ $X_5(s)=s+I_{[1/3,2/3]}(s)$ && $X_6(s)=s+I_{[2/3,1]}(s)$,\\
 and so on, and let $X(s)=s$. Show that this sequence converges in probability,
 but not almost surely. For any $\varepsilon> 0$
 
+\enter
+
 $P\left(|X_n-X|\geq\varepsilon\right) = P(\text{interval whose length is going to zero})$
 $\to 0$.
+
+\enter
 
 For every $s$ the value $X_n(s)$ alternates between $s$ and $s + 1$ infinitely
 often. For example, if $s = 3/8$, $X_1(s) = 11/8$ , $X_2(s) = 11/8$,
@@ -179,7 +203,7 @@ $$
 
 ---
 
-# Convergence in Distribution
+# Convergence in Distribution (or in Law)
 
 **Definition:** A sequence of random variables $X_1,X_2,\ldots$ **converges in distribution** to a random variable $X$ if 
 $$
@@ -192,7 +216,7 @@ $$
 
 ## Note
 
-This definition is actually about the cdfs of the random variables converge and not the random variables themselves.
+The definition is actually about the cdfs of the random variables and not the random variables themselves.
 
 <!-- - This is the weakest form of convergence of random variables.  -->
 
@@ -202,6 +226,8 @@ This definition is actually about the cdfs of the random variables converge and 
 
 **Example:** Let $X_1,X_2,\ldots$ be a sequence of continuous random variables with cdf given by $$F_{X_n}(x)=1-\left(1-\frac{x}{n}\right)^n \text{ for } 0 < x \leq n.$$
 Then For $x > 0$, $F_{X_n}(x) = 1-\left(1-\frac{x}{n}\right)^n \to 1 - e^{-x} =: F(x)$ as $n \to \infty$. Note that $F(x)$ is the cdf of Exponential(1) distribution, i.e., $X_n \xrightarrow{d} \on{Exponential}(\lambda = 1)$.
+
+\enter
 
 \enter
 
@@ -220,9 +246,16 @@ F_{V_n}(v) &= F_{X_n}(nv) \\
 &= \left[\left(1 - \frac{1}{1+nv}\right)^{nv}\right]^{1/v} \to e^{-1/v} \text{ for } v > 0 
 \end{aligned}
 $$
+
+\enter
+
 Since $F(v) = e^{-1/v} I(v > 0)$ is a cdf (verify), so $V_n$ converges in distribution to $V \sim F$. 
 
-**NOTE:** $F$ is the cdf of the inverse-Gamma($\alpha = 1$, $\beta = 1$) distribution. 
+
+\enter
+
+
+**NOTE:** $F$ is the cdf of the inverse-Gamma($\alpha = 1$, $\beta = 1$) distribution (verify)
 
 ---
 
@@ -278,13 +311,13 @@ The sequence of random variables $X_1,X_2,\ldots$ converges in probability to a 
 $$P\left(|X_n-\mu| > \epsilon \right) \longrightarrow0 \qquad \text{for every } \epsilon>0$$
 is equivalent to 
 $$	
-P(X_n\leq x)\longrightarrow\begin{cases}0&\text{if }x<\mu\\1&\text{if }x>\mu.\end{cases}
+P(X_n\leq x)\longrightarrow\begin{cases}0&\text{if }x<\mu\\1&\text{if }x\geq\mu.\end{cases}
 $$
 
 ---
 
 
-# Central Limit Theorem
+# Central Limit Theorem (CLT)
 
 ## Theorem 5.5.14
 Let $X_1,X_2,\ldots$ be a sequence of $\operatorname{iid}$ random variables whose mgfs exist in a neighborhood of $0$ (that is, $M_{X_i}(t)$ exists for $|t|<h$, for some positive $h$). Let $\E{(X_i})=\mu$ and $\var{(X_i)}=\sigma^2>0$ (both $\mu$ and $\sigma^2$ must be finite since the mgf exists).
@@ -306,6 +339,11 @@ $$\ds{Z_n = \frac{ \sqrt{n}(\overline{X}_n - \mu) }{\sigma} \xrightarrow{d} Z \s
 
 \enter
 
+
+- The CLT is often expressed as $\overline{X}_n \asim \on{N} \left(\mu, \frac{\sigma^2}{n}\right)$, where  $\asim$ means "approximately distributed as". 
+
+\enter
+
 - Note that no assumption on the distribution of $X_i$ is being made, only requirement is that they are iid and the mgf exists. Existence of mgf can be relaxed by just assuming $\var(X_1) = \sigma^2 < \infty$ (next theorem).
 
 \enter
@@ -317,18 +355,37 @@ $$\ds{Z_n = \frac{ \sqrt{n}(\overline{X}_n - \mu) }{\sigma} \xrightarrow{d} Z \s
 - DOES NOT hold in general if the regularity conditions are not satisfied. Example: $X_1, X_2, \dots \sim \on{iid~Cauchy}(0, 1)$. Then $\sum_{i=1}^n X_i \sim \on{Cauchy}(0, n)$ (see Example 5.2.10 in CB 2E; discussed last semester) and $\bar X_n = \frac{1}{n} \sum_{i=1}^n X_i \sim \on{Cauchy}(0, 1)$.
 
 
+\enter
+
+- Even if holds, how good the approximation is for a given $n$ must be checked case by case basis.
+
+\enter
+
+- The CLT specifies an asymptotic distribution of $\bar X_n$; it does NOT say anything about asymptotic distribution of a single random variable $X_n$.
+
+---
+
+**Example: de Moivre–Laplace CLT**  Let $S_n \sim \on{Binomial}(n, p)$ for some $0<p<1$. (In practice this means $p$ is neither too small nor too large.) Then as $n \to \infty$, $\ds \frac{S_n - np}{\sqrt{np(1-p)}} \xrightarrow{d} N(0, 1)$, or written alternatively, $S_n \asim N(np, np(1-p))$.
+
+
+\enter
+
+\enter
+
+To prove this, write $S_n = \sum_{i=1}^n X_i$ where $X_i \sim \on{iid~Bernoulli}(p)$. $\E(X_i) = p$, $\var(X_i) = p(1-p)$. Then use CLT on $\bar X_n = S_n/n$.
+
 ---
 
 
-**Proof of Theorem 5.5.14.** Using Taylor's series on the mgf. Define $Y_i = (X_i - \mu)/\sigma$,  $M_Y(t)$ = common mgf of the $Y_i$s which exists for $|t|  < \sigma h$. Then
+**Proof of Theorem 5.5.14.** Using Taylor's expansion on the mgf. Define $Y_i = (X_i - \mu)/\sigma$,  $M_Y(t)$ = common mgf of the $Y_i$s which exists for $|t|  < \sigma h$. Then
 $$
 \begin{aligned}
 M_{\sqrt{n}(\bar X_n - \mu)/\sigma}(t) &= M_{\sum_{i=1}^n Y_i/\sqrt{n}}(t) \\ 
-&=  \E\left( e^{\frac{(\sum_{i=1}^n Y_i)}{\sqrt{n}}\ t} \right) \\
+&=  \E\left( e^{\frac{\sum_{i=1}^n Y_i}{\sqrt{n}}\ t} \right) \\
 &= \left[\E\left( e^{ Y_1 \left(\frac{t}{\sqrt{n}}\right)} \right) \right] = \left[M_Y\left(\frac{t}{\sqrt{n}}\right)\right]^n
 \end{aligned}
 $$
-Consider a Taylor series expansion of $M_Y(s)$ around 0. 
+Consider a Taylor  expansion of $M_Y(s)$ around 0. 
 <!-- \sum_{k = 0}^\infty M_Y^{(k)} (0) \frac{(t/\sqrt{n})^k}{k!} = -->
 $$
 M_Y(s) = M_Y(0) + M_Y^{(1)} (0) \frac{s}{1!} + M_Y^{(2)} (0) \frac{s^2}{2!} + R_n(s) \frac{s^2}{2!} 
@@ -371,7 +428,7 @@ $$\lim_{n\to\infty}{G_n(x)}=\int_{-\infty}^x{\frac{1}{\sqrt{2\pi}}e^{-y^2/2}\,dy
 In other words,
 $$\ds{Z_n = \frac{ \sqrt{n}(\overline{X}_n - \mu) }{\sigma} \xrightarrow{d}  \operatorname{N}(0,1)} .$$
 
-**Proof** Exactly similar to Theorem 5.5.15, but uses characteristic function ($\phi(t) := E(e^{it})$) instead of mgf. Omitted.
+**Proof** Exactly similar to Theorem 5.5.15, but uses characteristic function ($\phi_X(t) := E(e^{itX})$) instead of mgf. Omitted.
 
 ---
 
@@ -401,7 +458,7 @@ $\ds\frac{\sqrt{n}(\overline{X}_n-\mu)}{S_n}\xrightarrow{d}\operatorname{N}{(0,1
 **Proof.** Relies on two facts:
 (a) $S_n^2\xrightarrow{P}\sigma^2$ as long as $\var{(S_n^2)}\to0$ (Lecture 1); and
 
-(b) $\ds{\frac{\sigma}{S_n}\xrightarrow{P}1}$ (see Exercise $5.32$)
+(b) $\ds{\frac{\sigma}{S_n}\xrightarrow{P}1}$ (Exercise $5.32$; homework)
 
 ---
 
@@ -416,14 +473,73 @@ $\ds\frac{\sqrt{n}(\overline{X}_n-\mu)}{S_n}\xrightarrow{d}\operatorname{N}{(0,1
 - the equivariance principle, another method that preserves important features of the data (section $6.4$).
 
 
-**Notation:**  Underline $\vec{X}$ for the entire sample, i.e., $\vec{X} = (X_1, \dots, X_n)$, $\vec{x} = (x_1, \dots, x_n)$, $T(\vec{X}) = T(X_1, \dots, X_n)$, $T(\vec{x}) = T(x_1, \dots, x_n)$, $T(\vec{X})$, etc. 
+**Notation:** We will use $\vec{X}$ and $\vec{x}$ to denote the entire sample, i.e., $\vec{X} = (X_1, \dots, X_n)$, $\vec{x} = (x_1, \dots, x_n)$, $T(\vec{X}) = T(X_1, \dots, X_n)$, $T(\vec{x}) = T(x_1, \dots, x_n)$, etc. 
 
 ---
 
 # Sufficiency
 
 
+- A sufficient statistic for a parameter $\theta$ is a statistic that in a sense captures all information about $\theta$ contained in the sample.
 
+- If $T(\vec{X})$ is a sufficient statistic for $\theta$, then any inference about $\theta$ should depend on the sample $\vec{X}$ only through the value $T(\vec{X})$. That is, if $\vec{x}$ and $\vec{y}$ are two sample points such that $T(\vec{x})=T(\vec{y})$, then the inference about $\theta$ should be the same whether $\vec{X}=\vec{x}$ or $\vec{X}=\vec{y}$ is observed.
+
+
+
+\enter
+
+**Definition:** A statistic $T(\vec{X})$ is a \textbf{sufficient statistic} for $\theta$ if the conditional distribution of the sample $\vec{X}$ given that $T(\vec{X})=t$ does not depend on $\theta$.
+
+
+
+\enter 
+
+To use this definition we must show (in the discrete sense) that
+$$P_{\theta}(\vec{X}=\vec{x} \mid T(\vec{X})=t)=P(\vec{X}=\vec{x} \mid T(\vec{X})=t),$$
+i.e., no dependence on $\theta$ (need discrete assumptions here).
+
+---
+
+# Checking for Sufficiency
+
+
+## Theorem 6.2.2
+If $p(\vec{x} \mid \theta)$ is the joint pdf or pmf of $\vec{X}$ and $q(t \mid \theta)$ is the pdf or pmf of $T(\vec{X})$, then $T(\vec{X})$ is a sufficient statistic for $\theta$ if, for every $\vec{x}$ in the sample space, the ratio
+$$\frac{p(\vec{x} \mid \theta)}{q(T(\vec{x}) \mid \theta)}$$
+is constant as a function of $\theta$.
+
+\enter
+\enter
+
+
+**Proof:** Let $\vec{X}$ be discrete. We'll show that $P_{\theta}(\vec{X}=\vec{x} \mid T(\vec{X})=t)$ does not depend on $\theta$. 
+
+$$
+\begin{aligned}
+P_\theta (\vec{X}=\vec{x} \mid T(\vec{X})=t) 
+&= \frac{P_\theta (\vec{X}=\vec{x} \text{ and } T(\vec{X})=t) }{ P_\theta(T(\vec{X}) = t) } \\
+&= \frac{P_\theta (\vec{X}=\vec{x}) }{ P_\theta(T(\vec{X}) = t) } = \frac{p(\vec{x} \mid \theta)}{q(T(\vec{x}) \mid \theta)}.
+\end{aligned}
+$$
+The RHS is constant as a function of $\theta$ by assumption. 
+
+---
+
+**Example**  Let $\rs$ be $\operatorname{iid}$ Bernoulli random variables with parameter $\theta$, $0< \theta <1$. Show that
+$\ds T(\vec{X})=\sum_{i=1}^n{X_i}$ is sufficient for $\theta$.
+
+\enter 
+
+We'll verify that the previous theorem holds. Note on the outset that $T(\vec{X})=\sum_{i=1}^n{X_i} \sim \on{Binomial}(n, \theta)$ (verify using mgf). Write $T(\vec{x}) = \sum_{i=1}^n x_i = t$. Then
+
+$$
+\begin{aligned}
+\frac{p(\vec{x} \mid \theta)}{q(t \mid \theta)} 
+&= \frac{\prod_{i=1}^n \theta^{x_i}\ (1-\theta)^{1-x_i}}{\binom{n}{t} \ \theta^t \ (1-\theta)^{n-t}} \\
+&= \frac{\theta^t \ (1-\theta)^{n-t}}{\binom{n}{t} \ \theta^t \ (1-\theta)^{n-t}} = \frac{1}{\binom{n}{t}}
+\end{aligned}
+$$
+and the RHS is free of $\theta$.
 
 
 
@@ -432,5 +548,7 @@ $\ds\frac{\sqrt{n}(\overline{X}_n-\mu)}{S_n}\xrightarrow{d}\operatorname{N}{(0,1
 # Homework
 
 
-- Read pp. $236-240$ (convergence concepts).\vfill
--
+- Convergence: Read p. $235-240$ Exercises 5.33, 5.34, 5.39b, 5.41.
+
+
+- Sufficiency: Read p. $271 - 274$.

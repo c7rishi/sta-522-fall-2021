@@ -1,0 +1,211 @@
+---
+title: "STA 522/Solutions to Homework 1"
+author: ""
+date: ""
+output: pdf_document
+---
+
+\newcommand{\rs}{X_1,X_2,\dots,X_n}
+\newcommand{\on}{\operatorname}
+\newcommand{\enter}{\vspace{0.1in}}
+\newcommand{\ds}{\displaystyle}
+\renewcommand{\bar}{\overline}
+\newcommand{\N}{\text{N}}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Ss}{\mathcal{S}}
+\newcommand{\E}{\on{E}}
+\newcommand{\var}{\on{Var}}
+<!-- \renewcommand{\vec}[1]{{\underaccent{\tilde}{#1}}} -->
+\renewcommand{\vec}{\underline}
+\newcommand{\asim}{\stackrel{a}{\sim}}
+
+
+# Problem 5.22
+
+From a theorem discussed in class it follows that the pdf of $Z = \min\{X, Y\}$ is given by
+$$
+f_Z(z) = \frac{2!}{(2-1)!} \ \phi(z) \ \left[1-\Phi(z)\right]^{2-1} = 2  \ \phi(z) \ \left[1-\Phi(z)\right], \ \ -\infty < z < \infty
+$$
+where $\phi(z)$ and $\Phi(z)$  denote the pdf and cdf of the standard normal distribution respectively. Note that for any $-\infty < x < \infty$, 
+$$\Phi(x) = P(X \leq x) = P(-X \geq -x) = 1 - P(-X < -x) = 1 - \Phi(-x)$$ where the last equality follows from the fact that $X \sim \N(0, 1)  \implies -X \sim \N(0, 1)$. 
+
+
+Now consider the transformation $U = g(Z) = Z^2$. The support of $U$ is $(0, \infty)$. The inverse transformations are $h_1(u) = \sqrt{u}$ on $(0, \infty)$, and  $h_2(u) = -\sqrt{u}$  on $(-\infty, 0)$ with  derivatives (Jacobian of transformation) being $\frac{1}{2\sqrt{u}}$ and $-\frac{1}{2\sqrt{u}}$ respectively. 
+
+
+Therefore the pdf of $U = Z^2$ is given by:
+$$
+\begin{aligned}
+f_U(u) &= 2 \left\{ \phi(\sqrt{u}) \left[1-\Phi(\sqrt{u})\right] \ \left|\frac{1}{2\sqrt{u}}\right| + \phi(-\sqrt{u}) \left[1-\Phi(-\sqrt{u})\right] \ \left|-\frac{1}{2\sqrt{u}}\right|\right\} \\
+&\overset{(*)}{=} 2 \left\{ \phi(\sqrt{u}) \left[1-\Phi(\sqrt{u})\right] \ \frac{1}{2\sqrt{u}} + \phi(\sqrt{u}) \left[\Phi(\sqrt{u})\right] \ \frac{1}{2\sqrt{u}}\right\}  \\
+&= 2 \ \phi(\sqrt{u}) \ \frac{1}{2\sqrt{u}} \ [1 - \Phi(\sqrt{u}) + \Phi(\sqrt{u})] \\
+&= \frac{1}{\sqrt{2\pi}} \ e^{-u/2} \ u^{1/2 - 1}; \ \ 0 < u < \infty 
+\end{aligned}  
+$$
+where $(*)$ follows from the fact that $\phi(\cdot)$ is an even function and that $\Phi(\sqrt{u}) + \Phi(-\sqrt{u}) = 1$ (proved above). The functional form of $f_U(u)$ suggests that $U \sim \chi^2_1$.
+
+
+# Problem 5.26
+
+**Part (a):** By assumption $X_i$'s are continuous, and $-\infty < u < v < \infty$.  Consider the partition $A_1 = (-\infty, u]$, $A_2 = (u, v]$ and $A_3 = (v, \infty)$. Each $X_i$ can lie on exactly one of $A_1, A_2$ and $A_3$ with 
+$$
+\begin{aligned}
+P_X(A_1) := P(X_i \in A_1) &= P(-\infty < X_i \leq u) = F_X(u) \\
+P_X(A_1) := P(X_i \in A_2) &= P(u < X_i \leq v) = F_X(v) - F_X(u) \\
+P_X(A_3) := P(X_i \in A_3) &= P(v < X_i < \infty) = 1 - F_X(v)
+\end{aligned}
+$$
+Since $A_1$, $A_2$ and $A_3$ forms a partition of the real line, $P_X(A_1) + P_X(A_2) + P_X(A_3) = 1$.
+
+
+Now associate with each $X_i$  a multinomial trial with 3 possible outcomes: outcome-1, outcome-2 and outcome-3, with outcome-$j$ occurring if $X_i \in A_j$,  with probability $P(X_i \in A_i)$; $j = 1, 2, 3$. Then $\rs$ collectively produce a sequence of $n$ independent multinomial trials, with $U$, $V$, and $n - U - V$  measuring the counts/numbers of trials resulting in outcome 1, 2 and 3 respectively. Consequently, 
+$$
+\begin{aligned}
+(U, V, n-U-V) &\sim \on{Multinomial}(n; P_X(A_1), P_X(A_2), P_X(A_3))\\ 
+&\equiv \on{Multinomial}(n; F_X(u), F_X(v) - F_X(u), 1-F_X(v))
+\end{aligned}
+$$
+
+
+**Part (b):** Note on the outset that $U$ = $\sum_{k=1}^n I(X_k \leq u)$ (= number of $k$'s such that $X_k \leq u$) and $V = \sum_{k=1}^n I(u < X_k \leq v)$. Hence,
+$$
+U + V = \sum_{k=1}^n [I(X_k \leq u) +  I(u < X_k \leq v)] = \sum_{k=1}^n I(X_k \leq v)  
+$$
+i.e., $U+V$ is the number of $k$'s such that $X_k \leq v$. Consequently, 
+$$
+\begin{aligned}
+\{X_{(i)} \leq u, X_{(j)} \leq v\} 
+&= \{
+\text{out of the } n \ X_k'\text{s at least }i \text{ are} 
+\leq u,\  \text{\underline{and} at least }j \text{ are} 
+\leq v
+\} \\
+&= \{
+\text{the no. of } k's \text{ such that} \ \{X_k \leq u\} \text{ is } \geq i, \\
+&\qquad \quad
+\  \text{\underline{and} the no. of } k's \text{ such that} \ \{X_k \leq v\} \text{ is } \geq j \} \\
+&= \{U \geq i,\ U+V \geq j\}
+\end{aligned}
+$$
+This implies
+$$
+\begin{aligned}
+P\left(X_{(i)} \leq u, X_{(j)} \leq v\right) 
+&= P\left(U \geq i,\ U+V \geq j\right) \\
+&\stackrel{(*)}{=} P\left(U \geq i,\ U+V \geq j,\ U < j\right) + 
+P\left(U \geq i,\ U+V \geq j,\ U \geq j\right) \\
+&\stackrel{(**)}{=} P(i \leq U < j, \ U + V \geq j) + P(U \geq j) \\
+&= \sum_{k=i}^{j-1} \sum_{m=j-k}^{n-k} P(U = k, V = m) + P(U \geq j) \\
+&= \sum_{k=i}^{j-1} \sum_{m=j-k}^{n-k} \frac{n!}{k!\ m! \ (n-k-m)!} \ [F_X(u)]^k \ [F_X(v) - F_X(u)]^m [1-F_X(v)]^{n-k-m} \\
+&\qquad \qquad \qquad + P(U \geq j)
+\end{aligned}
+$$
+where $(*)$ is due to the theorem of total probability and $(**)$ follows from the fact that $\{U \geq j\} \subseteq \{U \geq i\}$ and $\{U \geq j\} \subseteq \{U + V \geq j\}$ which implies $\{U \geq i\} \cap \{U + V \geq j\} \cap \{U \geq j\} = \{U \geq j\}$. 
+
+
+
+# Problem 5.32
+
+
+**Part (a.1):** Fix $\epsilon > 0$. 
+$$
+\begin{aligned}
+P(\left|Y_n - \sqrt{a}\right| > \epsilon) 
+&= P(\left|\sqrt{X_n} - \sqrt{a}\right| > \epsilon) \\
+&= P(\left|\sqrt{X_n} - \sqrt{a}\right|  \left|\sqrt{X_n} + \sqrt{a}\right|  > \epsilon \left|\sqrt{X_n} + \sqrt{a}\right|) \\
+&=P(|X_n - a | > \epsilon \left|\sqrt{X_n} + \sqrt{a}\right|) \\
+&\stackrel{(*)}{=} P(|X_n - a | > \epsilon \left|\sqrt{X_n} + \sqrt{a}\right|, X_n > 0) \\
+&\leq P(|X_n - a | > \epsilon\ \sqrt{a}) \to 0 
+\end{aligned}
+$$
+as $n \to \infty$, since $X_n \xrightarrow{P} a$, where $(*)$ follows from the fact that for any set $A$, $P(A) = P(A \cap B)$ if $P(B) = 1$. This means $Y_n = \sqrt{X_n} \xrightarrow{P} \sqrt{a}$.
+
+
+**Part (a.2):** Fix $0 < \epsilon < 1$. 
+$$
+\begin{aligned}
+P\left(\left|\frac{a}{X_n} - 1\right| < \epsilon \right) 
+&= P\left(1 - \epsilon < \frac{a}{X_n} < 1 + \epsilon \right) \\
+&= P\left(\frac{a}{1 + \epsilon} < X_n < \frac{a}{1 - \epsilon} \right) \\
+&= P\left(\frac{a}{1 + \epsilon} - a < X_n - a < \frac{a}{1 - \epsilon} - a \right) \\
+&= P\left(-\frac{a \epsilon}{1 + \epsilon} < X_n - a < \frac{a\epsilon}{1 - \epsilon} \right) \\
+&\geq P\left(-\frac{a \epsilon}{1 + \epsilon} < X_n - a < \frac{a\epsilon}{1 + \epsilon} \right)  \qquad \left( \frac{a\epsilon}{1 + \epsilon} < \frac{a\epsilon}{1 - \epsilon} \right) \\
+&= P\left( |X_n - a| < \frac{a\epsilon}{1 + \epsilon} \right) \to 1 
+\end{aligned}
+$$
+as $n \to \infty$ since $X_n \xrightarrow{P} a$. This means $Y_n' = \frac{a}{X_n} \xrightarrow{P} 1$.
+
+
+
+**Part (b):** Given $S_n^2 \xrightarrow{P} \sigma^2$. From part a.1 we have $S_n = \sqrt{S_n^2} \xrightarrow{P} \sqrt{\sigma^2} = \sigma$, which together with part a.2 implies $\sigma/S_n \xrightarrow{P} 1$.
+
+
+# Problem 5.38
+
+<!-- Without loss of generality assume $a \geq 0$.  -->
+
+
+**Part (a):** First note that $\rs$ being iid implies $$M_{S_n}(t) = \E(e^{tS_n}) = [\E(e^{tX_1})]^n = [M_X(t)]^n.$$
+Now for $0 < t < h$
+$$
+P(S_n > a) = P(S_nt > at) = P\left(e^{S_nt} > e^{at}\right) \stackrel{(*)}{\leq} \frac{\E\left(e^{S_nt}\right)}{e^{at}} = e^{-at} \ M_{S_n}(t) = e^{-at} \ [M_X(t)]^n
+$$
+and for $-h < t < 0$
+$$
+P(S_n \leq a) = P(S_nt \geq at) = P\left(e^{S_nt} \geq e^{at} \right) \stackrel{(**)}{\leq} \frac{\E\left( e^{S_nt} \right)}{e^{at}} = e^{-at} \ M_{S_n}(t) = e^{-at} \ [M_X(t)]^n
+$$
+where both $(*)$ and $(**)$ are both due to the Chebyshev inequality  ($e^{S_nt}$ is a non-negative random variable regardless of whether $t < 0$ or $t > 0$). 
+
+
+<!-- **Part (b):** By definition -->
+<!-- $$ -->
+<!-- E(X) = M_X'(0) =  \lim_{t \to 0} \frac{M_X(t + 0) - M_X(0)}{t} = \lim_{t \to 0} \frac{M_X(t) - 1}{t} -->
+<!-- $$  -->
+<!-- First consider $P(S_n > a)$.  Due to continuity of $M_X(\cdot)$,  -->
+<!-- we can choose a $t_0 > 0$ close to $0$ such that $\ds \frac{M_X(t_0) - 1}{t_0} \leq E(X)/2$ (the derivative is negative on a small interval centered at zero). This means that -->
+<!-- $M_X(t_0) \leq 1 + t_0 E(X)/2  < 1$. Call $c = 1 + t_0 E(X)/2$. Then -->
+<!-- $$ -->
+<!-- P(S_n > a) \leq e^{-a t_0} \ [M_X(t_0)]^n \leq \underbrace{e^{-a t_0}}_{\leq 1} \ c^n \leq c^n. -->
+<!-- $$ -->
+
+<!-- Next consider $P(S_n \leq a)$.  Again due to continuity of $M_X(\cdot)$,  -->
+<!-- we can find a $t_1 < 0$ close to $0$ such that $\ds \frac{M_X(t_1) - 1}{t_1} \geq E(X)/2$ (the derivative is negative on a small interval centered at zero). -->
+<!-- For the second part, we shall consider the cases $a > 0$ and $a = 0$ separately. If $a > 0$ then take $t = -\delta_1$ where $\delta_1 = \min\{\delta_0, \frac{1}{2a}\}$ Then $M_X(\delta_1) \leq c$ and $e^{a \delta_1} \leq e^{1/2} \leq 2$ for any $a \geq 0$. Therefore, from the second inequality in part (a), -->
+<!-- $$ -->
+<!-- P(S_n \leq a) \leq e^{(-a) (-\delta_1)} \ [M_X(-\delta_1)]^n \leq \underbrace{e^{a\delta_1}}_{\leq 2} \ c^n \leq 2 c^n -->
+<!-- $$ -->
+<!-- On the other hand, if $a = 0$, then simply take $t = -\delta_0$. Then  -->
+<!-- $$ -->
+<!-- P(S_n \leq a) \leq e^{(-a) (-\delta_1)} \ [M_X(-\delta_1)]^n \leq \underbrace{e^{a\delta_1}}_{= 1} \ c^n =  c^n -->
+<!-- $$ -->
+
+**Part (c):** As suggested, for $Y_i = X_i - \mu - \epsilon$ with $\epsilon > 0$ we have $E(Y_i) = \mu - \mu - \epsilon = -\epsilon < 0$. Therefore from part (b) we have for some $0 < c_1 < 1$
+$$
+c_1^n \geq P\left(\sum_{i = 1}^n Y_i > 0 \right) = P\left(n \bar X_n - n\mu -n \epsilon > 0\right) = P\left(\bar X_n - \mu > \epsilon\right)
+$$
+**Part (d):** For $Y_i = -X_i + \mu - \epsilon$, $E(Y_i) = -\epsilon < 0$. Therefore, from part (b) we have for some $0 < c_2 < 1$
+$$
+c_2^n \geq  P\left(\sum_{i = 1}^n Y_i > 0 \right)  = P\left(-n \bar X_n + n\mu - n \epsilon > 0\right) = P\left( \bar X_n  - \mu < -\epsilon \right)
+$$
+Therefore from part (c) 
+$$
+P\left( \left|\bar X_n  - \mu\right| > \epsilon \right) = P\left( \bar X_n  - \mu > \epsilon \right) + P\left( \bar X_n  - \mu < -\epsilon \right) \leq c_1^n + c_2^n \leq c^n + c^n = 2 c^n 
+$$
+where $c = \max\{c_1, c_2\}$ so that $0 < c < 1$. 
+
+
+
+# Problem 5.39 (part a)
+
+Let $X$ and $X_1, X_2, \dots$ be random variables with $X_n \xrightarrow{P} X$. Fix $\epsilon > 0$. As suggested in the hint, due to continuity of $h$ we can find a $\delta = \delta(\epsilon) > 0$ such that 
+$$
+|x_n - x| < \delta \implies |h(x_n) - h(x)| < \epsilon
+$$
+This means
+$$
+P(|h(X_n) - h(X) | < \epsilon) \geq P(|X_n - h(X)| < \delta) \to 1
+$$
+as $n \to \infty$ (the limit is due to the in probability convergence of $X_n$). This means that $h(X_n) \xrightarrow{P} h(X)$. 
+
+
