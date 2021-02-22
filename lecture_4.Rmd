@@ -1,0 +1,531 @@
+---
+title: |
+  | STA 522, Spring 2021  
+  | Introduction to Theoretical Statistics II
+author: | 
+  | Lecture 4
+  | 
+  | Department of Biostatistics
+  | University at Buffalo 
+date: "22 February, 2021"
+output: 
+  beamer_presentation:
+    toc: false
+header-includes:
+  - \usepackage{bm}
+bibliography: references.bib
+fontsize: 10pt
+editor_options: 
+  markdown: 
+    wrap: 80
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+\newcommand{\rs}{X_1,X_2,\dots,X_n}
+\newcommand{\on}{\operatorname}
+\newcommand{\enter}{\vspace{0.1in}}
+\newcommand{\ds}{\displaystyle}
+\renewcommand{\bar}{\overline}
+\newcommand{\N}{\text{N}}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Ss}{\mathcal{S}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\E}{\on{E}}
+\newcommand{\var}{\on{Var}}
+<!-- \renewcommand{\vec}[1]{{\underaccent{\tilde}{#1}}} -->
+\renewcommand{\vec}{\underline}
+\newcommand{\asim}{\stackrel{a}{\sim}}
+
+
+# AGENDA
+
+- Comments on Exam 1
+
+\enter
+
+- Ancillary Statistics
+
+\enter
+
+- Complete Statistics
+
+\enter
+
+- Likelihood Principle and Equivariance
+
+
+---
+
+
+
+# Review: Factorization Theorem, Minimal Sufficiency
+
+- **Factorization Theorem:** Let $f(\vec{x} \mid \theta)$ denote the joint pdf or pmf of a sample $\vec{X}$.
+A statistic $T(\vec{x})$ is a sufficient statistic for $\theta$ _if and only if_ there exist functions $g(t \mid \theta)$ and $h(\vec{x})$ such that, for all sample points $\vec{x}$ and all parameter points $\theta$,
+$$f(\vec{x} \mid \theta)=g(T(\vec{x}) \mid \theta)\cdot h(\vec{x}).$$
+
+\enter
+
+- **Finding minimal sufficient statistics:**  Let $f(\vec{x} \mid \theta)$ be the pdf/pmf of a sample $\vec{X}$. Suppose there exists a function $T(\vec{X})$ such that, for every $\vec{x}$ and $\vec{y}$, the ratio
+$$\frac{f(\vec{x} \mid \theta)}{f(\vec{y} \mid \theta)}$$
+is constant as a function of $\theta$ if and only if $T(\vec{x}) = T(\vec{y})$. Then $T(\vec{X})$ is a minimal sufficient statistic for $\theta$.
+
+
+---
+
+# Ancillary Statistics
+
+**Definition:** A statistic $S(\vec{X})$ whose distribution does not depend on the parameter $\theta$ is called an **ancillary statistic**.
+
+\enter
+\enter
+ - Alone, an ancillary statistic contains no information on the parameter $\theta$.
+
+\enter
+
+- However, when used in conjunction with other statistics, ancillary statistics sometimes do provide valuable information for inferences about $\theta$.
+
+
+---
+
+**Example (Uniform Ancillary Statistic):** Let $\rs$ be $\operatorname{iid~Uniform}{\left(\theta-\frac{1}{2},\theta+\frac{1}{2}\right)}$. We saw that $\left(X_{(1)}, X_{(n)}\right)$ is minimal sufficient for $\theta$. We will show that $R = X_{(n)} - X_{(1)}$ is ancillary for $\theta$ by showing that the pdf of $R$ doesn't depend on $\theta$.
+
+
+To this end we first find the joint pdf of $(X_{(1)}, X_{(n)})$. Note that the common pdf and cdf for each $X_i$ is:
+$$
+f(x \mid \theta) = I\left(\theta-\frac{1}{2} < x <\theta+\frac{1}{2}\right), \text{ and } 
+$$
+$$
+F(x \mid \theta) = \begin{cases}
+0 & x \leq \theta-\frac{1}{2} \\
+x - \theta + \frac{1}{2} & \theta-\frac{1}{2} < x < \theta+\frac{1}{2} \\
+1 & x \geq \theta+\frac{1}{2}
+\end{cases}
+$$
+From a result discussed in class, we have:
+$$
+\begin{aligned}
+f_{X_{(1)}, X_{(n)}}(x_1, x_n) 
+&= \frac{n!}{(1-1)!(n-1-1)!(n-n)!}\  f(x_1 \mid \theta )\ f(x_n \mid \theta) \\
+& \qquad \qquad \times \left[F(x_1 \mid \theta )\right]^{1-1} \ \left[F(x_n \mid \theta) - F(x_1 \mid \theta)\right]^{n-1-1} \\
+&\qquad \qquad \qquad \times  \left[1-F(x_n \mid \theta)\right]^{n-n} \\
+\end{aligned}
+$$
+
+---
+
+So, here 
+$$
+f_{X_{(1)}, X_{(n)}}(x_1, x_n \mid \theta) =  n(n-1) \ (x_n - x_1)^{n-2} \ I\left(\theta-\frac{1}{2} < x_1 < x_n < \theta+\frac{1}{2}\right)
+$$
+
+To find the  distribution of $R = X_{(n)} - X_{(1)}$, consider $M = (X_{(1)} + X_{(n)})/2$. The inverse transformation is $X_{(1)} = (2M - R)/2$ and $X_{(n)} = (2M + R)/2$ with Jacobian of transformation being 1. 
+
+\enter 
+
+Joint support for $(R, M)$: $\left\{(r, s): 0 < r < 1, \theta - \frac12 + \frac{r}{2} < m < \theta + \frac12 -\frac{r}{2} \right\}$. Therefore 
+
+$$
+\begin{aligned}
+f_R(r \mid \theta) &= \int_{\theta - \frac12 + \frac{r}{2}}^{\theta + \frac12 -\frac{r}{2}} n(n-1) \ r^{n-2} \ dm \\ 
+&= n(n-1) \ r^{n-2} \ (1-r); \qquad 0 < r < 1
+\end{aligned}
+$$
+This is the pdf of Beta($\alpha = n-1$, $\beta = 2$) distribution, and $f_R(r \mid \theta)$ is the same for all $\theta$. 
+
+\enter
+
+Thus the distribution of $R$ does not depend on $\theta \implies R$ is ancillary for $\theta$. 
+
+
+
+---
+
+<!-- # Example: Location Family Ancillary Statistic -->
+
+**Example (Location Family Ancillary Statistic):** Let $\rs$ be $\operatorname{iid}$ random variables from a location parameter family with cdf $F(x-\theta)$ for some $\theta\in\R$. Then $R=X_{(n)}-X_{(1)}$ is an ancillary statistic.
+
+\enter
+
+To see this, define $Z_i = X_i - \theta$. Then $Z_i$ are $\on{iid}$ with common cdf $F(x)$. The cdf of the range statistic $R$ is:
+$$
+\begin{aligned}
+F_R(r \mid \theta) &= P_\theta(R \leq r) \\ 
+&= P_\theta \left(\max_i X_i - \min_i X_i \leq r \right) \\
+&= P_\theta \left(\max_i (Z_i+\theta) - \min_i (Z_i+\theta) \leq r \right) \\
+&= P_\theta \left(\max_i Z_i - \min_i Z_i \leq r \right)
+\end{aligned}
+$$
+The last quantity does not depend on $\theta$ as the common cdf of $Z_1, \dots, Z_n$ does not depend on $\theta$.
+
+\enter
+
+Hence, $R$ is ancillary for $\theta$.
+
+
+---
+
+**Example (Scale family ancillary statistic)**  Let $\rs$ be $\operatorname{iid}$ random variables from a scale parameter family with cdf $F(x/\sigma)$ for some $\sigma > 0$. Then any statistic that depends
+on the sample only through the $n - 1$ values $X_1/X_n, \dots ,X_{n-1}/X_n$ is an ancillary statistic.
+
+\enter
+
+For example $\ds \frac{X_1 + \dots + X_n}{X_n} = \frac{X_1}{X_n} + \dots + \frac{X_{n-1}}{X_n} + 1$ is an ancillary statistic.
+
+\enter
+
+To see this, define $Z_i = X_i/\sigma$ so that $Z_i$ are iid from $F(x)$ (free of $\sigma$).
+$$
+\begin{aligned}
+F_{X_1/X_n, \dots, X_{n-1}/X_n}(y_1, \dots, y_{n-1} \mid \theta) 
+&= P_\sigma\left( X_1/X_n \leq y_1, \dots, X_{n-1}/X_n \leq y_{n-1}  \right) \\
+&= P_\sigma\left( Z_1/Z_n \leq y_1, \dots, Z_{n-1}/Z_n \leq y_{n-1}  \right)
+\end{aligned}
+$$
+
+which does not depend on $\sigma$.
+
+---
+
+## Ancillary and Minimal Sufficient Statistics
+
+- Ancillary statistic by itself does not contain any information on $\theta$ while a minimal sufficient statistic contains all information. So it may seem that ancillary and minimal sufficient statistics should be unrelated, or statistically independent. This is not necessarily the case.
+
+
+\enter
+
+\enter
+
+
+- Consider the Uniform($\theta - \frac12, \theta+\frac12$) example. Here $\theta \implies \left(R = X_{(n)} - X_{(1)}, M = (X_{(1)} + X_{(n)})/2\right)$ is  minimal sufficient for $\theta$,  but $R$ is ancillary. 
+
+---
+
+# Completeness
+
+**Definition:** Let $f(t \mid \theta)$ be a family of pdfs or pmfs for a statistic $T(\vec{X})$. The family of probability distributions is called **complete** if 
+$$
+\E_{\theta}(g(T))=0 \text{ for all } \theta 
+\implies
+P_{\theta}(g(T)=0) = 1 \text{ for all } \theta
+$$
+In this case, $T(\vec{X})$ is called a **complete statistic**.
+
+
+\enter 
+\enter
+
+## Notes
+
+-  completeness is a property of a family of distributions, not
+of a particular distribution. For example, if $X \sim \N(0, 1)$ then defining
+$g(x) = x$, we have that $E[g(X)] = E(X) = 0$, but $g(x)$ satisfies $P(g(X) = 0) = P(X = 0) = 0$ and not 1. However, this  a particular distribution and not a family of distributions. 
+
+\enter
+
+- Instead, if we consider $X \sim \N(\theta, 1)$ , $-\infty < \theta < \infty$, then we will see that no function of $X$, except one that is 0 with probability 1 for all $\theta$, satisfies $E_\theta(g(X)) = 0$ for all $\theta$.
+
+
+---
+
+
+**Example (Binomial Complete Sufficient Statistic):** Suppose that $T\sim\operatorname{Binomial}{(n,p)}$, where $0<p<1$ is an unknown parameter and $n$ is a fixed integer. Then $T$ is complete.
+
+\enter
+
+To see this, let $g$ be a function such that $E_p(g(T)) = 0$. Then
+$$
+\begin{aligned}
+ 0 &=  E_p(g(T)) = 
+\sum_{t=0}^n g(t) \ \binom{n}{t} \ p^t (1-p)^{n-t} \\
+&= (1-p)^n \sum_{t=0}^n g(t) \ \binom{n}{t} \ \left(\frac{p}{1-p}\right)^t  \text{ for all } p \in (0, 1) \\
+\implies 0 &=  \sum_{t=0}^n g(t) \ \binom{n}{t} \ \left(\frac{p}{1-p}\right)^t  \text{ for all } p \in (0, 1) \\
+\implies 0 &=  \sum_{t=0}^n g(t) \ \binom{n}{t} \ r^t  \text{ for all } r \in (0, \infty)
+\end{aligned}
+$$
+The last expression is a polynomial of degree $n$ in $r \in (0, \infty)$. For the polynomial to be $0$ for all $r$, each coefficient has to be $0$, implying $g(t) = 0$ for $t = 0,\dots, n \implies P_p(g(T) = 0) = 1$ for all $p$. 
+
+---
+
+
+**Example (Uniform Complete Sufficient Statistics):** Suppose $\rs \on{iid~Uniform}(0, \theta)$. It follows that $T(\vec X) = \max_i X_i$ is a sufficient statistic. We shall show that $T$ is also complete. 
+
+Using results on order statistics, the pdf of $T$ is obtained as
+$$
+f(t \mid \theta) = \frac{n}{\theta^n} \ t^{n-1} \ I(0 < t < \theta) 
+$$
+Suppose $g(t)$ is a function satisfying $E_\theta (g(T)) = 0$, for all $0 < \theta < \infty$. Since $E_\theta (g(T))$ is constant in $\theta$, 
+$$
+\begin{aligned}
+0 = \frac{d}{d\theta} E_\theta (g(T)) 
+&= \frac{d}{d\theta} \int_{0}^{\theta} g(t) \ \frac{n}{\theta^n} \ t^{n-1} \ dt \\
+&= \frac{n}{\theta^n} \ \frac{d}{d\theta} \left( \int_{0}^{\theta} g(t) \ t^{n-1} \ dt \right) + \left(\frac{d}{d\theta}\frac{n}{\theta^n}\right) \int_{0}^{\theta} g(t) \ t^{n-1} \ dt \\
+&= \frac{n}{\theta^n} \ g(\theta) \ \theta^{n-1} + 0 \ = \frac{n}{\theta} \ g(\theta), \quad \text{ for all } \theta
+\end{aligned}
+$$
+Since $\frac{n}{\theta} \neq 0$, we must have $g(\theta) = 0$ for all $\theta > 0$. Hence $T$ is complete.
+
+
+# Complete Statistics in the Exponential Family
+
+## Theorem 6.2.25
+
+Let $\rs$ be $\operatorname{iid}$ observations from an exponential family with pdf or pmf of the form
+$\ds f(x \mid \boldsymbol{\theta})=h(x)c(\boldsymbol{\theta})\operatorname{exp}{\left(\sum_{j=1}^k{w_j(\boldsymbol{\theta})t_j(x)}\right)}$,
+where $\boldsymbol{\theta}=(\theta_1,\ldots,\theta_k)$. Then
+$\ds T(\vec{X})=\left(\sum_{i=1}^n{t_1(X_i)},\ldots,\sum_{i=1}^n{t_k(X_i)}\right)$ is a complete statistic for $\boldsymbol{\theta}$ as long as the parameter space $\Theta$ contains an open set in $\R^k$.
+
+
+\enter
+
+
+## NOTES
+
+(a) The dimensions of $\boldsymbol{\theta}=(\theta_1,\ldots,\theta_k)$ and $\vec{w}=(w_1(\boldsymbol{\theta}),w_2(\boldsymbol{\theta}),\ldots,w_k(\boldsymbol{\theta}))$ must be the same. 
+
+
+(b) The parameter space $\Theta$ doesn't need to be an open set, it just needs to contain an open set in $\R^k$. Note that this is not possible if the entries in $\theta$ are functionally related (i.e., lies on a lower hyper-plane). Example includes the $\N(\theta, \theta^2)$ family.
+
+
+---
+
+**Example (Exercise 6.15)** Suppose $\rs \sim \on{iid~N}(\theta, \theta^2)$.  We argued that the previous result on exponential family cannot be used here. Is this family complete?
+
+\enter
+
+
+Consider the sufficient statistic $T(\vec X) = (\bar X, S^2)$. Note that 
+$$\E_\theta \left(\bar X^2 \right) = \var_\theta\left(\bar X\right) + \left(\E_\theta (\bar X)\right)^2 = \theta^2/n + \theta^2 = \frac{n+1}{n} \theta^2$$ 
+and 
+$$E_\theta \left( S^2 \right) = \theta^2$$.
+
+
+Therefore if we define
+$$
+g(T(\vec X)) = \frac{n}{n+1} T_1(\vec X)^2 -  T_2(\vec)
+$$
+Then $\ds \E_\theta \left(g(T(\vec X)\right) = 0$ for all $\theta$ but $P_\theta\left(g(T(\vec X) = 0\right) = 0$.
+
+
+\enter
+
+Hence, the family is not complete.
+
+---
+
+# Basu's Theorem 
+
+## Theorem 6.2.24
+If $T(\vec{X})$ is a complete and minimal sufficient statistic, then $T(\vec{X})$ is independent of every ancillary statistic.
+
+\enter
+\enter
+\enter
+
+**Proof:** (Only for discrete distributions.) Let $S(\vec X)$ be any ancillary statistic for the parameter $\theta$. Then $P(S(\vec X) = s)$ does not depend on $\theta$.
+
+\enter
+
+Again, since $T(\vec X)$ is sufficient, $P(S(\vec X) = s \mid T(\vec X) = t) = P(\vec X \in \{\vec x: S(\vec x) = s\} \mid T(\vec X) = t)$ does not depend on $\theta$. 
+
+\enter
+
+So enough to show that
+$$P(S(\vec X) = s \mid T(\vec X) = t) = P(S(\vec X) = s) \text{ for all } t \in \T.$$
+
+
+---
+
+We have 
+
+$$
+\begin{aligned}
+ P(S(\vec X) = s) &= \sum_{t \in \T}  P(S(\vec X) = s \mid T(\vec X) = t) \ P_\theta(T(\vec X) = t)
+\end{aligned}
+$$
+and from $\sum_{t \in \T}  P_\theta(T(\vec X) = t) = 1$,
+$$
+P(S(\vec X) = s) = \sum_{t \in \T}  P(S(\vec X) = s) \ P_\theta(T(\vec X) = t)
+$$
+Define $g(t) =  P(S(\vec X) = s \mid T(\vec X) = t) - P(S(\vec X) = s)$. Then from the above two equations we have
+$$
+\begin{aligned}
+\quad & \E_\theta(g(T)) = \sum_{t \in \T}  g(t) \ P_\theta(T(\vec X) = t) \text{ for all } \theta \\
+\implies & g(t) = 0 \text{ for all } t \in \T \qquad \qquad (T \text{ is complete}) \\
+\implies & P(S(\vec X) = s \mid T(\vec X) = t) = P(S(\vec X) = s) \text{ for all } t \in \T 
+\end{aligned}
+$$
+
+
+
+---
+
+# Using Basu's Theorem
+
+**Example:**  Let $\rs$ be iid exponential observations with parameter $\theta$. Find the expected value of 
+$$ g(\vec X) = \frac{X_n}{X_1 + \dots + X_n}.$$ 
+
+Note on the outset that exponential is a scale family, and so from a previous example it follows that $g(\vec X)$ is ancillary for $\theta$.
+
+\enter
+
+
+From the results on exponential family, it follows that $T(\vec X) = \sum_{i=1}^n X_i$ is complete and sufficient (verify).  
+
+
+\enter
+
+
+Hence, by Basu's Theorem, $T(\vec X)$ and $g(\vec X)$ are independent, meaning $\ds E_\theta [g(\vec X) T(\vec X)] = E [g(\vec X)] E_\theta[T(\vec X)]$. Here $\ds E_\theta [g(\vec X) T(\vec X)] = E_\theta [X_n] = \theta$, and $E_\theta[T(\vec X)] = E_\theta[\sum_{i=1}^n X_i] = n \theta$. 
+
+\enter
+
+This implies $E[g(X)] = 1/n$.
+
+
+---
+
+
+**Example:**   Let $\rs$ be iid observations from $\N(\mu, \sigma^2)$ distribution. We can establish the independence between $\bar X$ and $S^2$ using Basu's theorem. 
+
+
+\enter
+
+First fix $\sigma^2$ to some arbitrary value say $\sigma^2_0$. 
+
+
+\enter
+
+Then $\bar X$ is a complete sufficient statistic for $\mu$.
+
+\enter
+
+
+For any fixed $\sigma^2_0$, the family $\N(\mu, \sigma^2_0)$ is a location family with location parameter $\mu$. It can be shown that (homework) $S^2$, a statistic based on $X_1 - \bar X, \dots, X_n - bar X$, is ancillary for $\mu$.
+
+
+\enter
+
+So, for any fixed $\sigma^2_0$, $\bar X$ and $S^2$ are independent (Basu's theorem).
+
+\enter
+
+
+Since $\sigma^2_0$ is arbitrary, therefore, $\bar X$ and $S^2$ are independent  for any $(\mu, \sigma^2)$  
+
+
+---
+
+
+# The Likelihood Function
+
+**Definition:** Let $f(\vec{x} \mid \theta)$ denote the joint pdf or pmf of the sample $\vec{X}=(\rs)$. Then, given that $\vec{X}=\vec{x}$ is observed, the function of $\theta$ defined by $$L(\theta \mid \vec{x})=f(\vec{x} \mid \theta)$$
+is called the **likelihood function**.
+
+
+\enter
+
+If $\vec X$ is a discrete random vector, then $L(\theta \mid \vec x) =  P_\theta(\vec X = \vec x)$. If for two parameter points $\theta_1$ and $\theta_2$,  $P_{\theta_1}(\vec X = \vec x) = L(\theta_1 \mid \vec x) > L(\theta_2 \mid \vec x) = P_{\theta_2}(\vec X = \vec x)$, then $\vec x$ is more likely to have occurred if $\theta = \theta_1$ than if $\theta = \theta_2$.
+
+
+\enter
+
+**Likelihood Principle:** If $\vec x$ and $\vec y$ are two sample points such that $L(\theta \mid \vec x)$ is proportional to $L(\theta \mid \vec y)$, that is, there exists a constant $C(\vec x, \vec y)$ such that
+$\ds L(\theta \mid \vec x) =  C(\vec x, \vec y) \ L(\theta \mid \vec y)$ for all $\theta$, then the conclusions drawn from $\vec x$ and $\vec y$ should be identical.
+
+
+---
+
+
+**Example (Negative Binomial Likelihood):** Let $X$ have a negative binomial distribution with $r=3$ and success probability $p$. Find the likelihood function if $x=2$ is observed, and also for general $X=x$.
+
+\enter 
+
+If $x = 2$, the likelihood function for $0 \leq p \leq 1$ is
+$$
+L(p \mid 2) = P_p(X = 2) = \binom{4}{2} \ p^{3} \ (1-p)^{2} 
+$$
+For general $X = x$ the likelihood function is:
+$$
+L(p \mid x) = P_p(X = x) = \binom{3 + x - 1}{x} \ p^{3} \ (1-p)^{x} 
+$$
+
+
+---
+
+**Example (Poisson Likelihood):** Let $\vec{X}=(\rs)$ denote a random sample from a Poisson distribution with mean $\lambda$.  The likelihood function for $0 < \lambda < \infty$ is given by:
+$$
+L(\lambda \mid \vec x) = P_\lambda(\vec X = \vec x) =  \exp(-n \lambda) \ \frac{\lambda^{\sum_{i=1}^n x_i}}{\prod_{i=1}^n x_i!}
+$$
+
+\enter
+
+\enter
+
+
+**Example (Normal Likelihood):** Let $\vec{X}=(\rs)$ denote a random sample from a $\operatorname{N}{(\mu,\sigma^2)}$ distribution. The likelihood function for $-\infty < \mu < \infty$ and $\sigma > 0$ is given by
+$$
+L(\mu, \sigma \mid \vec x) = f (\vec x \mid \mu, \sigma^2) = \frac{1}{\sqrt{2\pi}} \ (\sigma^2)^{-n/2} \exp\left( -\frac{1}{2\sigma^2} \sum_{i=1}^n \left(x_i - \mu\right)^2 \right)
+$$
+
+---
+
+# Equivariance
+
+**Equivariance Principle:** If $\vec Y = g(\vec X)$ is a change of measurement scale such that the model for $\vec Y$ has the same formal structure as the model for $\vec X$, then an inference procedure should be both measurement equivariant and formally equivariant.
+
+\enter
+
+**Example (Binomial equivariance):** Suppose $X \sim \on{Binomial}(n, p)$ and we want to "estimate" $p$ using $x$, say using the statistic $T(x)$.
+
+\enter
+
+Now $X \sim \on{Binomial}(n, p) \implies Y = n-X \sim \on{Binomial}(n, q = 1-p)$, so $T(y)$ should be an estimator for $q = 1-p$. 
+
+\enter
+
+Since $p + q = 1$, it is reasonable to ensure that their estimator also satisfies this relationship, i.e.,
+$$
+T(x) + T(y) = 1 \implies T(x) = 1 - T(y) = 1 - T(n - x)
+$$
+If we only consider estimator satisfying this relationship, then we get a greatly reduced and simplified set of estimators.  
+
+
+
+<!-- # Point Estimation -->
+
+<!-- **Background:** When sampling is from a population with pdf/pmf $f(x\mid \theta)$, knowledge of $\theta$ yields knowledge of the entire population. Given a sample we to find a meaningful reasonable "estimator" of the point $\theta$. -->
+
+<!-- \enter -->
+
+
+
+<!-- **Definition:** A **point estimator** is any function $W(\rs)$ of a sample; that is, any statistic is a point estimator. -->
+
+<!-- \enter -->
+
+
+<!-- - No mention in the definition  of any correspondence between the estimator and the parameter it is to estimate. Also no mention in the definition of the range of the statistic $W(\rs)$. This ensures that we do not eliminate any candidates from consideration.  -->
+
+
+<!-- \enter -->
+
+<!-- -  **estimate vs. estimator:** An estimator is a function of the sample, while an estimate is the realized value of an estimator that is obtained when a sample is actually taken.  -->
+
+<!-- --- -->
+
+
+---
+
+# Homework
+
+
+- Read p. $282-291$.
+
+- Exercises: TBA.

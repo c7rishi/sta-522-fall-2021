@@ -44,19 +44,15 @@ knitr::opts_chunk$set(echo = FALSE)
 
 # AGENDA
 
-- almost sure convergence & SLLN
+- Sufficient Statistics
 
 \enter
 
-- convergence in distribution
+- Joint Sufficient Statistics
 
 \enter
 
-- central limit theorem
-
-\enter
-
-- sufficiency
+- Minimal Sufficient Statistics
 
 
 ---
@@ -129,7 +125,7 @@ $$f(\vec{x} \mid \theta)=g(T(\vec{x}) \mid \theta)\cdot h(\vec{x}).$$
 
 \enter
 
-**Example:**  Let $\rs$ be $\operatorname{iid}$ Bernoulli random variables with parameter $\theta$, $0< \theta <1$. We know that $\ds T(\vec{x})=\sum_{i=1}^n{X_i}$ is sufficient for $\theta$. To obtain this through the Factorization Theorem, note that for $x_i \in \{0, 1\}$, $i = 1, \dots, n$,
+**Example:**  Let $\rs$ be $\operatorname{iid}$ Bernoulli random variables with parameter $\theta$, $0< \theta <1$. We know that $\ds T(\vec{X})=\sum_{i=1}^n{X_i}$ is sufficient for $\theta$. To obtain this through the Factorization Theorem, note that for $x_i \in \{0, 1\}$, $i = 1, \dots, n$,
 $$
 \begin{aligned}
 f(\vec{x} \mid \theta) 
@@ -157,7 +153,7 @@ $$
 where $\ds h(\vec{x}) = \prod_{i=1}^n \gamma \ x_i^{\gamma-1}$, $\ds T(\vec{x}) = \sum_{i=1}^n x_i^\gamma$, and $\ds g(t \mid \beta) = \frac{1}{\beta^n} \ e^{- t/ \beta}$. 
 
 
-Therefore, from the Factorization Theorem it follows that $\ds T(\vec{x}) = \sum_{i=1}^n X_i^\gamma$ is sufficient for $\beta$.
+Therefore, from the Factorization Theorem it follows that $\ds T(\vec{X}) = \sum_{i=1}^n X_i^\gamma$ is sufficient for $\beta$.
 
 
 ---
@@ -333,6 +329,12 @@ $$T(\vec{X})=\left(\sum_{j=1}^n{t_1(X_j)},\ldots,\sum_{j=1}^n{t_k(X_j)}\right)$$
 is a sufficient statistic for $\boldsymbol{\theta}$.
 
 
+\enter 
+\enter
+
+**Proof:** Homework (Exercise 6.4).
+
+
 ---
 
 # Invariance Principle for Sufficient Statistics
@@ -354,11 +356,11 @@ where $g^*(t \mid \theta) = g(u^{-1} (t) \mid \theta)$. Again from the Factoriza
 
 # Sufficient Statistics are NOT unique
 
--  Based on the Invariance Principle, we see that sufficient statistics are not unique.
+-  Based on the Invariance Principle, we see that one-to-one functions of sufficient statistics are also sufficient.
 
 \enter 
 
--  Note that the sample itself, i.e., $T(\vec{X})=\vec{X}$, is a sufficient statistic. So are the order statistics $T(\vec X) = \left( X_{(1)}, \dots, X_{(n)} \right)$.
+-  Note that the sample itself, i.e., $T(\vec{X})=\vec{X}$, is a sufficient statistic. So are the order statistics $T'(\vec X) = \left( X_{(1)}, \dots, X_{(n)} \right)$.
 
 \enter
 
@@ -407,6 +409,8 @@ is constant as a function of $\theta$ if and only if $T(\vec{x}) = T(\vec{y})$. 
 
 \enter
 
+\enter
+
 **Proof:** To simplify proof assume $f(x \mid \theta) > 0$ for all $x \in \X$ and $\theta$.
 
 \enter
@@ -415,13 +419,15 @@ is constant as a function of $\theta$ if and only if $T(\vec{x}) = T(\vec{y})$. 
 
 Define the partition set $A_t = \{\vec x: T(\vec x) = t\}$, and choose and fix $\vec x_t \in A_t$ for each $t$. 
 
-For any $\vec x \in \X$, $\vec x_{T(\vec x)}$ is the fixed element that is in the same set, $A_t$, as $\vec x$. Since both $\vec x \in A_t$ and $\vec x_{T(\vec x)} \in A_t$, so $T(\vec x) = T(\vec x_{T(\vec x)})$, and hence $h(\vec x) = f(\vec x \mid \theta)/f(\vec x_{T(\vec x)} \mid \theta)$ is a constant function of $\theta$. 
+For any $\vec x \in \X$, $\vec x_{T(\vec x)}$ is the fixed element that is in the same set, $A_t$, as $\vec x$. 
 
 
 ---
 
 
-Define $g(t \mid \theta) = f(\vec x_t \mid \theta)$. Then 
+$\text{Both } \vec x,  \vec x_{T(\vec x)} \in A_t   \implies T(\vec x) = T(\vec x_{T(\vec x)})$
+
+$\implies h(\vec x) = f(\vec x \mid \theta)/f(\vec x_{T(\vec x)} \mid \theta)$ is a constant function of $\theta$. Define $g(t \mid \theta) = f(\vec x_t \mid \theta)$. Then 
 $$
 f(\vec x \mid \theta) = \frac{f(\vec x_{T(\vec x)} \mid \theta) \ f(\vec x \mid \theta)}{f(\vec x_{T(\vec x)} \mid \theta)} = g(T(\vec x) \mid \theta) \ h(\vec x)
 $$
@@ -434,23 +440,50 @@ which implies sufficiency of $T(\vec X)$ by the Factorization Theorem.
 $$
 \frac{f(\vec x \mid \theta)}{f(\vec y \mid \theta)} = \frac{g'(T'(\vec x) \mid \theta) \ h'(\vec x)}{g'(T'(\vec y) \mid \theta) \ h'(\vec y)} = \frac{h'(\vec x)}{h'(\vec y)}
 $$
-Since this ratio does not depend on $\theta$ from the assertion of the theorem, we have $T(\vec x) = T(\vec y)$. So, $T(\vec x)$ is a function of $T'(\vec x)$ and $T(\vec x)$ is a minimal sufficient statistic.
+Since this ratio does not depend on $\theta$, therefore from the assertion of the theorem, we have $T(\vec x) = T(\vec y)$. So, $T(\vec x)$ is a function of $T'(\vec x)$ and $T(\vec x)$ is a minimal sufficient statistic.
 
 
 
 ---
 
-**Example:** Let $\rs$ be $\operatorname{iid~N}{(\mu,\sigma^2)}$, with both $\mu$ and $\sigma^2$ unknown. Given a sample $\vec X$ we saw that $(\bar X, S^2)$ is sufficient for $(\mu, \sigma^2)$. To show that $(\bar X, S^2)$ is minimal sufficient, consider two sample points $\vec x$ and $\vec y$ with sample mean and variances $(\bar x, s_x^2)$ and $(\bar x, s_x^2)$ respectively.  Then
+**Example (Contd.):** Let $\rs$ be $\operatorname{iid~N}{(\mu,\sigma^2)}$, with both $\mu$ and $\sigma^2$ unknown. Given a sample $\vec X$ we saw that $(\bar X, S^2)$ is sufficient for $(\mu, \sigma^2)$. 
+
+\enter
+
+To show that $(\bar X, S^2)$ is minimal sufficient, consider two sample points $\vec x$ and $\vec y$ with sample mean and variances $(\bar x, s_x^2)$ and $(\bar x, s_x^2)$ respectively.  Then
 $$
 \begin{aligned}
-\frac{f(\vec x \mid \mu, \sigma^2)}{f(\vec y \mid \mu, \sigma^2)} &= \frac{(2\pi\sigma^2)^{-n/2} \exp\left( -[n(\bar x - \mu)^2 + (n-1)s_x^2]/(2\sigma^2) \right)}{(2\pi\sigma^2)^{-n/2} \exp\left( -[n(\bar y - \mu)^2 + (n-1)s_y^2]/(2\sigma^2) \right)} = \frac{h'(\vec x)}{h'(\vec y)} \\
+\frac{f(\vec x \mid \mu, \sigma^2)}{f(\vec y \mid \mu, \sigma^2)} &= \frac{(2\pi\sigma^2)^{-n/2} \exp\left( -[n(\bar x - \mu)^2 + (n-1)s_x^2]/(2\sigma^2) \right)}{(2\pi\sigma^2)^{-n/2} \exp\left( -[n(\bar y - \mu)^2 + (n-1)s_y^2]/(2\sigma^2) \right)}  \\
 &= \exp\left([-n(\bar x^2 - \bar y^2) + 2n\mu (\bar x - \bar y) - (n-1) (s_x^2 - s_y^2) ] /(2\sigma^2) \right)
 \end{aligned}
 $$
-is constant as a function of $(\mu, \sigma^2)$ if and only if $\bar x = \bar y$ and $s_x^2 = s_y^2$. 
+is constant as a function of $(\mu, \sigma^2)$ if and only if $\bar x = \bar y$ and $s_x^2 = s_y^2$.
+
+\enter
+This shows, from the previous theorem, that $(\bar X, S^2)$ is minimal sufficient.
 
 
 ---
+
+
+**Example (Contd.):** Let $\rs$ be $\operatorname{iid~Uniform}{\left(\theta-\frac{1}{2},\theta+\frac{1}{2}\right)}$. We saw that $\left(X_{(1)}, X_{(n)}\right)$ are jointly sufficient for $\theta$. To see if they are minimal sufficient, consider two sample points $\vec x$ and $\vec y$, and obtain $(x_{(1)}, x_{(n)})$ and $(y_{(1)}, y_{(n)})$. Then
+$$
+\begin{aligned}
+\frac{f(\vec x \mid \theta)}{f(\vec y \mid \theta)} 
+&= \frac{I\left(\theta-\frac{1}{2} < x_{(1)}  < x_{(n)} < \theta+\frac{1}{2} \right)}
+{I\left(\theta-\frac{1}{2} < y_{(1)}  < y_{(n)} < \theta+\frac{1}{2} \right)} \\ 
+&= \frac{I\left(x_{(n)} - \frac{1}{2} <  \theta  < x_{(1)} + \frac12 \right)}
+{I\left(y_{(n)} - \frac{1}{2} <  \theta  < y_{(1)} + \frac12 \right)}
+\end{aligned}
+$$
+The numerator and the denominator of this ratio are both one if and only if $x_{(1)} = y_{(1)}$ and $x_{(n)} = y_{(n)}$.
+
+Therefore, $\left(X_{(1)}, X_{(n)}\right)$ is minimal sufficient for $\theta$.
+
+
+
+---
+
 
 **Example:** Let $\rs$ be $\operatorname{iid~beta}{(\alpha,\beta)}$. Show that
 $\ds \left(\sum_{i=1}^n{\log{X_i}},\sum_{i=1}^n{\log{(1-X_i)}}\right)$
@@ -458,19 +491,19 @@ is a minimal sufficient statistic for $(\alpha,\beta)$.
 
 \enter
 
-Verify sufficiency using Factorization Theorem:
+First note on the outset that
 $$
 \begin{aligned}
 f(\vec x \mid \alpha, \beta) 
 &= \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha) \ \Gamma(\beta)} \prod_{i=1}^n \left\{x_i^{\alpha-1} (1 - x_i)^{\beta-1} \right\}\\ 
-&= \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha) \ \Gamma(\beta)} \ \exp\left[ (\alpha-1) \sum_{i=1}^n \log x_i + (\beta-1) \sum_{i=1}^n \log(1-x_i) \right] \times 1 \\
-&= g\left(\sum_{i=1}^n \log x_i, \sum_{i=1}^n{\log{(1-x_i)}} \mid \alpha, \beta \right) \ h(\vec x)
+&= \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha) \ \Gamma(\beta)} \ \exp\left[ (\alpha-1) \sum_{i=1}^n \log x_i + (\beta-1) \sum_{i=1}^n \log(1-x_i) \right]
 \end{aligned}
 $$
 
 ---
 
-Show minimal sufficiency:
+
+Now show minimal sufficiency:
 $$
 \begin{aligned}
 \frac{f(\vec x \mid \alpha, \beta)}{f(\vec y \mid \alpha, \beta)} 
@@ -483,6 +516,7 @@ $$
 This is constant in $(\alpha, \beta)$ if and only if $\sum_{i=1}^n \log x_i  = \sum_{i=1}^n \log y_i$ and $\sum_{i=1}^n \log (1-x_i) = \sum_{i=1}^n \log (1-y_i)$.
 
 ---
+
 
 # Invariance Principle for Minimal Sufficient Statistics
 
@@ -500,7 +534,6 @@ Suppose $T(\mathbf{X})$ is a minimal sufficient statistic for a parameter $\thet
 # Homework
 
 
-- Convergence: Read p. $235-240$ Exercises 5.33, 5.34, 5.39b, 5.41.
+- Read p. $274-282$.
 
-
-- Sufficiency: Read p. $271 - 274$.
+- Exercises: TBA.

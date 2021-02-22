@@ -1,0 +1,140 @@
+---
+title: "STA 522/Solutions to Homework 2"
+author: ""
+date: ""
+output: pdf_document
+---
+
+\newcommand{\rs}{X_1,X_2,\dots,X_n}
+\newcommand{\on}{\operatorname}
+\newcommand{\enter}{\vspace{0.1in}}
+\newcommand{\ds}{\displaystyle}
+\renewcommand{\bar}{\overline}
+\newcommand{\N}{\text{N}}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Ss}{\mathcal{S}}
+\newcommand{\E}{\on{E}}
+\newcommand{\var}{\on{Var}}
+<!-- \renewcommand{\vec}[1]{{\underaccent{\tilde}{#1}}} -->
+\renewcommand{\vec}{\underline}
+\newcommand{\asim}{\stackrel{a}{\sim}}
+
+
+# Problem 5.33
+
+Let $c$ be any finite number. Fix $\epsilon > 0$. We'll show that there exists a positive integer $N$ such that $n \geq N \implies P(X_n + Y_n > c) \geq 1- \epsilon$. 
+
+To this end, first find a continuity  point $x_0$ of $F_X$ (i.e., find an $x_0$ where $F_X$ is continuous) such that $F_X(x_0) \leq \epsilon/3$ (we can always find such a point since $\lim_{t \to -\infty} F_X(t) = 0$, and the total number of points where $F_X$ is discontinuous can at most be countable).  
+
+Since $X_n \xrightarrow{d} X$ and $x_0$ is a continuity point of $X$, therefore we can find $N_1$ such that 
+$$
+\begin{aligned}
+n \geq N_1 &\implies \left| F_{X_n}(x_0) - F_X(x_0) \right| < \epsilon/3 \\ &\implies F_{X_n}(x_0) < F_X(x_0) + \epsilon/3 \leq \epsilon/3 + \epsilon/3 = 2\epsilon/3 \\
+&\implies P(X_n > x_0) = 1 - F_{X_n}(x_0) \geq 1 - 2\epsilon/3
+\end{aligned}
+$$
+
+Since $\lim_{n\to\infty}P(Y_n > c - x_0) \to 1$ as $n \to \infty$,  therefore,  we can find a positive integer $N_2$ such that $n \geq N_2 \implies P(Y_n > c - x_0) \geq 1 - \epsilon/3$. Hence, 
+$$
+\begin{aligned}
+P(X_n + Y_n > c) &\geq P(X_n > x_0,\ Y_n > c - x_0) \\
+&\geq P(X_n > x_0) + P(Y_n > c - x_0) - 1 & (\text{Bonferroni}) \\
+&\geq 1 - 2\epsilon/3 + 1 - \epsilon/3 -1 = 1-\epsilon
+\end{aligned}
+$$
+for all $n \geq N = \max\{N_1, N_2\}$. This completes the proof.
+
+
+# Problem 5.34
+
+
+Since $\ds \E(\bar X_n) = \mu$, we have
+$$
+\E\left( \frac{\sqrt{n} \left(\bar X_n - \mu\right)}{\sigma} \right) = \frac{\sqrt{n}}{\sigma} \E\left( \bar X_n - \mu \right) = 0,
+$$
+and since $\ds \var (\bar X_n) = \frac{\sigma^2}{n}$ we have
+$$
+\var\left( \frac{\sqrt{n} \left(\bar X_n - \mu\right)}{\sigma} \right) = \frac{n}{\sigma^2} \var\left( \bar X_n - \mu \right) =  \frac{n}{\sigma^2} \var\left( \bar X_n \right) = \frac{n}{\sigma^2} \cdot \frac{\sigma^2}{n} = 1. 
+$$
+
+
+# Problem 5.39 (Part b)
+
+
+As discussed in  class, consider the sub-sequence corresponding to the "left-most" intervals of the form $[0, 1/k]$ for $k = 1, 2, 3, \dots$, i.e., consider the subsequence $(X_{n_j}) = X_1, X_2, X_4, X_7, X_{11}, X_{16}, \dots$. For this subsequence 
+$$
+X_{n_j}(s) \to 
+\begin{cases}
+s + 1 & \text{ if } s = 0 \\
+s & \text{ if } s > 0 
+\end{cases}
+$$
+i.e., $X_{n_j}(s) \to X(s)$ for all $s \in (0, 1]$. This means $X_{n_j} \xrightarrow{a.s.} X$ since $P((0, 1]) = 1$.
+
+
+# Problem 5.41
+
+As suggested, set $\epsilon = |x - \mu|$.
+
+**Part (a)**  if $x > \mu$ then $\epsilon = x - \mu$, so that
+$$
+\begin{aligned}
+P(|X_n - \mu| \leq \epsilon) 
+&= P(|X_n - \mu| \leq x - \mu) \\
+&= P(\mu - x \leq X_n - \mu \leq x - \mu) \\
+&= P(2\mu -x \leq X_n \leq x) \\
+&\leq P(X_n \leq x)
+\end{aligned}
+$$
+On the other hand, if $x < \mu$ then $\epsilon = \mu - x$ so that
+$$
+\begin{aligned}
+P(|X_n - \mu| \geq \epsilon) 
+&= P(|X_n - \mu| \geq \mu - x) \\
+&= P(X_n - \mu \geq \mu - x) + P(X_n - \mu \leq x - \mu) \\
+&= P(X_n \geq 2\mu - x) + P(X_n \leq x) \\
+&\geq P(X_n \leq x)
+\end{aligned}
+$$
+
+To prove the $\implies$ implication assume $X_n \xrightarrow{P} \mu$ i.e., $P(|X_n -\mu| > \epsilon) \to 0 \iff P(|X_n -\mu| \leq \epsilon) \to 1$. 
+
+If $x > \mu$ then as $n \to \infty$,  
+$$1 \geq P(X_n \leq x) \geq P(|X_n - \mu| \leq \epsilon) \to 1 \implies P(X_n \leq x) \to 1.$$ 
+
+On the other hand if $x < \mu$ then as $n \to \infty$
+$$0 \leq P(X_n \leq x) \leq P(|X_n - \mu| \geq \epsilon) \to 0 \implies P(X_n \leq x) \to 0.$$ 
+Therefore combining the two cases, we get
+$$
+P(X_n \leq x) \to 
+\begin{cases}
+0 & \text{ if } x < \mu \\
+1 & \text{ if } x > \mu
+\end{cases}
+$$
+(Note that $x = \mu$ is a discontinuity point of the cdf of a degenerate distribution at $\mu$. Hence, we don't need to show convergence of $F_{X_n}(x) = P(X_n \leq x)$ at $x = \mu$. The limiting cdf is 1 at $x = \mu$.) 
+
+
+\enter
+
+
+**Part (b)** To prove the $\impliedby$ implication, assume that
+$$
+P(X_n \leq x) \to 
+\begin{cases}
+0 & \text{ if } x < \mu \\
+1 & \text{ if } x \geq \mu
+\end{cases}
+$$
+holds. Fix $\epsilon > 0$. As suggested,
+$$
+\begin{aligned}
+P(|X_n - \mu| > \epsilon) 
+&= P(X_n - \mu < -\epsilon) + P(X_n - \mu > \epsilon) \\
+&= P(X_n < \mu - \epsilon) + P(X_n > \mu + \epsilon) \\
+&= P(X_n < \mu - \epsilon) + 1 - P(X_n \leq \mu + \epsilon) \\
+&\to 0 + 1 - 1  = 0
+\end{aligned}
+$$
+as $n\to\infty$.   which completes the proof.
