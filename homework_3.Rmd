@@ -1,0 +1,84 @@
+---
+title: "STA 522/Solutions to Homework 3"
+author: ""
+date: ""
+output: pdf_document
+---
+
+```{=tex}
+\newcommand{\rs}{X_1,X_2,\dots,X_n}
+\newcommand{\on}{\operatorname}
+\newcommand{\enter}{\vspace{0.1in}}
+\newcommand{\ds}{\displaystyle}
+\renewcommand{\bar}{\overline}
+\newcommand{\N}{\text{N}}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Ss}{\mathcal{S}}
+\newcommand{\E}{\on{E}}
+\newcommand{\var}{\on{Var}}
+```
+<!-- \renewcommand{\vec}[1]{{\underaccent{\tilde}{#1}}} -->
+
+```{=tex}
+\renewcommand{\vec}{\underline}
+\newcommand{\asim}{\stackrel{a}{\sim}}
+```
+# Problem 6.1
+
+Use the Factorization theorem on the pdf of $X$: $$
+f(x \mid \sigma^2) = \frac{1}{\sqrt{2\pi}\sigma} \ \exp \left( -\frac{x^2}{2\sigma^2} \right) = \underbrace{\left\{\frac{1}{\sigma} \ \exp \left( -\frac{|x|^2}{2\sigma^2} \right)\right\}}_{=g(T(x)\mid \sigma)} \underbrace{\left(\frac{1}{2\pi}\right)}_{=h(x)}
+$$ where $T(x) = |x|$. Therefore by the Factorization theorem, $T(X) = |X|$ is a sufficient statistic for $\sigma$.
+
+
+
+# Problem 6.4
+
+If $X_1,X_2,\dots,X_n$ is a random sample from a pdf/pmf from the  exponential family, then their joint pdf/pmf is given by:
+
+$$
+\begin{aligned}
+f(x_1, \dots, x_n \mid \vec \theta) &= \prod_{j=1}^n \left\{ h(x_j) \ c(\vec \theta) \ \exp \left(\sum_{i=1}^k w_i(\vec \theta)\ t_i(x_j) \right) \right\} \\
+&= \underbrace{\left\{ c(\vec \theta)^n \exp \left(\sum_{i=1}^k w_i(\vec \theta)\ \sum_{j=1}^n t_i(x_j) \right) \right\}}_{=g(\vec T(\vec x) \mid \vec \theta)}  \underbrace{\left(\prod_{i=1}^n h(x_j) \right)}_{=h(\vec x)}
+\end{aligned}
+$$
+where $\vec T(\vec x) = \left(\sum_{j=1}^n t_1(x_j), \dots, \sum_{j=1}^n t_k(x_j)\right)$. Hence, by the Factorization theorem it follows that 
+$\vec T(\vec X) = \left(\sum_{j=1}^n t_1(X_j), \dots, \sum_{j=1}^n t_k(X_j)\right)$ is sufficient for $\vec \theta$.
+
+
+# Problem 6.6
+
+The joint pdf of $\vec X = (\rs)$ is given by:
+$$
+f(\vec x \mid \alpha, \beta) = \prod_{i=1}^n \left\{ \frac{1}{\Gamma(\alpha)\beta^\alpha} \ x_i^{\alpha-1} \ e^{-x_i/\beta} \right\} = 
+\underbrace{\left(\frac{1}{\Gamma(\alpha)\beta^\alpha}\right)^n \exp\left[ (\alpha-1)\sum_{i=1}^n \log x_i -\frac{1}{\beta}\sum_{i=1}^n x_i  \right]}_{g(T_1(\vec x), T_2(\vec x) \mid \alpha, \beta)} \ \underbrace{1}_{=h(\vec x)}
+$$
+Therefore, from the Factorization theorem, $(\sum_{i=1}^n \log X_i, \sum_{i=1}^n X_i)$ is a sufficient statistic for $(\alpha, \beta)$.
+
+
+
+# Problem 6.9
+
+**Part (a):** Consider two sample points $\vec x$ and $\vec y$ from the density. Then 
+$$
+\begin{aligned}
+\frac{f(\vec x \mid \theta)}{f(\vec y \mid \theta)} 
+&= \frac{(2\pi)^{-n/2} \exp \left(-\frac12\sum_{i=1}^n(x_i-\theta)^2\right)}{(2\pi)^{-n/2} \exp \left(-\frac12\sum_{i=1}^n(y_i-\theta)^2\right)} \\ 
+&= \frac{\exp \left(-\frac12\sum_{i=1}^nx_i^2 + n \bar x  \theta - \frac12n\theta^2\right)}{\exp \left(-\frac12\sum_{i=1}^ny_i^2 + n \bar y  \theta - \frac12n\theta^2\right)} \\ 
+&=\exp\left[\frac12\sum_{i=1}^n(y_i^2-x_i^2) - n \theta(\bar y - \bar x) \right] 
+\end{aligned}
+$$
+is constant as a function of $\theta$ if and only if $\bar y = \bar x$. Hence, $\bar X$ is a minimal sufficient statistic for $\theta$. 
+
+\enter
+
+
+**Part (b):** Consider two sample points $\vec x$ and $\vec y$ from the density. Then 
+$$
+\begin{aligned}
+\frac{f(\vec x \mid \theta)}{f(\vec y \mid \theta)} 
+&= \frac{ \exp \left(-\sum_{i=1}^n(x_i-\theta)\right) \ \prod_{i=1}^n I(x_i > \theta > 0)}{\exp \left(-\sum_{i=1}^n(y_i-\theta)\right) \ \prod_{i=1}^n I(y_i > \theta > 0)} \\ 
+&= \exp \left(\sum_{i=1}(y_i - x_i)\right) \frac{I \left(0 < \theta < x_{(1)}\right)}{I \left(0 < \theta < y_{(1)}\right)}.
+\end{aligned}
+$$
+This is constant as a function of $\theta$ if and only if the ratio of indicators is 1 for all $\theta$, i.e., $x_{(1)} = y_{(1)}$. This means $X_{(1)} = \min_i X_i$ is a minimal sufficient statistic for $\theta$.

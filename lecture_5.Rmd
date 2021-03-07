@@ -3,11 +3,11 @@ title: |
   | STA 522, Spring 2021  
   | Introduction to Theoretical Statistics II
 author: | 
-  | Lecture 4
+  | Lecture 6
   | 
   | Department of Biostatistics
   | University at Buffalo 
-date: "22 February, 2021"
+date: "8 March, 2021"
 output: 
   beamer_presentation:
     toc: false
