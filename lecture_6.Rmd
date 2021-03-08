@@ -1,0 +1,123 @@
+---
+title: |
+  | STA 522, Spring 2021  
+  | Introduction to Theoretical Statistics II
+author: | 
+  | Lecture 6
+  | 
+  | Department of Biostatistics
+  | University at Buffalo 
+date: "8 March, 2021"
+output: 
+  beamer_presentation:
+    toc: false
+header-includes:
+  - \usepackage{bm}
+bibliography: references.bib
+fontsize: 10pt
+editor_options: 
+  markdown: 
+    wrap: 80
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+\newcommand{\rs}{X_1,X_2,\dots,X_n}
+\newcommand{\on}{\operatorname}
+\newcommand{\enter}{\vspace{0.1in}}
+\newcommand{\ds}{\displaystyle}
+\renewcommand{\bar}{\overline}
+\newcommand{\N}{\text{N}}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Ss}{\mathcal{S}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\E}{\on{E}}
+\newcommand{\var}{\on{Var}}
+<!-- \renewcommand{\vec}[1]{{\underaccent{\tilde}{#1}}} -->
+\renewcommand{\vec}{\underline}
+\newcommand{\asim}{\stackrel{a}{\sim}}
+\renewcommand{\mathbf}{\vec}
+
+
+# AGENDA
+
+\enter
+
+- Method of maximum likelihood
+
+\enter
+
+- 
+
+
+---
+
+
+
+# Review: Method of Estimation
+
+\enter
+
+- **Method of Moments:** Equate population moments with the sample moments, then solve for parameters.
+
+\enter
+
+- **Method of Maximum Likelihood:** For each sample point $\mathbf{x}$, let $\hat{\theta}(\mathbf{x})$ be a parameter value at which the likelihood function $L(\theta\,|\,\mathbf{x})$ attains its maximum as a function of $\theta$, with $\mathbf{x}$ held fixed.  A \textbf{maximum likelihood estimator (MLE)} of the parameter $\theta$ based on a sample $\mathbf{X}$ is $\hat{\theta}(\mathbf{X})$.
+
+\enter
+
+- **Note:** since the logarithm function is strictly increasing on $(0,\infty)$ (and so one-to-one), the value which maximizes $\log{L(\theta\,|\,\mathbf{x})}$ is the same value that maximizes $L(\theta\,|\,\mathbf{x})$.
+
+\enter
+
+- **Example:**  $\rs\sim\operatorname{iid~Bernoulli}{(p)}$, for $0 \leq p \leq 1$. The MLE of $p$ is $\ds \hat{p} = \frac{1}{n} \sum_{i=1}^n X_i$
+
+
+---
+
+**Example:** Let $\rs\sim\operatorname{iid~N}(\theta,1)$, where $\theta$. Find the MLE of $\theta$.
+
+\enter
+
+The likelihood function for $\theta$ is given by
+$$
+\begin{aligned}
+L(\theta \mid \vec x) &= \prod_{i=1}^n \frac{1}{\sqrt{2\pi}} \ \exp\left[-\frac12 (x_i - \theta)^2 \right] 
+= \left(\frac{1}{2\pi}\right)^{n/2} \exp\left[ -\frac12 \sum_{i=1}^n (x_i - \theta)^2 \right]
+\end{aligned}
+$$
+Therefore the log likelihood is:
+$$
+\begin{aligned}
+\log L(\theta \mid \vec x) &= - \frac{n}{2} \log \left(2\pi \right)  -\frac12 \sum_{i=1}^n (x_i - \theta)^2 = - \frac{n}{2} \log \left(2\pi \right)  -\frac12 \sum_{i=1}^n (\theta - x_i)^2
+\end{aligned}
+$$
+which implies
+$$
+\frac{d \log L(\theta \mid \vec x)}{d\theta} = -\frac{1}{2} \sum_{i=1}^n 2 \ (x_i - \theta) \gtreqless 0 \ \text{ according as } \ \theta \lesseqgtr \frac{1}{n} \sum_{i=1}^n x_i = \bar x
+$$
+Thus the MLE of $\theta$ is $\hat{\theta} = \bar x$.
+
+---
+
+**Example (Restricted Range MLE):**  Let $\rs\sim\operatorname{iid~N}(\theta,1)$, where $\theta\geq0$. Find the MLE of $\theta$.
+
+
+
+
+
+
+
+---
+
+# Homework
+
+
+- Read p. $282-291$.
+
+- Exercises: TBA.
