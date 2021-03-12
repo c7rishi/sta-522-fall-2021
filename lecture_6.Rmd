@@ -131,7 +131,7 @@ $$
 $$ 
 which implies 
 $$
-\frac{d \log L(\theta \mid \underline x)}{d\theta} = -\frac{1}{2} \sum_{i=1}^n 2 \ (x_i - \theta) \gtreqless 0 \ \text{ according as } \ \theta \lesseqgtr \frac{1}{n} \sum_{i=1}^n x_i = \overline x
+\frac{d \log L(\theta \mid \underline x)}{d\theta} = \frac{1}{2} \sum_{i=1}^n 2 \ (x_i - \theta) \gtreqless 0 \ \text{ according as } \ \theta \lesseqgtr \frac{1}{n} \sum_{i=1}^n x_i = \overline x
 $$ 
 Thus the MLE of $\theta$ is $\hat{\theta} = \overline x$.
 
@@ -230,7 +230,7 @@ This is maximum when $\theta = x_{(1)}$. Hence the MLE for $\theta$ is $\hat \th
 **Example (Binomial with unknown number of trials):** Let
 $X_1,X_2,\dots,X_n\sim \operatorname{iid~Binomial}(k,p)$, where $p$ is known and
 $k$ is unknown. The likelihood function is: $$
-L(k \mid \underline x, p) = \prod_{i=1}^n \binom{k}{x_i} p^{x_i} (1-p)^{x_i}
+L(k \mid \underline x, p) = \prod_{i=1}^n \binom{k}{x_i} \ p^{x_i} (1-p)^{k-x_i} \ I(x_i \in \{0, 1, \dots, k\})
 $$ Maximizing with differentiation is difficult because of factorials and
 because $k$ is integer.
 
@@ -378,7 +378,7 @@ $$
 \end{aligned}
 $$
 $$
-\frac{\partial \log L(\mu, \sigma^2 \mid \underline x)}{\partial\mu} = -\frac{1}{2} \sum_{i=1}^n 2 \ (x_i - \mu) \gtreqless 0 \ \text{ according as } \ \mu \lesseqgtr \frac{1}{n} \sum_{i=1}^n x_i = \overline x
+\frac{\partial \log L(\mu, \sigma^2 \mid \underline x)}{\partial\mu} = \frac{1}{2} \sum_{i=1}^n 2 \ (x_i - \mu) \gtreqless 0 \ \text{ according as } \ \mu \lesseqgtr \frac{1}{n} \sum_{i=1}^n x_i = \overline x
 $$
 So, for each $\sigma$, $\hat \mu = \bar x$ is the MLE of $\mu$.
 
@@ -466,9 +466,9 @@ $$
 
 ---
 
-The posterior pdf of $\theta$ is 
+The posterior pdf of $p$ is 
 $$
-f_{Y \mid p}(y \mid p) = \frac{f_{Y, P}(y, p)}{f_P(p)} = \frac{\Gamma(n+\alpha+\beta)}{\Gamma(y + \alpha) \Gamma(n-y+\beta)} \ p^{y+\alpha-1} (1-p)^{n-y + \beta -1}
+f_{p \mid Y}(p \mid y) = \frac{f_{Y, P}(y, p)}{f_Y(y)} = \frac{\Gamma(n+\alpha+\beta)}{\Gamma(y + \alpha) \Gamma(n-y+\beta)} \ p^{y+\alpha-1} (1-p)^{n-y + \beta -1}
 $$
 which is $\on{Beta}(y + \alpha, n - y + \beta)$.
 
@@ -482,49 +482,49 @@ $$
 \hat{p}_B =  \left(\frac{n}{n + \alpha + \beta}\right) \underbrace{\left(\frac{y}{n}\right)}_{=\text{sample mean}} + \left(\frac{\alpha+\beta}{n + \alpha + \beta}\right) \underbrace{\left(\frac{\alpha}{\alpha+\beta}\right)}_{=\text{prior mean}}
 $$
 
----
+<!-- --- -->
 
-# Conjugate Family
+<!-- # Conjugate Family -->
 
-**Definition:** Let $\mathcal{F}$ denote the class of pdfs or pmfs $f(x \mid \theta)$, indexed by $\theta$. A class $\Pi$ of prior distributions is a \textbf{conjugate family} for $\mathcal{F}$ if the posterior distribution is in the class $\Pi$ for all $f\in\mathcal{F}$, all priors in $\Pi$, and all $x\in\mathcal{X}$.
+<!-- **Definition:** Let $\mathcal{F}$ denote the class of pdfs or pmfs $f(x \mid \theta)$, indexed by $\theta$. A class $\Pi$ of prior distributions is a \textbf{conjugate family} for $\mathcal{F}$ if the posterior distribution is in the class $\Pi$ for all $f\in\mathcal{F}$, all priors in $\Pi$, and all $x\in\mathcal{X}$. -->
 
-\vfill
+<!-- \vfill -->
 
-- The beta family is conjugate for the binomial family, which is why it was chosen as the prior distribution in the previous example.
+<!-- - The beta family is conjugate for the binomial family, which is why it was chosen as the prior distribution in the previous example. -->
 
-\vfill
+<!-- \vfill -->
 
-- the gamma family is conjugate for the Poisson family.
+<!-- - the gamma family is conjugate for the Poisson family. -->
 
-\vfill
+<!-- \vfill -->
 
-- the normal family is its own conjugate.
+<!-- - the normal family is its own conjugate. -->
 
----
+<!-- --- -->
 
-**Example (Normal Bayes Estimator)** Let $X \sim \on{N}(\theta, \sigma^2)$, and suppose that the prior distribution on $\theta$ is $\N(\mu, \tau^2)$ where $\sigma^2$, $\mu$ and $\tau^2$ are all known. 
+<!-- **Example (Normal Bayes Estimator)** Let $X \sim \on{N}(\theta, \sigma^2)$, and suppose that the prior distribution on $\theta$ is $\N(\mu, \tau^2)$ where $\sigma^2$, $\mu$ and $\tau^2$ are all known.  -->
 
-\enter
-
-
-The posterior distribution of $\theta$ is also normal (Exercise 7.22; Homework) with 
-
-$$
-\E(\theta \mid x) = \frac{\tau^2}{\sigma^2 + \tau^2} x + \frac{\sigma^2}{\sigma^2 + \tau^2} \mu = \frac{1/\sigma^2}{1/\sigma^2 + 1/\tau^2} x + \frac{1/\tau^2}{1/\sigma^2 + 1/\tau^2} \mu
-$$
-and
-$$
-\var (\theta \mid x) = \frac{\sigma^2 \tau^2}{\sigma^2 + \tau^2} = \frac{1}{1/\sigma^2 + 1/\tau^2}
-$$
-
-Using the posterior mean, a Bayes point estimator is given by $E(\theta \mid X)$
-
-\enter
-
-Note that the Bayes estimator is again a linear combination of prior and sample means.
+<!-- \enter -->
 
 
----
+<!-- The posterior distribution of $\theta$ is also normal (Exercise 7.22; Homework) with  -->
+
+<!-- $$ -->
+<!-- \E(\theta \mid x) = \frac{\tau^2}{\sigma^2 + \tau^2} x + \frac{\sigma^2}{\sigma^2 + \tau^2} \mu = \frac{1/\sigma^2}{1/\sigma^2 + 1/\tau^2} x + \frac{1/\tau^2}{1/\sigma^2 + 1/\tau^2} \mu -->
+<!-- $$ -->
+<!-- and -->
+<!-- $$ -->
+<!-- \var (\theta \mid x) = \frac{\sigma^2 \tau^2}{\sigma^2 + \tau^2} = \frac{1}{1/\sigma^2 + 1/\tau^2} -->
+<!-- $$ -->
+
+<!-- Using the posterior mean, a Bayes point estimator is given by $E(\theta \mid X)$ -->
+
+<!-- \enter -->
+
+<!-- Note that the Bayes estimator is again a linear combination of prior and sample means. -->
+
+
+<!-- --- -->
 
 # Homework
 
