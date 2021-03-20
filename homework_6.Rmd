@@ -1,0 +1,152 @@
+---
+title: "STA 522/Solutions to Homework 6"
+author: ""
+date: ""
+output: pdf_document
+---
+
+```{=tex}
+\newcommand{\rs}{X_1,X_2,\dots,X_n}
+\newcommand{\on}{\operatorname}
+\newcommand{\enter}{\vspace{0.1in}}
+\newcommand{\ds}{\displaystyle}
+\renewcommand{\bar}{\overline}
+\newcommand{\N}{\text{N}}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Ss}{\mathcal{S}}
+\newcommand{\E}{\on{E}}
+\newcommand{\var}{\on{Var}}
+\newcommand{\MSE}{\on{MSE}}
+```
+<!-- \renewcommand{\vec}[1]{{\underaccent{\tilde}{#1}}} -->
+
+```{=tex}
+\renewcommand{\vec}{\underline}
+\newcommand{\asim}{\stackrel{a}{\sim}}
+```
+
+
+# Problem 7.1
+
+Given an $x$, the MLE is simply the value of $\theta$ that maximizes the likelihood. The MLEs corresponding to $x = 0, 1, 2, 3, 4$ are $\hat \theta = 1, 1, (2 \text{ or } 3), 3, 3$ respectively. 
+
+
+# Problem 7.2
+
+**Part (a):**  Since $\alpha$ is known, the likelihood function for $\beta$ is given by:
+$$
+\begin{aligned}
+L(\beta \mid \vec x) = \prod_{i=1}^n \frac{1}{\Gamma(\alpha) \beta^\alpha}\ x_i^{\alpha-1} \ e^{-x_i/\beta} = \frac{1}{\Gamma(\alpha)^n \beta^{n\alpha}}\ \left(\prod_{i=1}^n x_i^{\alpha-1}\right) \ \exp\left[{-\frac{1}{\beta} \sum_{i=1}^n x_i}\right]
+\end{aligned}
+$$
+The log-likelihood function is given by: 
+$$
+\log L(\beta \mid \vec x) = -n log \Gamma(\alpha) - n\alpha \log \beta + (\alpha - 1) \sum_{i=1}^n \log x_i - \frac{1}{\beta} \sum_{i=1}^n x_i
+$$
+To maximize $\log  L(\beta \mid \vec x)$ we consider the first derivative test:
+$$
+\frac{\partial \ \log L(\beta \mid \vec x) }{\partial \beta} = -\frac{n\alpha}{\beta} + \frac{1}{\beta^2} \sum_{i=1}^n  x_i \gtreqless 0 \iff \frac{1}{\beta^2} \sum_{i=1}^n  x_i \gtreqless \frac{n\alpha}{\beta} \iff \beta \lesseqgtr \frac{1}{n\alpha} \sum_{i=1}^n  x_i  = \frac{1}{\alpha} \bar x 
+$$
+This shows that $\hat \beta = \frac{1}{\alpha} \bar X$ is maximum likelihood estimator for $\alpha$.
+
+
+\enter
+
+**Part (b):** We shall consider successive optimization. The log-likelihood function for $(\alpha, \beta)$ is given by (same as in part (a); only  $\alpha$ is also unknown here)
+$$
+\log L(\alpha, \beta \mid \vec x) = -n \log \Gamma(\alpha) - n\alpha \log \beta + (\alpha - 1) \sum_{i=1}^n \log x_i - \frac{1}{\beta} \sum_{i=1}^n x_i
+$$
+From part (a), for any $\alpha$, the log-likelihood is maximized when $\beta = \hat \beta = \bar x/\alpha$. Plugging $\hat \beta$ into $\log L(\alpha, \beta \mid \vec x)$ we get the following profile log-likelihood for $\alpha$:
+$$
+\log \tilde{L}(\alpha \mid \vec x) = \log L(\alpha, \hat \beta \mid \vec x) = -n \log \Gamma(\alpha) - n\alpha \log (\bar x/\alpha) + (\alpha - 1) \sum_{i=1}^n \log x_i - n \alpha
+$$
+The MLE $\hat \alpha$ of $\alpha$ is obtained by numerically maximizing the above log-likelihood. The corresponding MLE of $\beta$ is $\tilde \beta = \bar x/\hat \alpha$.
+
+
+# Problem 7.3
+
+Given the data $\vec x$, let $\hat \theta$ be the MLE of $\theta \in \Theta$, where $\Theta$ denotes the parameter space. Then
+$$
+\begin{aligned}
+\quad & L(\hat \theta \mid \vec x) \geq L(\theta^* \mid \vec x) \text{ for all } \theta^* \in \Theta && (\hat \theta \text{ is MLE}) \\
+\iff & \log L(\hat \theta \mid \vec x) \geq \log L(\theta^* \mid \vec x) \text{ for all } \theta^* \in \Theta && (\log \text{ is an increasing function}) \\
+\end{aligned}
+$$
+This completes the proof. 
+
+
+# Problem 7.7
+
+First find the likelihood function of $\theta$. Here $\theta \in \Theta = \{0, 1\}$, with 
+$$
+L(\theta = 0 \mid \vec x) = \prod_{i=1}^n I(0 < x_i < 1) = I(0 < x_{(1)} < x_{(n)} < 1)
+$$
+and 
+$$
+L(\theta = 1 \mid \vec x) = \prod_{i=1}^n \frac{1}{2\sqrt{x_i}} \ I(0 < x_i < 1) = \frac{1}{2^n \prod_{i=1}^n \sqrt{x_i}}  \ I(0 < x_{(1)} < x_{(n)} < 1)
+$$
+Therefore
+$$
+\frac{L(\theta=1 \mid \vec x)}{L(\theta=0 \mid \vec x)} = \frac{1}{2^n \prod_{i=1}^n \sqrt{x_i}} \gtreqless 1 \iff 1 \gtreqless 2^n \prod_{i=1}^n \sqrt{x_i}
+$$
+Thus, the MLE of $\theta$ is
+$$
+\hat \theta = 
+\begin{cases}
+1 & \text{if } \  2^n \prod_{i=1}^n \sqrt{x_i} < 1 \\
+0 & \text{if } \  2^n \prod_{i=1}^n \sqrt{x_i} > 1 \\
+0 \text{ or } 1 & \text{if } \  2^n \prod_{i=1}^n \sqrt{x_i}  = 1 
+\end{cases}
+$$
+
+
+
+# Problem 7.9
+
+Here $\rs \sim \on{iid~Uniform}(\theta)$, $\theta > 0$. We have seen in class (lecture 5 & 6) that the method of moments and the method of maximum likelihood estimators of $\theta$ are $\hat \theta_{MM} = 2 \bar X$ and $\hat \theta = X_{(n)}$ respectively. We shall compare the two estimators using their mean squared errors.
+
+
+For $\hat \theta_{MM}$ we have 
+$$
+\E_\theta(\hat \theta_{MM}) = 2 \E_\theta(\bar X) \stackrel{\text{iid}}{=} 2 \E(X_1) = 2 \frac{\theta}{2} = \theta \ \text{ for all } \theta 
+$$
+i.e., $\hat \theta_{MM}$ is unbiased for $\theta$. Hence,
+$$
+\MSE_\theta(\hat \theta_{MM}) = \var_\theta(\hat \theta_{MM}) = 4 \var_\theta(\bar X) \stackrel{\text{iid}}{=} \frac{4}{n} \var_\theta (X_1) = \frac{4}{n} \cdot \frac{\theta^2}{12} = \frac{\theta^2}{3n}.
+$$
+For $\hat \theta$, we have (from lecture 7)
+$$
+\E_\theta(\hat \theta) = \frac{n}{n+1} \theta \ \ \text{ and } \var_\theta(\hat \theta) = \left(\frac{n}{n+1}\right)^2 \var_\theta \left( \frac{n}{n+1} \ X_{(n)} \right) = \frac{n}{(n+1)^2(n+2)} \theta^2
+$$
+Therefore,
+$$
+\begin{aligned}
+\MSE_\theta(\hat \theta) &= \left(\on{Bias}_\theta(\hat \theta)\right)^2 + \var_\theta(\hat \theta) \\
+&= \left(\frac{n}{n+1} \theta - \theta \right)^2 + \frac{n}{(n+1)^2(n+2)} \theta^2 \\
+&= \frac{1}{(n+1)^2} \theta^2  + \frac{n}{(n+1)^2(n+2)} \theta^2 \\ 
+&= \frac{2n + 2}{(n+1)^2(n+2)} \theta^2 = \frac{2 \theta^2}{(n+1)(n+2)}  
+\end{aligned}
+$$
+Thus,
+$$
+\begin{aligned}
+\MSE_\theta(\hat \theta_{MM}) - \MSE_\theta(\hat \theta) &= \frac{\theta^2}{3n} - \frac{2 \theta^2}{(n+1)(n+2)}  \\
+&= \frac{n^2 - 3n + 2}{3 n (n+1) (n+2)} \ \theta^2 = \frac{(n-1)(n-2)}{3 n (n+1) (n+2)} \ \theta^2
+\end{aligned}
+$$
+Hence $\MSE_\theta(\hat \theta_{MM}) = \MSE_\theta(\hat \theta)$ for all $\theta$ when $n = 1, 2$ and $\MSE_\theta(\hat \theta_{MM}) > \MSE_\theta(\hat \theta)$ for all $\theta$ for $n \geq 3$. Hence, in terms of having a smaller MSE, $\hat \theta$ is preferred.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
