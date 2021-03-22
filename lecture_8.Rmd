@@ -1,0 +1,526 @@
+---
+title: |
+  | STA 522, Spring 2021  
+  | Introduction to Theoretical Statistics II
+author: | 
+  | Lecture 8
+  | 
+  | Department of Biostatistics
+  | University at Buffalo 
+date: "22 March, 2021"
+output: 
+  beamer_presentation:
+    toc: false
+header-includes:
+  - \usepackage{bm}
+  - \usepackage{amsmath}
+  - \usepackage{mathrsfs}
+bibliography: references.bib
+fontsize: 10pt
+editor_options: 
+  markdown: 
+    wrap: 80
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+\newcommand{\rs}{X_1,X_2,\dots,X_n}
+\newcommand{\on}{\operatorname}
+\newcommand{\enter}{\vspace{0.1in}}
+\newcommand{\ds}{\displaystyle}
+\renewcommand{\bar}{\overline}
+\newcommand{\N}{\text{N}}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Ss}{\mathcal{S}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\E}{\on{E}}
+\newcommand{\var}{\on{Var}}
+\newcommand{\cov}{\on{Cov}}
+\newcommand{\MSE}{\on{MSE}}
+\renewcommand{\vec}{\underline}
+\newcommand{\asim}{\stackrel{a}{\sim}}
+\renewcommand{\mathbf}{\vec}
+<!-- \renewcommand{\mathcal}{\mathscr} -->
+
+
+# AGENDA
+
+\vspace{0.1in}
+
+-  Wrap up discussion on Cramér-Rao Lower Bound
+
+\vspace{0.1in}
+
+-  Rao-Blackwell Theorem
+
+
+\vspace{0.1in}
+
+
+-  Lehmann–Scheffé THeorem
+
+
+\vspace{0.1in}
+
+-  Cramér-Rao Lower Bound
+
+
+---
+
+
+# Review: UMVUE & Cramér-Rao lower bound
+
+
+- An estimator $W^*$ is a \textbf{uniform minimum variance unbiased estimator} (UMVUE) of $\tau(\theta)$ if (a) $W^*$ is unbiased, and (b) among all unbiased estimators, the variance (or MSE) of $W^*$ is a minimum.
+
+- **CRLB:** Let $\mathbf{X}=(\rs)$ have pdf $f(\mathbf{x} \mid \theta)$, and let $W(\mathbf{X})$ be any estimator satisfying
+\begin{enumerate}[(a)]
+\item $\ds{\frac{d}{d\theta}\E_{\theta}\left[W(\mathbf{X})\right]=\int_{\mathcal{X}}{\frac{\partial}{\partial\theta}\left[W(\mathbf{x})f(\mathbf{x} \mid \theta)\right]\,d\mathbf{x}}}$; and\vskip .1in
+\item $\var_{\theta}\left[W(\mathbf{X})\right]<\infty$.
+\end{enumerate}
+Then
+$\ds \var_{\theta}(W(\mathbf{X}))\geq\frac{\left[\frac{d}{d\theta}\E_{\theta}\left[W(\mathbf{X})\right]\right]^2}{\underbrace{\E_{\theta}\left[\left[\frac{\partial}{\partial\theta}\log{f(\mathbf{X} \mid \theta)}\right]^2\right]}_{\text{Fisher Information}}}.$
+
+- If an estimator satisfies the above two assumptions, and its variance attains the CRLB, then the estimator is UMVUE.
+
+
+- There is no guarantee that the bound given in the Cramér-Rao Inequality is sharp.  That is, our best unbiased estimator may not achieve the CRLB.
+
+---
+
+**Example:** Let $\rs\sim\operatorname{iid~Poisson}(\lambda)$. (a) Compute the CRLB for an unbiased estimator for
+$\ds \tau(\lambda)=e^{-\lambda}=P(X_1=0)$. (b) Consider $W=\frac{1}{n}\sum_{i=1}^n{I(X_i = 0)}$.  Show that $W$ is an unbiased estimator for $\tau(\lambda)$ whose variance is larger than the CRLB.
+
+\enter
+
+At the outset, note that Poisson distribution is a member of the (regular) expoential family, and therefore the two conditions in the CRLB hold.
+
+\enter
+
+First find Fisher Information (iid form). Here common log pmf is
+$$
+\log f(x \mid \lambda) = -\lambda + x \log \lambda - \log(x!) \implies \frac{\partial \ \log f(x \mid \lambda)}{d\lambda} = -1 + \frac{x}{\lambda} = \frac{(x - \lambda)}{\lambda}
+$$
+Therefore, Fisher information
+$$
+\E_{\lambda}\left[\left[\frac{\partial}{\partial\lambda}\log{f(\mathbf{X} \mid \lambda)}\right]^2\right] = n \E_\lambda\left[ \frac{(X_1 - \lambda)^2}{\lambda^2}\right] = n \frac{\var_\lambda(X_1)}{\lambda^2} = \frac{n}{\lambda}
+$$
+Therefore, the CRLB for an unbiased estimator of $\ds \tau(\lambda)=e^{-\lambda}$ is:
+$$
+\on{CRLB} = \frac{\left[\frac{d}{d\theta}\ \tau(\theta) \right]^2}{\E_{\lambda}\left[\left[\frac{\partial}{\partial\lambda}\log{f(\mathbf{X} \mid \lambda)}\right]^2\right]} = \frac{\left(-e^{-\lambda}\right)^2}{\frac{n}{\lambda}}= \frac{\lambda \ e^{-2 \lambda}}{n}
+$$
+
+
+---
+
+Now consider  $W=\frac{1}{n}\sum_{i=1}^n{I(X_i = 0)}$. To find its variance first define $U_i = I(X_i = 0)$. Then
+$$
+U_i \sim \on{iid~Bernoulli} \left(p = P(X_1 = 0) = e^{-\lambda}\right)
+$$
+which implies $Z = \sum_{i=1}^n U_i = \sum_{i=1}^n{I(X_i = 0)} \sim \on{Binomial}\left(n, e^{-\lambda}\right)$ and
+$$
+W = \frac{1}{n}\sum_{i=1}^n{I(X_i = 0)} = \frac{Z}{n} \implies \var_\lambda (W) = \frac{\var_\lambda(Z)}{n^2} = \frac{e^{-\lambda} \left(1 - e^{-\lambda} \right)}{n}
+$$
+Therefore
+$$
+\begin{aligned}
+\var_\lambda (W) - \on{CRLB} &= \frac{e^{-\lambda} \left(1 - e^{-\lambda} \right)}{n} - \frac{\lambda \ e^{-2 \lambda}}{n} = \frac{e^{-\lambda}(1 - (\lambda + 1) e^{-\lambda})}{n}
+\end{aligned}
+$$
+
+
+---
+
+Now consider the function $g(\lambda) = 1 - (\lambda+1)e^{-\lambda}.$  Then 
+$$
+g'(\lambda) = -\left( e^{-\lambda} - (\lambda+1)e^{-\lambda} \right) = \lambda e^{-\lambda} > 0 \ \text{ for all } \lambda > 0
+$$
+which means that $g(\lambda)$ is increasing in $\lambda$ for $\lambda > 0$, so that $g(\lambda) > g(0) = 0$ for all $\lambda > 0$, i.e., $g(\lambda) > 0$ for all $\lambda > 0$.
+
+\enter
+
+Hence, $\ds \var_\lambda (W) - \on{CRLB} = \frac{e^{-\lambda}(1 - (\lambda + 1) e^{-\lambda})}{n} > 0$ for all $\lambda > 0$.
+
+
+\enter
+\enter
+
+
+**HW:** Show that $\bar X$ is a UMVUE for $\lambda$.
+
+---
+
+
+# Attainment of Cramér-Rao Inequality
+
+
+## Result (Corollary 7.3.15)
+
+Let $\rs$ be iid $f(x\,|\,\theta)$, where $f(x\,|\,\theta)$ satisfies the conditions of the Cramér-Rao Theorem.
+\vskip .2in
+Let $L(\theta\,|\,\mathbf{x})=\prod_{i=1}^n{f(x_i\,|\,\theta)}$ denote the likelihood function.
+\vskip .2in
+If $W(\mathbf{X})=W(\rs)$ is any unbiased estimator of $\tau(\theta)$, then $W(\mathbf{X})$ attains the Cram\'er-Rao Lower Bound if and only if
+$$a(\theta)\left[W(\mathbf{x})-\tau(\theta)\right]=\frac{\partial}{\partial\theta}\log{L(\theta\,|\,\mathbf{x})}$$
+for some function $a(\theta)$.
+
+
+---
+
+**Proof: (steps)**
+
+- Write the Cramér-Rao Inequality as
+
+$${\footnotesize\left[\operatorname{Cov}_{\theta}{\left[W(\mathbf{X}),\frac{\partial}{\partial\theta}\log{\prod_{i=1}^n{f(x_i\,|\,\theta)}}\right]}\right]^2\leq\var_{\theta}{\left[W(\mathbf{X})\right]}\var_{\theta}{\left[\frac{\partial}{\partial\theta}\log{\prod_{i=1}^n{f(x_i\,|\,\theta)}}\right]}}.$$
+\vfill
+
+- Now use property of correlation coefficient: for any random variables $X$ and $Y$, $|\rho_{XY}|=1$ if and only if there exist numbers $a\neq0$ and $b$ such that $P(Y=aX+b)=1$.
+\vfill
+
+-  $\E_{\theta}\left[W(\mathbf{X})\right]=\tau(\theta)$ for all $\theta$ due to unbiasedness.
+\vfill
+
+- $\E_{\theta}\left[\frac{\partial}{\partial\theta}\log{\prod_{i=1}^n{f(x_i\,|\,\theta)}}\right]=0$ (proved in lecture 7).
+\vfill
+
+- Thus, we can have equality if and only if $W(\mathbf{X})-\tau(\theta)$ is proportional to $\frac{\partial}{\partial\theta}\log{L(\theta\,|\,\mathbf{x})}$
+
+
+
+---
+
+# Rao-Blackwell Theorem
+
+
+**Recall: Tower Property.** Let $X$ and $Y$ be any two random variables. Then, provided the expectations exist, we have
+
+(a) $\E(X)=\E\left[\E(X\,|\,Y)\right]$ \vskip .1in
+
+(b) $\var(X)=\var\left[\E(X\,|\,Y)\right]+\E\left[\var(X\,|\,Y)\right]$
+
+
+\vfill
+
+## Theorem (7.3.17)
+
+Let $W$ be any unbiased estimator of $\tau(\theta)$, and let $T$ be a sufficient statistic for $\theta$.  Define $\phi(T)=\E(W\,|\,T)$.  Then
+
+\enter
+
+(a) $\E_{\theta}\left[\phi(T)\right]=\tau(\theta)$ for all $\theta$; and\vskip .1in
+
+(b) $\var_{\theta}\left[\phi(T)\right]\leq\var_{\theta}(W)$ for all $\theta$.
+
+\enter 
+
+That is, $\phi(T)$ is a uniformly better unbiased estimator (UMVUE) of $\tau(\theta)$.
+
+
+---
+
+
+**Proof:**
+
+For (a) We have 
+$$
+\E_{\theta}\left[\phi(T)\right] = \E_{\theta}\left[\E(W \mid T)\right] = \E_\theta (W) = \tau(\theta) \ \text{ for all } \theta.
+$$
+For (b)  note that
+$$
+\begin{aligned}
+\var_{\theta}(W) &= 
+\var_{\theta} \left[ \E(W \mid T) \right] + \E_{\theta} \left[ \var(W \mid T) \right] \\
+&= \var_{\theta} \left[ \phi(T) \right] + \underbrace{\E_{\theta} \left[ \var(W \mid T) \right]}_{\geq 0} \geq \var_{\theta} \left[ \phi(T) \right]
+\end{aligned}
+$$
+for all $\theta$.
+
+\enter
+
+It remains to show that $\phi(T) = \E(W\,|\,T)$ is indeed an estimator, i.e., is a function only of the sample, and is free of $\theta$. 
+
+\enter 
+
+This follows from  sufficiency -- $W$ being a function of sample the conditional distribution of $W \mid T$ is free of $\theta$.  
+
+---
+
+# Finding UMVUEs
+
+(a) So conditioning any unbiased estimator on a sufficient statistic will result in a uniform improvement.\vfill
+
+(b) Thus, to find UMVUEs, we need only consider statistics that are functions of a sufficient statistic.\vfill
+
+(c) But if $T$ is sufficient, how do we know that $\phi(T)$ is a best unbiased estimator (UMVUE)?\vfill
+
+(d) If it attains the CRLB, then it is best unbiased (UMVUE).\vfill
+
+(e) What if it does not?  We need a few more results to answer this question.
+
+
+---
+
+# Uniqueness of UMVUEs
+
+## Theorem 7.3.19
+
+If $W$ is a best unbiased estimator (UMVUE) of $\tau(\theta)$, then $W$ is unique.\vfill
+
+\enter
+
+**Proof:** Suppose $W'$ is another UMVUE and consider
+$W^* = \frac12 (W + W')$. Note that $E_\theta(W^*) = \tau(\theta)$ and
+$$
+\begin{aligned}
+\var_\theta(W^*)
+&= \var_\theta \left( \frac12 (W + W') \right) \\
+&= \frac14 \var_\theta(W) + \frac14 \var_\theta(W') + \frac12 \cov_\theta(W, W') \\
+&\stackrel{\text{Cauchy-Schwarz}}{\leq} \frac14 \var_\theta(W) + \frac14 \var_\theta(W') + \frac12 \sqrt{\var_\theta(W) \var_\theta(W')} \\
+&= \var_\theta(W) \qquad (\var_\theta(W) = \var_\theta(W'))
+\end{aligned}
+$$
+Since both $W$ and $W^*$ are UMVUEs the above inequality cannot be strict for any $\theta$, i.e., must have equality in the Cauchy-Schwarz inequality.
+
+\enter
+
+Equality in Cauchy-Schwarz inequality holds only if $W' = a(\theta) W + b(\theta)$ for some $a(\theta)$ and $b(\theta)$. 
+
+
+---
+
+
+# Necessary and Sufficient Conditions for UMVUE
+
+## Theorem (7.3.20)
+
+If $\E_{\theta}(W)=\tau(\theta)$, then $W$ is the best unbiased estimator of $\tau(\theta)$ if and only if $W$ is uncorrelated with all unbiased estimators of $0$.
+
+\vfill
+\vspace{0.2in}
+
+**NOTE:**  this theorem can sometimes be used to show that an unbiased estimator is not UMVUE, by showing that the estimator is correlated with an unbiased estimator of $0$.
+
+\vfill
+\vspace{0.2in}
+
+**Proof: (If part)**
+Let  $W$ be the UMVUE and $U$ be any unbiased estimator of $0$. Define $\phi_a = W + aU$ for some arbitrary number $a$. Then $\phi_a$ is unbiased for $\tau(\theta)$ and
+$$
+\var_\theta(\phi_a) = \var_\theta(W + aU) = \var_\theta(W) + a^2 \var_\theta(U) + 2 a \cov_\theta(W, U)
+$$
+
+---
+
+If for some $\theta=\theta_0$, $\cov_{\theta_0}(W, U) < 0$ then for $a \in \left(0, -2\frac{\cov_{\theta_0}(W, U)}{\var_{\theta_0}(U)} \right)$ we have $a^2 \var_\theta(U) + 2 a \cov_{\theta_0}(W, U) < 0$, i.e., $\var_\theta(\phi_a) < \var_\theta(W)$ for $\theta = \theta_0$ which contradicts to $W$ being UMVUE.
+
+\vspace{0.2in} 
+
+
+Similar contradiction arises if $\cov_{\theta_0}(W, U) < 0$. 
+
+\vspace{0.2in} 
+
+
+Hence $\cov_\theta(W, U)$ must be $0$ for all $\theta$ and for all $U$.
+
+\vspace{0.2in} 
+
+
+**(Only if part):** Reading exercise. See p. 345 of the textbook.
+
+
+\vfill
+
+---
+
+# Lehmann–Scheffé Theorem
+
+
+## Theorem
+Let $T$ be a complete sufficient statistic for a parameter $\theta$, and let $\phi(T)$ be any estimator based only on $T$. Then $\phi(T)$ is the unique best unbiased estimator of its expected value.
+
+\vfill
+\vspace{0.2in}
+
+**Proof:** Since $T$ is complete, $X=0$ is the only unbiased estimator of $0$.  Since   $\phi(T)$ is uncorrelated with $0$, and hence uncorrelated with all unbiased estimators of $0$, we have that $\phi(T)$ is UMVUE of $\E_{\theta}\left[\phi(T)\right]$.
+
+\vfill
+\vspace{0.2in}
+
+
+**Remark:** The Lehmann–Scheffé theorem and the Rao-Blackwell theorem together provide UMVUE for parametric functions from many standard probability distributions.
+
+\enter
+
+Suppose we want the UMVUE for $\tau(\theta)$. We have a complete sufficient statistic $T$ for $\theta$ and we have an unbiased estimator $W$ of $\tau(\theta)$. Then the Rao-Blackwell estimator $\ds \phi(T) = \E[W \mid T]$ is UMVUE for $\tau(\theta)$.
+
+
+
+
+---
+
+**Example:** Let $\rs\sim\operatorname{iid~Poisson}(\lambda)$. (a) Find the UMVUE of $\lambda$, if it exists. (b) Find the UMVUE of $\tau(\lambda)=e^{-\lambda}=P(X=0)$, if it exists.
+
+\enter
+
+At the outset note that for Poisson (a member of the exponential family) $T = \sum_{i=1}^n X_i$ is complete sufficient for $\lambda$. Also, $T \sim \on{Poisson}(n\lambda)$.
+
+
+\enter
+
+For part (a), start with $T$. We have $\E_\lambda(T) = n\lambda$ for all $\lambda$ so that $E_\lambda(T/n) = \lambda$ for all $\lambda$. Hence $\phi(T) = T/n = \bar X$ is unbiased for $\lambda$. Since $T$ is complete sufficient, therefore $\bar X$ is UMVUE for $\lambda$.
+
+\enter
+
+---
+
+
+
+For part (b), consider the simple unbiased estimator $W = I(X_1 = 0)$ of $\tau(\lambda) = e^{-\lambda}$. Now obtain the Rao-Blackwell estimator
+$$
+\begin{aligned}
+\phi(t) &= \E \left[W \mid T = t\right] \\
+&= \E(X_1 = 0 \mid T = t) \\
+&= P(X_1 = 0 \mid T = t) \\
+&= \frac{P(X_1 = 0, T = t)}{P(T = t)} \\ 
+&= \frac{P(X_1 = 0, \sum_{i=2}^n X_i = t)}{P(T = t)} \\
+&= \frac{P(X_1 = 0) \ P(\sum_{i=2}^n X_i = t)}{P(T = t)} \\
+&= \frac{e^{-\lambda}\ e^{(n-1)\lambda} \ ((n-1)\lambda)^t/t!}{e^{n\lambda} \ (n\lambda)^t /t!} = \left(\frac{n-1}{n}\right)^{t} 
+\end{aligned}
+$$
+Therefore, by Lehmann–Scheffé theorem $\left(\frac{n-1}{n}\right)^{T} = \left(\frac{n-1}{n}\right)^{\sum_{i=1}^n X_i}$ is UMVUE for $e^{-\lambda}$.
+
+
+---
+
+**Example:** Let $\rs\sim\operatorname{iid~binomial}(k,\theta)$.
+\vskip .2in
+Let $\tau(\theta)=P_{\theta}(X=1)=k\theta(1-\theta)^{k-1}$.
+\vskip .2in
+Find the UMVUE of $\tau(\theta)$, if it exists.
+
+\enter
+\enter
+
+Reading exercise. Example 7.3.24 in the textbook.
+
+---
+
+# Hypothesis Testing
+
+
+**Definition:** A \textbf{hypothesis} is a statement about a population parameter.
+\vskip .2in
+The two complementary hypotheses in a hypothesis testing problem are called the \textbf{null hypothesis} and the \textbf{alternative hypothesis}, denoted $H_0$ and $H_1$ (or sometimes $H_a$), respectively.
+\vskip .2in
+For instance,
+$$
+\begin{aligned}
+H_0 & : \theta\in\Theta_0\\[.5em]
+H_1 & : \theta\in\Theta_0^c,
+\end{aligned}
+$$
+where $\Theta=\Theta_0\cup\Theta_0^c$ is the parameter space.
+
+---
+
+**Definition:** A \textbf{hypothesis testing procedure}, or \textbf{hypothesis test}, is a rule that specifies
+\vskip .1in
+
+(1) for which sample values we accept $H_0$ as true; and\vskip .1in
+
+(2) for which sample values we reject $H_0$ and accept $H_1$,
+
+\vskip .1in
+i.e., for what $\mathbf{x}\in\mathcal{X}$ do we accept or reject $H_0$.
+\vskip .2in
+The subset of $\mathcal{X}$ where we reject $H_0$ is called the \textbf{rejection region} (or \textbf{critical region}).  The complement is sometimes called the \textbf{acceptance region}.
+
+---
+
+# Likelihood Ratio Test
+
+
+**Definition:** Recall the \textbf{likelihood function},
+$$L(\theta\,|\,\mathbf{x})=f(\mathbf{x}\,|\,\theta)=\prod_{i=1}^n{f(x_i\,|\,\theta)}.$$
+\vskip .1in
+The \textbf{likelihood ratio test (LRT) statistic} for testing
+\begin{align*}
+H_0 & : \theta\in\Theta_0\\[.5em]
+H_1 & : \theta\in\Theta_0^c
+\end{align*}
+is
+$$\lambda(\mathbf{x})=\frac{\sup_{\Theta_0}{L(\theta\,|\,\mathbf{x})}}{\sup_{\Theta}{L(\theta\,|\,\mathbf{x})}}.$$
+\enter
+\enter
+Some texts define the reciprocal as the LRT statistic. We shall follow the convention in the textbook and define the statistic as above.
+
+---
+
+
+**Definition:** A \textbf{likelihood ratio test (LRT)} is any test that has a rejection region of the form
+$$\lbrace\mathbf{x}\,:\,\lambda(\mathbf{x})\leq c\rbrace,$$
+where $c\in[0,1]$.
+
+
+\vspace{0.3in}
+
+**Questions:**
+
+(a) How to choose $c$?  Later...\vfill
+
+(b) Note that the likelihood ratio test statistic can be viewed as
+$$\lambda(\mathbf{x})=\frac{L(\hat{\theta}_0\,|\,\mathbf{x})}{L(\hat{\theta}\,|\,\mathbf{x})}=\frac{\text{restricted maximization}}{\text{unrestricted maximization}},$$
+where $\hat{\theta}$ is the MLE obtained by maximizing $L(\theta\,|\,\mathbf{x})$ over the entire parameter space $\Theta$, and $\hat{\theta}_0$ is the MLE obtained by maximizing over the restricted parameter space $\Theta_0$.
+
+
+
+---
+
+**Example:** Let $\rs\sim\operatorname{iid~N}(\theta,1)$. We want to test
+$$
+\begin{aligned}
+H_0 & : \theta=\theta_0\\[.5em]
+H_1 & : \theta\neq\theta_0.
+\end{aligned}
+$$
+Find the LRT rejection region.
+
+
+\enter
+
+
+Under $H_0$, there is only one value of $\theta_0$. So the restricted maximum in the numerator of LRT statistic $\lambda(\vec{x})$ is simply $L(\theta_0 \mid \vec x)$.
+
+\enter
+
+The unrestricted MLE of $\theta$ is $\bar X$. So the denominator of $\lambda (\vec x)$ is $L(\bar x \mid \vec x)$.
+
+\enter
+So the LRT statistic is 
+$$
+\begin{aligned}
+\lambda(\vec x) 
+&= \frac{(2\pi)^{-n/2} \exp\left[-\frac12\sum_{i=1}^n (x_i - \theta_0)^2\right]}{(2\pi)^{-n/2} \exp\left[-\frac12\sum_{i=1}^n (x_i - \bar x)^2\right]} \\
+&= \exp\left[-\frac12\left\{ \sum_{i=1}^n (x_i - \theta_0)^2 - \sum_{i=1}^n (x_i - \bar x)^2  \right\} \right] \\
+&= \exp\left[-\frac12 \ n  (\bar x - \theta_0)^2 \right]
+\end{aligned}
+$$
+
+The LRT rejection region is $\{\vec x: \exp\left[-\frac12 \ n  (\bar x - \theta_0)^2 \right] < c\}$ for $0 < c < 1$.
+
+---
+
+# Homework
+
+-   Method of evaluating estimators: Read p. $342-348$.
+
+-   Hypothesis Tests: Read p. $373-376$.
+
+-   Exercises: TBA.
+
