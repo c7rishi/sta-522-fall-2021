@@ -42,7 +42,7 @@ L(\beta \mid \vec x) = \prod_{i=1}^n \frac{1}{\Gamma(\alpha) \beta^\alpha}\ x_i^
 $$
 The log-likelihood function is given by: 
 $$
-\log L(\beta \mid \vec x) = -n log \Gamma(\alpha) - n\alpha \log \beta + (\alpha - 1) \sum_{i=1}^n \log x_i - \frac{1}{\beta} \sum_{i=1}^n x_i
+\log L(\beta \mid \vec x) = -n \log \Gamma(\alpha) - n\alpha \log \beta + (\alpha - 1) \sum_{i=1}^n \log x_i - \frac{1}{\beta} \sum_{i=1}^n x_i
 $$
 To maximize $\log  L(\beta \mid \vec x)$ we consider the first derivative test:
 $$
@@ -117,7 +117,7 @@ $$
 $$
 For $\hat \theta$, we have (from lecture 7)
 $$
-\E_\theta(\hat \theta) = \frac{n}{n+1} \theta \ \ \text{ and } \var_\theta(\hat \theta) = \left(\frac{n}{n+1}\right)^2 \var_\theta \left( \frac{n}{n+1} \ X_{(n)} \right) = \frac{n}{(n+1)^2(n+2)} \theta^2
+\E_\theta(\hat \theta) = \frac{n}{n+1} \theta \ \ \text{ and } \var_\theta(\hat \theta) = \left(\frac{n}{n+1}\right)^2 \var_\theta \left( \frac{n+1}{n} \ X_{(n)} \right) = \frac{n}{(n+1)^2(n+2)} \theta^2
 $$
 Therefore,
 $$
