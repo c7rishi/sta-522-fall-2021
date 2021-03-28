@@ -112,7 +112,7 @@ $$
 $$
 Therefore, the CRLB for an unbiased estimator of $\ds \tau(\lambda)=e^{-\lambda}$ is:
 $$
-\on{CRLB} = \frac{\left[\frac{d}{d\theta}\ \tau(\theta) \right]^2}{\E_{\lambda}\left[\left[\frac{\partial}{\partial\lambda}\log{f(\mathbf{X} \mid \lambda)}\right]^2\right]} = \frac{\left(-e^{-\lambda}\right)^2}{\frac{n}{\lambda}}= \frac{\lambda \ e^{-2 \lambda}}{n}
+\on{CRLB} = \frac{\left[\frac{d}{d\lambda}\ \tau(\lambda) \right]^2}{\E_{\lambda}\left[\left[\frac{\partial}{\partial\lambda}\log{f(\mathbf{X} \mid \lambda)}\right]^2\right]} = \frac{\left(-e^{-\lambda}\right)^2}{\frac{n}{\lambda}}= \frac{\lambda \ e^{-2 \lambda}}{n}
 $$
 
 
@@ -308,7 +308,7 @@ If $\E_{\theta}(W)=\tau(\theta)$, then $W$ is the best unbiased estimator of $\t
 \vfill
 \vspace{0.2in}
 
-**Proof: (If part)**
+**Proof: (Only if part)**
 Let  $W$ be the UMVUE and $U$ be any unbiased estimator of $0$. Define $\phi_a = W + aU$ for some arbitrary number $a$. Then $\phi_a$ is unbiased for $\tau(\theta)$ and
 $$
 \var_\theta(\phi_a) = \var_\theta(W + aU) = \var_\theta(W) + a^2 \var_\theta(U) + 2 a \cov_\theta(W, U)
@@ -321,7 +321,7 @@ If for some $\theta=\theta_0$, $\cov_{\theta_0}(W, U) < 0$ then for $a \in \left
 \vspace{0.2in} 
 
 
-Similar contradiction arises if $\cov_{\theta_0}(W, U) < 0$. 
+Similar contradiction arises if $\cov_{\theta_0}(W, U) > 0$. 
 
 \vspace{0.2in} 
 
@@ -331,7 +331,7 @@ Hence $\cov_\theta(W, U)$ must be $0$ for all $\theta$ and for all $U$.
 \vspace{0.2in} 
 
 
-**(Only if part):** Reading exercise. See p. 345 of the textbook.
+**(if part):** Reading exercise. See p. 345 of the textbook.
 
 
 \vfill
