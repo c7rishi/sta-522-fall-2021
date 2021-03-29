@@ -1,0 +1,477 @@
+---
+title: |
+  | STA 522, Spring 2021  
+  | Introduction to Theoretical Statistics II
+author: | 
+  | Lecture 9
+  | 
+  | Department of Biostatistics
+  | University at Buffalo 
+date: "29 March, 2021"
+output: 
+  beamer_presentation:
+    toc: false
+header-includes:
+  - \usepackage{bm}
+  - \usepackage{amsmath}
+  - \usepackage{mathrsfs}
+bibliography: references.bib
+fontsize: 10pt
+editor_options: 
+  markdown: 
+    wrap: 80
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+\newcommand{\rs}{X_1,X_2,\dots,X_n}
+\newcommand{\on}{\operatorname}
+\newcommand{\enter}{\vspace{0.1in}}
+\newcommand{\ds}{\displaystyle}
+\renewcommand{\bar}{\overline}
+\newcommand{\N}{\text{N}}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Ss}{\mathcal{S}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\E}{\on{E}}
+\newcommand{\var}{\on{Var}}
+\newcommand{\cov}{\on{Cov}}
+\newcommand{\MSE}{\on{MSE}}
+\renewcommand{\vec}{\underline}
+\newcommand{\asim}{\stackrel{a}{\sim}}
+\renewcommand{\mathbf}{\vec}
+<!-- \renewcommand{\mathcal}{\mathscr} -->
+
+
+# AGENDA
+
+\vspace{0.1in}
+
+- Hypothesis testing, LRT
+
+\enter
+
+- Properties of tests, finding $c$ in LRT
+
+\enter
+
+- Methods of evaluating tests
+
+---
+
+
+# Review: likelihood ratio test
+
+
+
+- Recall the \textbf{likelihood function} $\ds L(\theta\,|\,\mathbf{x}) = f(\mathbf{x}\,|\,\theta)=\prod_{i=1}^n{f(x_i\,|\,\theta)}.$
+The \textbf{likelihood ratio test (LRT) statistic} for testing
+$H_0 : \theta\in\Theta_0$ vs.  $H_1: \theta\in\Theta_0^c$ is
+$\ds \lambda(\mathbf{x})=\frac{\sup_{\Theta_0}{L(\theta\,|\,\mathbf{x})}}{\sup_{\Theta}{L(\theta\,|\,\mathbf{x})}}.$
+
+\enter
+
+- Note that the likelihood ratio test statistic can be viewed as
+$$\lambda(\mathbf{x})=\frac{L(\hat{\theta}_0\,|\,\mathbf{x})}{L(\hat{\theta}\,|\,\mathbf{x})}=\frac{\text{restricted maximization}}{\text{unrestricted maximization}},$$
+where $\hat{\theta}$ is the MLE obtained by maximizing $L(\theta\,|\,\mathbf{x})$ over the entire parameter space $\Theta$, and $\hat{\theta}_0$ is the MLE obtained by maximizing over the restricted parameter space $\Theta_0$.
+
+\enter
+
+
+- A \textbf{likelihood ratio test (LRT)} is any test that has a rejection region of the form
+$$\lbrace\mathbf{x}\,:\,\lambda(\mathbf{x})\leq c\rbrace,$$
+where $c\in[0,1]$.
+
+
+---
+
+**Example:** Let $\rs\sim\operatorname{iid}$ from a (location) exponential population with pdf
+$\ds f(x\,|\,\theta)=e^{-(x-\theta)}I_{[\theta,\infty)}(x),$
+where $\theta\in \Theta = \R$. Suppose we wish to test
+$H_0: \theta\leq a$ vs. $H_1: \theta> a$ where $a$ is a known value (e.g. 0) supplied by the experimenter. Find the LRT rejection region.
+
+\enter
+
+The likelihood function for $\theta$ is:
+$$
+L(\theta \mid \vec x) = \prod_{i=1}^n e^{-(x_i-\theta)} \ I(x_i \geq \theta) = e^{-n (\bar x-\theta)} \ I(x_{(1)} \geq \theta)
+$$
+\enter \vfill
+
+\enter \vfill
+
+$L(\theta \mid \vec x)$ is an increasing function in $\theta$ for $\theta \in (-\infty, x_{(1)}]$. So unrestricted MLE is $\hat \theta = x_{(1)}$ so that $\ds \sup_{\theta \in \Theta} = L(x_{(1)} \mid \vec x) = e^{-n \left(\bar x-x_{(1)}\right)}$. 
+
+\enter \vfill
+
+\enter \vfill
+
+
+
+---
+
+
+Under $H_0$, the restricted range $\theta \in \Theta_0 = (-\infty, a]$ MLE of $\theta$ is
+$$
+\hat \theta_0 = \begin{cases}
+x_{(1)} & \text{ if } \ x_{(1)} \leq a \\
+a & \text{ if } \ x_{(1)} > a
+\end{cases}
+$$
+Therefore, LRT is:
+$$
+\lambda(\vec x) = \begin{cases}
+1 & \text{ if } x_{(1)} \leq a \\
+e^{-n \left(x_{(1)} - a \right)} & \text{ if } x_{(1)} > a
+\end{cases}
+$$
+\enter \vfill
+\enter \vfill
+
+Therefore the rejection region for the LRT is:
+$$
+\{\vec x: \lambda(\vec x) \leq c \} = \left\{\vec x: x_{(1)} \geq a - \frac{\log c}{n} \right\}
+$$
+for some $0 < c < 1$.
+
+**NOTE:** The LRT rejection region depends on the data only through $X_{(1)}$. In the normal example discussed last week, the LRT rejection region depends on data only through $\bar X$.
+
+
+---
+
+# LRT and sufficiency
+
+
+**Note:** Sufficiency means that all the information about $\theta$ in $\vec x$ is contained in a sufficient statistic $T(\vec x)$. Intuitively,  a test based on $T$ should be as good as the test based on the complete sample $\vec X$. The following theorem formalizes this.
+
+
+\enter
+\vfill
+
+## Theorem (8.2.4)
+
+If $T(\mathbf{X})$ is a sufficient statistic for $\theta$ and $\lambda^*(t)$ and $\lambda(\mathbf{x})$ are the LRT statistics based on $T$ and $\mathbf{X}$, respectively, then
+$$\lambda^*(T(\mathbf{x}))=\lambda(\mathbf{x})$$
+for every $\mathbf{x}$ in the sample space.
+
+\enter
+\vfill
+
+
+
+**Proof:**  Since $T(\vec X)$ is a sufficient statistics, therefore by the Factorization theorem, we have
+$$
+f(\vec x  \mid \theta) = g(T(\vec x) \mid \theta) \ h(\vec x)
+$$
+
+
+---
+
+Therefore
+$$
+\begin{aligned}
+\lambda(\vec x) &= \frac{\sup_{\Theta_0} L(\theta \mid \vec x)}{\sup_{\Theta} L(\theta \mid \vec x)} \\
+&= \frac{\sup_{\Theta_0} f(\vec x  \mid \theta)}{\sup_{\Theta} f(\vec x  \mid \theta)} \\
+&= \frac{\sup_{\Theta_0} g(T(\vec x) \mid \theta) \ h(\vec x)}{\sup_{\Theta} g(T(\vec x) \mid \theta) \ h(\vec x)} \\
+&= \frac{\sup_{\Theta_0} g(T(\vec x) \mid \theta) }{\sup_{\Theta} g(T(\vec x) \mid \theta)} \\
+&= \frac{\sup_{\Theta_0} L^*(\theta \mid T(\vec x))}{\sup_{\Theta} L^*(\theta \mid T(\vec x))} \\
+&= \lambda^*(T(\vec x))
+\end{aligned}
+$$
+This completes the proof.
+
+---
+
+
+**Example:** Let $\rs\sim\operatorname{iid}$ from a population with pdf $\ds f(x\,|\,\theta)=\theta x^{\theta-1}I_{(0,1)}(x)$, $\theta > 0$. Suppose we wish to test $H_0: \theta=1$ vs. $H_1: \theta \neq 1$. Find the LRT rejection region.
+
+\enter
+
+Note at the outset that the restricted MLE is simply $\hat \theta_0 = 1$.
+
+
+For $\theta \in \Theta = (0, \infty)$ the likelihood function is given by 
+$$
+L(\theta \mid \vec x) = \theta^n \left(\prod_{i=1}^n x_i\right)^{ (\theta-1)} \implies \log L(\theta \mid \vec x) = n \log \theta + (\theta-1)\sum_{i=1}^n \log x_i
+$$
+therefore
+$$
+\frac{\partial \ L(\theta \mid \vec x)}{\partial \theta} = \frac{n}{\theta} + \sum_{i=1}^n \log x_i \gtreqless 0 \iff \theta \lesseqgtr - \frac{n}{\sum_{i=1}^n \log x_i}
+$$
+Therefore, the MLE of $\theta$ is $\hat \theta = \frac{n}{\sum_{i=1}^n \log X_i}$.
+
+---
+
+Therefore the LRT statistic is 
+$$
+\begin{aligned}
+\lambda(\vec x) 
+&= \frac{\sup_{\Theta_0} L(\theta \mid \vec x)}{\sup_{\Theta} L(\theta \mid \vec x)} \\
+&= \exp\left[n \log \theta_0 + (\theta_0-1)\sum_{i=1}^n \log x_i  - n \log \hat \theta - (\hat\theta-1)\sum_{i=1}^n \log x_i \right] \\
+&= \exp\left[n \log \left(\frac{\theta_0}{\hat \theta}\right)  + (\theta_0-\hat \theta)\sum_{i=1}^n \log x_i   \right]
+\end{aligned}
+$$
+
+Note that $\lambda(\vec x)$ depends on $\vec x$ only through $\sum_{i=1} \log x_i$.
+
+The rejection region of the LR test is given by:
+$$
+\left\{\vec x: \exp\left[n \log \left(\frac{\theta_0}{\hat \theta}\right)  + (\theta_0-\hat \theta)\sum_{i=1}^n \log x_i   \right] \leq c \right\}
+$$
+
+
+---
+
+
+**Example (LRT under the presence of nuisance parameters):** Let $\rs\sim\operatorname{iid~N}(\mu,\sigma^2)$ (both parameters unknown). Suppose we wish to test
+$H_0 : \mu\leq\mu_0$ vs. $H_1: \mu>\mu_0$. Find the LRT rejection region.
+
+\enter 
+
+Note that here $\sigma^2$ is a nuisance parameter.
+
+The unrestricted MLEs of $\mu$ and $\sigma^2$ are $\hat \mu = \bar X$ and $\hat \sigma^2 = \frac{1}{n} \sum_{i=1}^n (X_i - \bar X)^2$.
+
+Under $H_0$, the restricted MLE for $\mu$ is
+$$
+\hat \mu_0 = \begin{cases}
+\bar X & \text{if } \ \bar X \leq \mu_0 \\
+\mu_0 & \text{if } \ \bar X  > \mu_0
+\end{cases}
+$$
+The corresponding MLE of $\sigma^2$ is
+$$
+\hat \sigma^2_0 = \begin{cases}
+\frac{1}{n} \sum_{i=1}^n (X_i - \bar X)^2 & \text{if } \ \bar X \leq \mu_0 \\
+\frac{1}{n} \sum_{i=1}^n (X_i - \mu_0)^2 & \text{if } \ \bar X  > \mu_0
+\end{cases}
+$$
+
+---
+
+The LRT statistic is given by:
+$$
+\lambda(\vec x) = \begin{cases}
+1 & \text{if } \ \bar X \leq \mu_0 \\
+\ds \frac{L(\mu_0, \sigma^2_0)}{L(\hat \mu, \hat \sigma^2)} & \text{if } \ \bar X  > \mu_0
+\end{cases}
+$$
+The rejection region is given by
+$$
+\{\vec x: \lambda(\vec x) \leq c\}
+$$
+It can be shown that (HW, exercise 8.37) the above rejection region can be equivalently expressed as ($t$-test)
+$$
+\bar X > \mu_0 + c' \sqrt{\frac{S^2}{n}}
+$$
+
+
+
+---
+
+# Errors in Hypothesis Testing
+
+**Definition:** Suppose we are testing
+$$
+\begin{aligned}
+H_0 & : \theta\in\Theta_0\\[.5em]
+\text{vs. } H_1 & : \theta\in\Theta_0^c.
+\end{aligned}
+$$
+
+\enter
+
+If $\theta\in\Theta_0$, but the test incorrectly rejects $H_0$, then the test has made a \textbf{Type I error}.
+
+\enter
+
+If, on the other hand, $\theta\in\Theta_0^c$, but the test decides to accept $H_0$, then the test has made a \textbf{Type II error}.
+
+![](images/table-8-3-1.PNG){height=30%}
+
+---
+
+
+# Computing Error Probabilities
+
+**Definition:** Let $R$ denote the rejection region of a hypothesis test.
+\vskip .2in
+If $\theta\in\Theta_0$, then the probability of a Type I error is
+$$P_{\theta}(\mathbf{X}\in R).$$
+\vskip .2in
+If $\theta\in\Theta_0^c$, then the probability of a Type II error is
+$$P_{\theta}(\mathbf{X}\notin R)=1-P_{\theta}(\mathbf{X}\in R).$$
+
+
+
+---
+
+# Power Function
+
+**Definition:** The \textbf{power function} of a hypothesis test with rejection region $R$ is the function of $\theta$ defined by
+$$
+\begin{aligned}
+\beta(\theta) & = P_{\theta}(\mathbf{X}\in R)\\[.5em]
+& = \begin{cases}\text{probability of a Type I error}&\text{if }\theta\in\Theta_0\\1-\text{ probability of a Type II error}&\text{if }\theta\in\Theta_0^c.\end{cases}
+\end{aligned}
+$$
+
+**Comments on the Power function:**
+
+(a) Ideally, we want $\beta(\theta)=0$ for all $\theta\in\Theta_0$ and $\beta(\theta)=1$ for all $\theta\in\Theta_0^c$.\vfill
+
+(b) Depends on the hypothesis test (what are we testing?).\vfill
+
+(c) Depends on the rejection region (value of $c$).\vfill
+
+(d) It's a function of $\theta$, not the data.\vfill
+
+(e) Since it's a probability, $0\leq\beta(\theta)\leq1$ for all $\theta$.
+
+
+---
+
+
+**Example:** Suppose $X\sim\operatorname{binomial}(5,\theta)$, and we are testing
+$\ds H_0 : \theta\leq\frac{1}{2} \text{vs. } H_1  : \theta>\frac{1}{2}.$ Consider the two rejection regions
+$$
+\begin{aligned}
+R_1 & = \lbrace x\,:\,x=5\rbrace\\[.5em]
+R_2 & = \lbrace x\,:\,x=3,4,5\rbrace.
+\end{aligned}
+$$
+Note that with $R_1$, we reject $H_0$ if and only if we observe all successes, whereas with $R_2$, we reject $H_0$ if and only if we observe at least $3$ successes. Determine the power function for each test.
+
+
+\enter
+
+Here
+$$
+\beta_1(\theta) = P_\theta(X \in R_1) = P_\theta(X = 5) = \binom{5}{5} \theta^5 (1-\theta)^{5-5} = \theta^5
+$$
+$$
+\beta_2(\theta) = P_\theta(X \in R_2) = \sum_{j=3}^5 P_\theta(X = 5) = \sum_{j=3}^5 \binom{5}{j} \theta^j (1-\theta)^{5-j}
+$$
+
+
+
+---
+
+# Comments about the two power functions
+
+
+
+![](images/fig-8-3-1.PNG){width=40%}
+
+
+
+
+(a) $\beta_2(\theta)$ has higher Type I error and lower Type II error.
+
+(b) $\beta_1(\theta)$ has lower Type I error and higher Type II error.
+
+(c) Ideally, what we will do is try to maximize power while controlling Type I error.
+
+(d) This is how we will choose $c$ in our previous calculations of rejection regions.
+
+---
+
+# Size and Level
+
+**Definition:** For $0\leq\alpha\leq1$, a test with power function $\beta(\theta)$ is a \textbf{size $\alpha$ test} if
+$$\sup_{\theta\in\Theta_0}{\beta(\theta)}=\alpha.$$
+\vskip .2in
+For $0\leq\alpha\leq1$, a test with power function $\beta(\theta)$ is a \textbf{level $\alpha$ test} if 
+$$\sup_{\theta\in\Theta_0}{\beta(\theta)}\leq\alpha.$$
+
+
+\enter
+\vfill
+**Notes:** the set of size $\alpha$ tests is a subset of the set of level $\alpha$ tests.
+\vfill
+By specifying the level of a test, we are only controlling the Type I error, not the Type II error.
+
+
+---
+
+# Choosing $c$ For LRTs
+
+
+- Restricting to size $\alpha$ tests allows us to determine the value of $c$ to use in the LRT.\vfill
+
+- We can build a size $\alpha$ LRT by choosing $c$ so that
+$$\sup_{\theta\in\Theta_0}{P_{\theta}(\mathbf{X}\in R)}=\alpha,\quad\text{i.e.,}\quad\sup_{\theta\in\Theta_0}{P_{\theta}(\lambda(\mathbf{X})\leq c)}=\alpha.$$
+
+---
+
+**Example (contd.):** Let $\rs\sim\operatorname{iid~N}(\theta,1)$. Suppose we wish to test
+$H_0: \theta=\theta_0 \text{vs. } H_1 : \theta\neq\theta_0$.
+We saw that the LRT rejection region is given by
+$$R=\lbrace\mathbf{x}\,:\,|\overline{x}-\theta_0|\geq k\rbrace,$$
+where $k=\sqrt{\frac{-2\log{c}}{n}}$. Find the value of $c$ so that we have a size $\alpha$ test.
+
+Since $\Theta_0 = \{\theta_0\}$ is singleton, hence 
+$$
+\on{size} = \sup_{\Theta_0} P_\theta\left(|\overline{X}-\theta_0|\geq k\right) = P_{\theta_0}\left(|\overline{X}-\theta_0|\geq k\right) 
+$$
+Now, under $H_0$, $\bar X \sim N(\theta_0, 1/n)$ so that $Z = \sqrt{n}(\bar X - \theta_0) \sim N(0, 1)$. Therefore the size of the LRT being $\alpha$ implies
+$$
+\begin{aligned}
+\alpha &= P_{\theta_0}\left(|\sqrt{n}(\bar X - \theta_0)| \geq \sqrt{n} \ k \right) \\ 
+&= P_{\theta_0}(|Z| \geq \sqrt{n} \ k) \\
+&= P(Z \geq \sqrt{n} \ k) + P(Z \leq -\sqrt{n} \ k) \\
+&= P(Z \geq \sqrt{n} \ k) + P(-Z \geq  -\sqrt{n} \ k) = 2 \ P(Z \geq \sqrt{n} \ k)
+\end{aligned}
+$$
+Let $z_{\alpha}$ be the upper $\alpha$-th quantile of $Z$ such that $P(Z \geq z_\alpha) = \alpha$.
+
+
+
+---
+
+Here $\alpha/2 = P(Z \geq \sqrt{n} \ k)$, which implies $$\sqrt{n} \ k = z_{\alpha/2} \implies k = \frac{1}{\sqrt{n}} z_{\alpha/2} \implies c = \exp\left(- z_{\alpha/2}^2 / 2\right)$$
+
+\enter \vfill
+
+
+**Example (contd.): ** Let $\rs\sim\operatorname{iid}$ from a location exponential population with pdf
+$$f(x\,|\,\theta)=e^{-(x-\theta)}I_{[\theta,\infty)}(x).$$ Suppose we wish to test $H_0 : \theta\leq\theta_0$ vs. $H_1 : \theta>\theta_0$. We showed that the LRT rejection region is given by
+$$R=\left\lbrace\mathbf{x}\,:\,x_{(1)}\geq\theta_0-\frac{\log{c}}{n}\right\rbrace.$$
+Find the value of $c$ so that we have a size $\alpha$ test.
+
+HW. See p. 386 in the textbook.
+
+---
+
+# Evaluating Tests
+
+**Definition:** A test with power function $\beta(\theta)$ is \textbf{unbiased} if
+$$\beta(\theta')\geq\beta(\theta'')$$
+for every $\theta'\in\Theta_0^c$ and $\theta''\in\Theta_0$.
+
+\enter 
+\vfill
+
+**Definition:** Let $\mathcal{C}$ be a class of tests for testing $H_0 : \theta\in\Theta_0$ vs. $H_1 : \theta\in\Theta_0^c$. A test in class $\mathcal{C}$, with power function $\beta(\theta)$, is a \textbf{uniformly most powerful (UMP) class $\mathcal{C}$ test} if $\beta(\theta)\geq\beta'(\theta)$ for every $\theta\in\Theta_0^c$ and every $\beta'(\theta)$ that is a power function of a test in class $\mathcal{C}$.
+
+\enter
+
+**Note:** if we take $\mathcal{C}$ to be the class of all level $\alpha$ tests, the test described in the above definition is called a \textbf{UMP level $\alpha$ test}.
+
+---
+
+
+
+# Homework
+
+-   Method of evaluating estimators: Read p. $342-348$.
+
+-   Hypothesis Tests: Read p. $373-376$.
+
+-   Exercises: TBA.
+

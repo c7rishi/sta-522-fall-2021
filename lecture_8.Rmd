@@ -67,7 +67,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 \vspace{0.1in}
 
--  Cramér-Rao Lower Bound
+-  Intro to Hypothesis Testing
 
 
 ---
