@@ -105,7 +105,7 @@ $$
 
 \enter \vfill
 
-$L(\theta \mid \vec x)$ is an increasing function in $\theta$ for $\theta \in (-\infty, x_{(1)}]$. So unrestricted MLE is $\hat \theta = x_{(1)}$ so that $\ds \sup_{\theta \in \Theta} = L(x_{(1)} \mid \vec x) = e^{-n \left(\bar x-x_{(1)}\right)}$. 
+$L(\theta \mid \vec x)$ is an increasing function in $\theta$ for $\theta \in (-\infty, x_{(1)}]$. So unrestricted MLE is $\hat \theta = x_{(1)}$ so that $\ds \sup_{\theta \in \Theta} L(\theta \mid \vec x) = L(x_{(1)} \mid \vec x) = e^{-n \left(\bar x-x_{(1)}\right)}$. 
 
 \enter \vfill
 
@@ -355,7 +355,7 @@ $$
 \beta_1(\theta) = P_\theta(X \in R_1) = P_\theta(X = 5) = \binom{5}{5} \theta^5 (1-\theta)^{5-5} = \theta^5
 $$
 $$
-\beta_2(\theta) = P_\theta(X \in R_2) = \sum_{j=3}^5 P_\theta(X = 5) = \sum_{j=3}^5 \binom{5}{j} \theta^j (1-\theta)^{5-j}
+\beta_2(\theta) = P_\theta(X \in R_2) = \sum_{j=3}^5 P_\theta(X = j) = \sum_{j=3}^5 \binom{5}{j} \theta^j (1-\theta)^{5-j}
 $$
 
 
@@ -469,9 +469,7 @@ for every $\theta'\in\Theta_0^c$ and $\theta''\in\Theta_0$.
 
 # Homework
 
--   Method of evaluating estimators: Read p. $342-348$.
-
--   Hypothesis Tests: Read p. $373-376$.
+-   Read p. $374-379$, $382-387$.
 
 -   Exercises: TBA.
 
