@@ -1,0 +1,342 @@
+---
+title: |
+  | STA 522, Spring 2021  
+  | Introduction to Theoretical Statistics II
+author: | 
+  | Lecture 10
+  | 
+  | Department of Biostatistics
+  | University at Buffalo 
+date: "5 April, 2021"
+output: 
+  beamer_presentation:
+    toc: false
+header-includes:
+  - \usepackage{bm}
+  - \usepackage{amsmath}
+  - \usepackage{mathrsfs}
+bibliography: references.bib
+fontsize: 10pt
+editor_options: 
+  markdown: 
+    wrap: 80
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+\newcommand{\rs}{X_1,X_2,\dots,X_n}
+\newcommand{\on}{\operatorname}
+\newcommand{\enter}{\vspace{0.1in}}
+\newcommand{\ds}{\displaystyle}
+\renewcommand{\bar}{\overline}
+\newcommand{\N}{\text{N}}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Ss}{\mathcal{S}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\E}{\on{E}}
+\newcommand{\var}{\on{Var}}
+\newcommand{\cov}{\on{Cov}}
+\newcommand{\MSE}{\on{MSE}}
+\renewcommand{\vec}{\underline}
+\newcommand{\asim}{\stackrel{a}{\sim}}
+\renewcommand{\mathbf}{\vec}
+<!-- \renewcommand{\mathcal}{\mathscr} -->
+
+
+# AGENDA
+
+\vspace{0.1in}
+
+- Evaluating Tests
+
+\vspace{0.1in}
+
+- UMP tests
+
+\enter
+
+- Neyman Pearson Lemma
+
+\enter
+
+- Review for Exam 2
+
+---
+
+
+# Review: Evaluating Tests
+
+
+
+- Let $\mathcal{C}$ be a class of tests for testing $H_0 : \theta\in\Theta_0$ vs. $H_1 : \theta\in\Theta_0^c$. A test in class $\mathcal{C}$, with power function $\beta(\theta)$, is a \textbf{uniformly most powerful (UMP) class $\mathcal{C}$ test} if $\beta(\theta)\geq\beta'(\theta)$ for every $\theta\in\Theta_0^c$ and every $\beta'(\theta)$ that is a power function of a test in class $\mathcal{C}$.
+
+-  if we take $\mathcal{C}$ to be the class of all level $\alpha$ tests, the test described in the above definition is called a \textbf{UMP level $\alpha$ test}.
+
+
+---
+
+
+# Neyman-Pearson Lemma
+
+## Theorem 8.3.12
+
+\enter
+
+Consider testing $H_0: \theta = \theta_0$ vs. $H_1: \theta=\theta_1$,
+where
+
+(1) the pdf or pmf corresponding to $\theta_i$ is $f(\mathbf{x}\,|\,\theta_i)$ for $i=0,1$;
+
+(2) the test has a rejection region $R$ that satisfies
+
+$\ds \mathbf{x}\in R\quad\text{if}\quad f(\mathbf{x}\,|\,\theta_1)>kf(\mathbf{x}\,|\,\theta_0)$
+and
+$\ds \mathbf{x}\in R^c\quad\text{if}\quad f(\mathbf{x}\,|\,\theta_1)<kf(\mathbf{x}\,|\,\theta_0)$
+for some $k\geq0$; and
+
+(3) $\alpha=P_{\theta_0}(\mathbf{X}\in R)$.
+
+\enter 
+
+Then 
+
+\enter 
+
+(a) **(Sufficiency)** any test that satisfies (2) and (3) above is a UMP level $\alpha$ test; and
+
+(b) **(Necessity)** if there exists a test satisfying (2) and (3) above with $k>0$, then every UMP level $\alpha$ test is a size $\alpha$ test (satisfies (3) above), and every UMP level $\alpha$ test satisfies (2) above, except perhaps on a set $A$ satisfying
+$\ds P_{\theta_0}(\mathbf{X}\in A)=P_{\theta_1}(\mathbf{X}\in A)=0.$
+
+
+---
+
+**Proof:** Assume that $f(\mathbf{x}\,|\,\theta_0)$ and $f(\mathbf{x}\,|\,\theta_1)$ are pdfs of continuous random variables.
+
+
+Note  that any test satisfying (3) is a size $\alpha$ and, hence, a level $\alpha$ test:
+$$
+\sup_{\theta \in \Theta_0} P_\theta(\vec X \in R) = P_{\theta_0} (\vec X  \in R) = 0
+$$
+Consider the *test function* $\phi(\vec x) = I(\vec x \in R)$ of a test satisfying (1) and (2). 
+
+
+
+\enter
+
+**Part(a):** Let $\phi'(\vec x)$ be the test function of any other level $\alpha$ test, and let $\beta(\theta)$ and $\beta'(\theta)$ be the power
+functions for the tests $\phi$ and $\phi'$, respectively. 
+
+Now consider quantity $\psi(\vec x \mid \theta_0, \theta_1) =  (\phi(\vec x) - \phi'(\vec x)) \ (f(\mathbf{x}\,|\,\theta_1) - kf(\mathbf{x}\,|\,\theta_0))$.
+
+\enter
+
+Then $\psi(\vec x \mid \theta_0, \theta_1) \geq 0$ for all $\vec x$ (since $0 \leq \phi'(\vec x) \leq 1$ for all $x$ and $\phi(\vec x) = I(\vec x \in R)$)
+
+$$
+\begin{aligned}
+\implies 0 \ & \leq \int \left[(\phi(\vec x) - \phi'(\vec x)) \ (f(\mathbf{x}\,|\,\theta_1) - kf(\mathbf{x}\,|\,\theta_0))\right] \ d\vec x \\
+& = \beta(\theta_1) - \beta'(\theta_1) - k (\beta(\theta_0) - \beta'(\theta_0)) && (\star)
+\end{aligned}
+$$
+
+---
+
+Since $\phi'(\vec x)$ is a level $\alpha$ test and $\phi(\vec x)$ is a size $\alpha$ test, therefore $\beta(\theta_0) - \beta'(\theta_0) \geq \alpha - \alpha = 0$. Therefore from $(\star)$,
+$$
+0 \leq \beta(\theta_1) - \beta'(\theta_1) - k (\beta(\theta_0) - \beta'(\theta_0)) \leq \beta(\theta_1) - \beta'(\theta_1)
+$$
+implying $\beta(\theta_1) \geq \beta'(\theta_1)$. This proves part (a).
+
+\enter
+
+
+**Part(b):** let $\phi'$ now be the test function for any UMP level $\alpha$ test. By part (a), $\phi$, a test satisfying (2) and (3) above, is also a UMP level $\alpha$ test, thus $\beta(\theta_1) = \beta'(\theta_1)$. Since $k \geq 0$, from $(\star)$
+$$
+0 \leq 0 - k (\beta(\theta_0) - \beta'(\theta_0)) \implies \underbrace{\beta(\theta_0)}_{=\alpha} - \beta'(\theta_0) \leq 0 \implies \beta'(\theta_0) \geq \alpha
+$$
+but by assumption $\phi'(\vec x)$ is a level $\alpha$ test, i.e., $\beta'(\theta_0) \leq \alpha$, which together imply $\beta'(\theta_0) = \alpha$ meaning $\phi'(\vec x)$ is a size $\alpha$ test, and $(\star)$ is an equality.
+
+\enter
+
+However, the non-negative integrand $\psi(\vec x \mid \theta_0, \theta_1)$ will have a zero integral only if it satisfies
+(2), except perhaps on a set $A$ satisfying
+$\ds P_{\theta_0}(\mathbf{X}\in A)=P_{\theta_1}(\mathbf{X}\in A)=0.$ This proves (b). 
+
+---
+
+
+# Tests Based on Sufficient Statistics
+
+
+## Corollary 8.3.13
+
+\enter
+
+Consider testing $H_0:\theta=\theta_0$ vs. $H_1:\theta=\theta_1$. Suppose $T(\mathbf{X})$ is a sufficient statistic for $\theta$, and let $g(t\,|\,\theta_i)$ be the pdf or pmf of $T$ corresponding to $\theta_i$ for $i=0,1$. Then any test based on $T$ with rejection region $S$ (a subset of the sample space of $T$) is a UMP level $\alpha$ test if it satisfies
+
+\enter
+
+(1) for some $k\geq0$, $$t\in S\quad\text{if}\quad g(t\,|\,\theta_1)>kg(t\,|\,\theta_0)$$
+and
+$$t\in S^c\quad\text{if}\quad g(t\,|\,\theta_1)<kg(t\,|\,\theta_0)$$
+and
+
+\enter
+
+(2) $\alpha=P_{\theta_0}(T\in S)$.
+
+
+
+\enter \vfill
+
+**Proof:** Use factorization theorem. Reading exercise. See p. 390 in the textbook.
+
+---
+
+**Example:** Suppose $X\sim\operatorname{binomial}(2,\theta)$, and we are testing
+$H_0: \theta=\frac{1}{2}$ vs. $H_1: \theta=\frac{3}{4}$. Determine the UMP level $\alpha$ tests for $\alpha=0,\frac{1}{4},\frac{3}{4},1$.
+
+
+\enter
+
+At the outset note that a "larger" value of $X$ favors $H_1$, and a smaller value of $X$ favors $H_0$.
+
+\enter
+
+We have $\ds f(x \mid \theta) = \binom{2}{x} \ \theta^x \ (1-\theta)^{2-x}; \ x = 0, 1, 2$. Consider the ratio
+$$
+\frac{f\left(x \mid \theta=\frac{3}{4}\right)}{f\left(x \mid \theta=\frac{1}{2}\right)} = \frac{\binom{2}{x} \ \left(\frac34\right)^x \ \left(\frac14\right)^{2-x}}{\binom{2}{x} \ \left(\frac12\right)^x \ \left(\frac12\right)^{2-x}} = \left(\frac32\right)^x \ \left(\frac12\right)^{2-x}; \quad x = 0, 1, 2
+$$
+Therefore,
+$$
+\frac{f\left(0 \mid \theta=\frac{3}{4}\right)}{f\left(0 \mid \theta=\frac{1}{2}\right)} = \frac14; \quad \frac{f\left(1 \mid \theta=\frac{3}{4}\right)}{f\left(1 \mid \theta=\frac{1}{2}\right)} = \frac34; \quad \frac{f\left(2 \mid \theta=\frac{3}{4}\right)}{f\left(2 \mid \theta=\frac{1}{2}\right)} = \frac94.
+$$
+
+
+
+---
+
+
+(a) If we choose $\frac34 < k < \frac94$ then NP Lemma says that the test that rejects $H_0$ if $X = 2$ is the UMP level $\alpha = P\left(X = 2 \mid \theta = \frac12 \right) = \frac14$ test. 
+
+
+(b) If we choose $\frac14 < k < \frac34$
+then NP Lemma says that the test that rejects $H_0$ if $X = 1$ or $X = 2$ is the UMP level $\alpha = P\left(X = 1 \text{ or }  2 \mid \theta = \frac12 \right) = \frac34$ test
+
+(c) Choosing $k < \frac14$ or $k > \frac34$ produces UMP level 1 or level 0 tests tests respectively.
+
+\vfill
+
+
+- If $k = \frac34$, NP lemma says that we must reject $H_0$ when $X = 2$
+and accept $H_0$ but leaves the action for $X = 1$ undetermined. 
+
+  --  If we accept $H_0$ for $X = 1$, we get the UMP level $\alpha = \frac14$  test as above (case (a)). 
+ 
+  -- If we reject $H_0$ for $X = 1$, we get the UMP level $\alpha = \frac34$  test as above (case (b)).
+
+
+---
+
+
+<!-- **Example:** Suppose that $X_1,X_2,X_3,X_4\sim\operatorname{iid~gamma}(3,\theta)$ is a random sample to be used to test the hypotheses $H_0: \theta=\theta_0$ $H_1: \theta=\theta_1$, where $\theta_1>\theta_0$. Use the Neyman-Pearson Lemma to find the most powerful critical region of size $\alpha$. -->
+
+**Example (UMP Normal test):** 
+Let $\rs \sim \on{iid} N(\theta, \sigma^2)$ population, $\sigma^2$ known. Consider testing $H_0 : \theta = \theta_0$ vs. $H_1 : \theta = \theta_1$ , where $\theta_0 > \theta_1$. Find the UMP test.
+
+\enter
+
+The sample mean $\bar X$ is a sufficient statistic for $\theta$. So we'll use the corollary of NP lemma with sufficient statistic. 
+
+\enter
+
+Here
+$$g(\bar x \mid \theta_1) > k \ g(\bar x \mid \theta_0)$$ 
+is equivalent to (HW, use $\theta_1 - \theta_0 < 0$)
+$$
+\bar x < \frac{\frac{2 \sigma^2 \log k}{n} - (\theta_0^2 - \theta_1^2)}{2(\theta_1 - \theta_0)}
+$$
+i.e., of the form $\bar x < c$. Therefore, by the (corollary to) the NP lemma, a test that rejects $H_0$ when $\bar x < c$ is a UMP size $\alpha$ test, where $c$ is obtained from 
+$$
+\alpha = P_{\theta_0}(\bar X < c) = P_{\theta_0}\left( \frac{\bar X - \theta_0}{\sigma/\sqrt{n}} < \frac{c- \theta_0}{\sigma/\sqrt{n}} \right) \implies \frac{c- \theta_0}{\sigma/\sqrt{n}} = z_{1-\alpha} = -z_{\alpha}
+$$  
+i.e., $c = \theta_0 - z_\alpha \frac{\sigma}{\sqrt n}$
+
+
+---
+
+# Homework
+
+-   Read p. $387-392$.
+
+-   Exercises: TBA.
+
+
+
+<!-- # Extending the Neyman-Pearson Lemma -->
+
+
+<!-- -  Can we extend the Neyman-Pearson Lemma to composite hypotheses (hypotheses that specify more than one possible distribution for the sample)?\vfill -->
+
+<!--   --  Yes, but only for one-sided hypotheses ($H:\theta\geq\theta_0$ or $H:\theta<\theta_0$). \vfill -->
+
+<!--   --  A UMP level $\alpha$ test must be UMP for all values in the alternative hypothesis. -->
+
+
+<!-- --- -->
+
+<!-- # Monotone Likelihood Ratio (MLR) -->
+
+
+<!-- **Definition:** A family of pdfs or pmfs $\lbrace g(t\,|\,\theta)\,:\,\theta\in\Theta\rbrace$ for a univariate random variable $T$ with real-valued parameter $\theta$ has a \textbf{monotone likelihood ratio (MLR)} if, for every $\theta_2>\theta_1$, -->
+<!-- $$\frac{g(t\,|\,\theta_2)}{g(t\,|\,\theta_1)}$$ -->
+<!-- is a monotone (non-increasing or non-decreasing) function of $t$ on -->
+<!-- $$\lbrace t\,:\,g(t\,|\,\theta_1)>0\text{~or~}g(t\,|\,\theta_2)>0\rbrace.$$ -->
+
+<!-- \enter \vfill -->
+
+<!-- ## Comments About MLR -->
+
+
+<!-- - MLR is a property of a family of distributions.\vfill -->
+
+<!-- - $\operatorname{N}(\theta,\sigma^2)$ (with $\sigma^2$ known), $\operatorname{poisson}(\theta)$, and $\operatorname{binomial}(n,\theta)$ all have an MLR.\vfill -->
+
+<!-- - In general, any regular exponential family  -->
+
+<!-- --- -->
+
+
+<!-- # Karlin-Rubin Theorem -->
+
+
+<!-- ## Theorem  -->
+
+<!-- Consider testing $H_0: \theta\leq\theta_0$ -->
+<!-- vs. $H_1: \theta>\theta_0$. Suppose that $T$ is a sufficient statistic for $\theta$ and the family of pdfs or pmfs $\lbrace g(t\,|\,\theta)\,:\,\theta\in\Theta\rbrace$ of $T$ has an MLR. Then for any $t_0$, the test that rejects $H_0$ if and only if $T>t_0$ is a UMP level $\alpha$ test, where $\alpha=P_{\theta_0}(T>t_0)$. -->
+
+
+<!-- \enter -->
+<!-- \enter -->
+<!-- \enter -->
+
+<!-- \vfill -->
+
+<!-- **Example (Contd.):** Let $\rs \sim \on{iid} N(\theta, \sigma^2)$ population, $\sigma^2$ known. Consider testing $H_0' : \theta \geq \theta_0$ vs. $H_1' : \theta < \theta_0$, where $\theta_0 > \theta_1$.  -->
+
+<!-- \enter -->
+
+<!-- Consider the test that rejects $H_0'$ if $\bar X < \theta_0 - z_\alpha \frac{\sigma}{\sqrt n}$. $\bar X$ is sufficient and its distribution has an MLR (Exercise 8.25; HW).  -->
+
+<!-- \enter -->
+
+<!-- Therefore, from Karlin-Rubin theorem it follows that this test is UMP level $\alpha$ for this problem. -->
+
+
+<!-- --- -->
+
