@@ -1,0 +1,293 @@
+---
+title: |
+  | STA 522, Spring 2021  
+  | Introduction to Theoretical Statistics II
+author: | 
+  | Lecture 11
+  | 
+  | Department of Biostatistics
+  | University at Buffalo 
+date: "12 April, 2021"
+output: 
+  beamer_presentation:
+    toc: false
+header-includes:
+  - \usepackage{bm}
+  - \usepackage{amsmath}
+  - \usepackage{mathrsfs}
+bibliography: references.bib
+fontsize: 10pt
+editor_options: 
+  markdown: 
+    wrap: 80
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+\newcommand{\rs}{X_1,X_2,\dots,X_n}
+\newcommand{\on}{\operatorname}
+\newcommand{\enter}{\vspace{0.1in}}
+\newcommand{\ds}{\displaystyle}
+\renewcommand{\bar}{\overline}
+\newcommand{\N}{\text{N}}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Ss}{\mathcal{S}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\E}{\on{E}}
+\newcommand{\var}{\on{Var}}
+\newcommand{\cov}{\on{Cov}}
+\newcommand{\MSE}{\on{MSE}}
+\renewcommand{\vec}{\underline}
+\newcommand{\asim}{\stackrel{a}{\sim}}
+\renewcommand{\mathbf}{\vec}
+<!-- \renewcommand{\mathcal}{\mathscr} -->
+
+
+# AGENDA
+
+\vspace{0.1in}
+
+- Evaluating Tests
+
+\vspace{0.1in}
+
+- UMP tests
+
+\enter
+
+- Neyman Pearson Lemma
+
+\enter
+
+- Review for Exam 2
+
+---
+
+
+# Review: Neyman Pearson Lemma & Most Powerful Tests
+
+ - Consider testing $H_0: \theta = \theta_0$ vs. $H_1: \theta=\theta_1$,
+where (1) the pdf or pmf corresponding to $\theta_i$ is $f(\mathbf{x}\,|\,\theta_i)$ for $i=0,1$; (2) the test has a rejection region $R$ that satisfies 
+$\ds \mathbf{x}\in R\quad\text{if}\quad f(\mathbf{x}\,|\,\theta_1)>kf(\mathbf{x}\,|\,\theta_0)$
+and
+$\ds \mathbf{x}\in R^c\quad\text{if}\quad f(\mathbf{x}\,|\,\theta_1)<kf(\mathbf{x}\,|\,\theta_0)$
+for some $k\geq0$; and (3) $\alpha=P_{\theta_0}(\mathbf{X}\in R)$.
+
+- Then  (a) **(Sufficiency)** any test that satisfies (2) and (3) above is a UMP level $\alpha$ test; and (b) **(Necessity)** if there exists a test satisfying (2) and (3) above with $k>0$, then every UMP level $\alpha$ test is a size $\alpha$ test (satisfies (3) above), and every UMP level $\alpha$ test satisfies (2) above, except perhaps on a set $A$ satisfying
+$\ds P_{\theta_0}(\mathbf{X}\in A)=P_{\theta_1}(\mathbf{X}\in A)=0.$
+
+
+- Suppose $T(\mathbf{X})$ is a sufficient statistic for $\theta$, and let $g(t\,|\,\theta_i)$ be the pdf or pmf of $T$ corresponding to $\theta_i$ for $i=0,1$. Then any test based on $T$ with rejection region $S$ (a subset of the sample space of $T$) is a UMP level $\alpha$ test if it satisfies (1) for some $k\geq0$, $\ds t\in S \text{ if } g(t\,|\,\theta_1)>kg(t\,|\,\theta_0)$  and
+$\ds t\in S^c \text{ if } g(t\,|\,\theta_1)<kg(t\,|\,\theta_0)$
+
+
+---
+
+
+
+# Extending the Neyman-Pearson Lemma
+
+
+-  Can we extend the Neyman-Pearson Lemma to composite hypotheses (hypotheses that specify more than one possible distribution for the sample)?\vfill
+
+  --  Yes, but only for one-sided hypotheses ($H:\theta\geq\theta_0$ or $H:\theta<\theta_0$). \vfill
+
+  --  A UMP level $\alpha$ test must be UMP for all values in the alternative hypothesis.
+
+
+---
+
+# Monotone Likelihood Ratio (MLR)
+
+
+**Definition:** A family of pdfs or pmfs $\lbrace g(t\,|\,\theta)\,:\,\theta\in\Theta\rbrace$ for a univariate random variable $T$ with real-valued parameter $\theta$ has a \textbf{monotone likelihood ratio (MLR)} if, for every $\theta_2>\theta_1$,
+$$\frac{g(t\,|\,\theta_2)}{g(t\,|\,\theta_1)}$$
+is a monotone (non-increasing or non-decreasing) function of $t$ on
+$$\lbrace t\,:\,g(t\,|\,\theta_1)>0\text{~or~}g(t\,|\,\theta_2)>0\rbrace.$$
+
+\enter \vfill
+
+## Comments About MLR
+
+
+- MLR is a property of a family of distributions.\vfill
+
+- $\operatorname{N}(\theta,\sigma^2)$ (with $\sigma^2$ known), $\operatorname{poisson}(\theta)$, and $\operatorname{binomial}(n,\theta)$ all have an MLR.\vfill
+
+- In general, any regular exponential family
+
+---
+
+
+# Karlin-Rubin Theorem
+
+
+## Theorem
+
+Consider testing $H_0: \theta\leq\theta_0$
+vs. $H_1: \theta>\theta_0$. Suppose that $T$ is a sufficient statistic for $\theta$ and the family of pdfs or pmfs $\lbrace g(t\,|\,\theta)\,:\,\theta\in\Theta\rbrace$ of $T$ has an MLR. Then for any $t_0$, the test that rejects $H_0$ if and only if $T>t_0$ is a UMP level $\alpha$ test, where $\alpha=P_{\theta_0}(T>t_0)$.
+
+\vspace{0.3in}
+
+\enter
+
+\enter
+
+\enter
+
+\vfill
+
+**Example (Contd.):** Let $\rs \sim \on{iid} N(\theta, \sigma^2)$ population, $\sigma^2$ known. Consider testing $H_0' : \theta \geq \theta_0$ vs. $H_1' : \theta < \theta_0$, where $\theta_0 > \theta_1$.
+
+\enter
+
+Consider the test that rejects $H_0'$ if $\bar X < \theta_0 - z_\alpha \frac{\sigma}{\sqrt n}$. $\bar X$ is sufficient.
+
+\enter
+
+We'll show that the distribution of $T = \bar X$ has an MLR, and apply the Karlin-Rubin theorem. 
+
+---
+
+For $\theta_2 > \theta_1$: 
+$$
+\begin{aligned}
+\frac{g(t \mid \theta_1)}{g(t \mid \theta_2)} &= \frac{\exp\left(-\frac{n}{2\sigma^2} (t - \theta_2)^2 \right)}{\exp\left(-\frac{n}{2\sigma^2} (t - \theta_1)^2 \right)} \\
+&= \exp\left[ \frac{n}{\sigma^2} t (\theta_2 - \theta_1) \right] \exp\left[ -\frac{n}{2\sigma^2} (\theta_2^2 - \theta_1^2) \right]
+\end{aligned}
+$$
+which is non-decreasing in $t$ as $\theta_2 - \theta_1 > 0$. 
+
+\enter
+
+Thus the distribution of $T = \bar X$ has an MLR.
+
+\enter
+
+\enter
+
+Therefore, from Karlin-Rubin theorem it follows that this test is UMP level $\alpha$ for this problem.
+
+
+---
+
+#  Nonexistence of UMP Test
+
+**Example:** Let $\rs\sim\operatorname{iid~N}(\theta,\sigma^2)$, with $\sigma^2$ known. 
+Consider testing
+$$
+\begin{aligned}
+H_0 & : \theta=\theta_0\\
+\text{vs. } H_1 & : \theta\neq\theta_0.
+\end{aligned}
+$$
+We'll show that there does not any UMP test at any level $0 < \alpha < 1$. 
+
+\enter
+
+
+
+For a specified value of $\alpha$, a level $\alpha$ test in this problem is any test that satisfies
+$$P_{\theta_0}(\text{reject~}H_0)\leq\alpha.$$
+
+\enter
+
+
+Suppose $\theta_1<\theta_0$. 
+By Corollary to the NP Lemma with sufficient statistic, the test with rejection region
+$$R=\Big\lbrace\mathbf{x}\,:\,\overline{x}<\theta_0-\frac{\sigma z_{\alpha}}{\sqrt{n}}\Big\rbrace$$
+has the highest possible power at $\theta_1$; call this Test 1.
+
+
+---
+
+By part (b) of the NP Lemma, any other level $\alpha$ test that has the same power as Test 1 at $\theta_1$ must have the same rejection region, except possibly for a set $A$ with measure zero.
+
+\enter
+
+So if a UMP level $\alpha$ test exists, it must be Test 1, since no other level $\alpha$ test has as high a power as Test 1 at $\theta_1$.
+
+
+\enter
+
+Now consider Test 2, which has rejection region
+$$R=\Big\lbrace\mathbf{x}\,:\,\overline{x}>\theta_0+\frac{\sigma z_{\alpha}}{\sqrt{n}}\Big\rbrace.$$
+This is also a level $\alpha$ test.
+
+\enter
+
+
+We can show that for any $\theta_2>\theta_0$, $\beta_2(\theta_2)>\beta_1(\theta_2)$.
+
+\enter
+
+So Test 1 cannot be a UMP level $\alpha$ test, since Test 2 has a higher power than Test 1 at $\theta_2$.
+
+\enter
+
+Therefore, no UMP level $\alpha$ test exists in this problem.
+
+
+---
+
+# $p$-Values
+
+
+**Defintion:** A \textbf{$p$-value}, $p(\mathbf{X})$, is a test statistic satisfying $0\leq p(\mathbf{x})\leq1$ for every sample point $\mathbf{x}$. Small values of $p(\mathbf{X})$ give evidence that $H_1$ is true. A $p$-value is \textbf{valid} if, for every $\theta\in\Theta_0$ and every $0\leq\alpha\leq1$, 
+$$P_{\theta}(p(\mathbf{X})\leq\alpha)\leq\alpha.$$
+
+\enter
+
+If $p(\mathbf{X})$ is a valid $p$-value, then the test that rejects $H_0$ if and only if $p(\mathbf{X})\leq\alpha$ is a level $\alpha$ test.
+
+
+\enter 
+\enter \vfill
+
+## Theorem (8.3.27; Determining Valid $p$-Values)
+Let $W(\mathbf{X})$ be a test statistic such that large values of $W$ give evidence that $H_1$ is true. For each sample point $\mathbf{x}$, define
+$$p(\mathbf{x})=\operatorname{sup}_{\theta\in\Theta_0}{P_{\theta}\left[W(\mathbf{X})\geq W(\mathbf{x})\right]}.$$
+Then $p(\mathbf{X})$ is a valid $p$-value.
+
+
+---
+
+**Proof:** Fix $\theta\in\Theta_0$. Let $F_\theta(w)$ denote the cdf of $-W(X)$. Define
+$$p_\theta(\vec x) = P_{\theta}\left[W(\mathbf{X})\geq W(\mathbf{x})\right] = P_{\theta}\left[-W(\mathbf{X})\leq -W(\mathbf{x})\right] = F_\theta(-W(x)).$$
+Then the random variable $p_\theta(\vec X)$ is equal to $F_\theta(-W(\vec X))$. 
+
+\enter
+
+Hence, by the Probability Integral Transformation $P_\theta(p_\theta(\mathbf X) \leq \alpha)$. Since 
+$$
+p(\vec x) = \operatorname{sup}_{\theta'\in\Theta_0} p_{\theta'}(\vec x) \geq p_\theta(\vec x)
+$$ 
+for all $\vec x$, we have
+$$
+P_\theta(p(\vec X) \leq \alpha \ ) \leq P_\theta(p_\theta(\vec X) \leq \alpha) \leq \alpha
+$$
+which is true for all $\theta \in \Theta_0$ and for every $0 \leq \alpha \leq 1$.
+
+Hence $p(\vec X)$ is a valid $p$-value.
+
+---
+
+
+
+
+
+---
+
+
+# Homework
+
+-   Read p. $387-392$.
+
+-   Exercises: TBA.
+
+---
