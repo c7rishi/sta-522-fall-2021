@@ -52,19 +52,20 @@ knitr::opts_chunk$set(echo = FALSE)
 
 \vspace{0.1in}
 
-- Evaluating Tests
+- Extending Neyman-Pearson Lemma, MLR family
 
 \vspace{0.1in}
 
-- UMP tests
+- non-existence of UMP tests
 
 \enter
 
-- Neyman Pearson Lemma
+- Interval Estimation
 
 \enter
 
-- Review for Exam 2
+- Method of Finding Interval Estimates
+
 
 ---
 
@@ -142,7 +143,7 @@ vs. $H_1: \theta>\theta_0$. Suppose that $T$ is a sufficient statistic for $\the
 
 \vfill
 
-**Example (Contd.):** Let $\rs \sim \on{iid} N(\theta, \sigma^2)$ population, $\sigma^2$ known. Consider testing $H_0' : \theta \geq \theta_0$ vs. $H_1' : \theta < \theta_0$, where $\theta_0 > \theta_1$.
+**Example (Contd.):** Let $\rs \sim \on{iid} N(\theta, \sigma^2)$ population, $\sigma^2$ known. Consider testing $H_0' : \theta \geq \theta_0$ vs. $H_1' : \theta < \theta_0$.
 
 \enter
 
@@ -232,6 +233,17 @@ So Test 1 cannot be a UMP level $\alpha$ test, since Test 2 has a higher power t
 
 Therefore, no UMP level $\alpha$ test exists in this problem.
 
+---
+
+Since a global UMP test does not exist, we can restrict to the class of unbiased tests. (Recall that for an unbiased test the power function at each $\theta \in \Theta_0^c$ is $\geq$ the level of the test.)\vfill
+
+\enter
+
+Consider Test 3, which rejects $H_0: \theta = \theta_0$ in favor of $H_1: \theta \neq \theta_0$ if and only if 
+$$
+\bar X > \theta_0 + \sigma z_{\alpha/2}/\sqrt{n} \ \text{ or } \ \bar X < \theta_0 - \sigma z_{\alpha/2}/\sqrt{n}
+$$
+is actually a UMP unbiased level $\alpha$ test; i.e., it is UMP in the class of unbiased tests.
 
 ---
 
@@ -278,16 +290,161 @@ Hence $p(\vec X)$ is a valid $p$-value.
 ---
 
 
+# Interval Estimation
 
+**Defintion:** An \textbf{interval estimate} of a real-valued parameter $\theta$ is any pair of functions, $L(\mathbf{x})$ and $U(\mathbf{x})$, of a sample that satisfy $L(\mathbf{x})\leq U(\mathbf{x})$ for all $\mathbf{x}\in\mathcal{X}$. If $\mathbf{X}=\mathbf{x}$ is observed, the inference $L(\mathbf{x})\leq\theta\leq U(\mathbf{x})$ is made. The random interval $[L(\mathbf{X}),U(\mathbf{X})]$ is called an \textbf{interval estimator}.
+
+\vspace{0.2in}
+
+**Example:** Suppose $X_1,X_2,X_3,X_4\sim\operatorname{iid~N}(\mu,1)$. Then $[\overline{X}-1,\overline{X}+1]$ is an interval estimator for the population mean $\mu$. What is $P\left(\mu\in[\overline{X}-1,\overline{X}+1]\right)$?
+
+\vspace{0.2in}
+
+Note that interval estimators are less precise than point estimators, but are more likely to be correct.
+\vfill
+Recall that $P(\overline{X}=\mu)=0$, for instance, i.e., there is no chance we are correct if we estimate $\mu$ using $\overline{X}$.
 
 
 ---
 
+# Coverage Probability & Confidence coefficient
+
+**Definition:** For an interval estimator $[L(\mathbf{X}),U(\mathbf{X})]$ of a parameter $\theta$, the \textbf{coverage probability} of $[L(\mathbf{X}),U(\mathbf{X})]$ is the probability that the random interval $[L(\mathbf{X}),U(\mathbf{X})]$ covers the true parameter $\theta$. 
+
+Symbolically, it is denoted by either $P_{\theta}\left(\theta\in [L(\mathbf{X}),U(\mathbf{X})]\right)$ or $P\left(\theta\in [L(\mathbf{X}),U(\mathbf{X})]\,|\,\theta\right)$. 
+
+Note that the coverage probability is usually a function of $\theta$.
+
+\vskip 0.2in
+
+
+**Definition:** For an interval estimator $[L(\mathbf{X}),U(\mathbf{X})]$ of a parameter $\theta$, the \textbf{confidence coefficient} of $[L(\mathbf{X}),U(\mathbf{X})]$ is the infimum of the coverage probabilities,
+$$\inf_{\theta}{P_{\theta}\left(\theta\in [L(\mathbf{X}),U(\mathbf{X})]\right)}.$$
+We use \textbf{confidence interval} to mean the interval estimator along with its corresponding confidence coefficient.
+
+\enter
+
+Note that since $\theta$ is fixed, but unknown, the probability statements above refer to $\mathbf{X}$, not $\theta$. We can think of such a probability as $P_{\theta}\left(L(\mathbf{X})\leq\theta,U(\mathbf{X})\geq\theta\right)$.
+
+
+---
+
+**Example (Scale Uniform Interval Estimator):**
+Let $\rs$ be a random sample from a $\operatorname{uniform}(0,\theta)$ population, and let $Y=X_{(n)}$ be the $n$th order statistic.
+\vskip .2in
+We are interested in an interval estimator of $\theta$.
+\vskip .2in
+We consider two candidate estimators:
+\vskip .1in
+\begin{enumerate}[(a)]
+\item $[aY,bY]$, where $1\leq a<b$; and\vskip .1in
+\item $[Y+c,Y+d]$, where $0\leq c<d$.
+\end{enumerate}
+\vskip .2in
+Note that $\theta$ is necessarily larger than $y$.
+\vskip .2in
+Determine the coverage probability and confidence coefficient for each estimator. 
+
+---
+
+(a) We have
+$$
+\begin{aligned}
+P_\theta (\theta \in [aY, bY]) &= P_\theta(aY \leq \theta \leq bY) \\
+&= P_\theta \left( \frac{1}{b} \leq \frac{Y}{\theta} \leq \frac{1}{a} \right) \\
+&= P_\theta \left( \frac{1}{b} \leq T \leq \frac{1}{a} \right) && \left(T = \frac{Y}{\theta}\right)
+\end{aligned}
+$$
+The pdf of $T$ is $f_T(t) = nt^{n-1}$, $0 \leq t \leq 1$. Therefore,
+$$
+P_\theta (\theta \in [aY, bY]) =  P_\theta \left( \frac{1}{b} \leq T \leq \frac{1}{a} \right) = \int_{1/b}^{1/a} nt^{n-1} \ dt = \left(\frac{1}{a}\right)^n - \left(\frac{1}{b}\right)^n
+$$
+which is free of $\theta$. So, confidence coefficient = 
+$$
+\inf_\theta P_\theta (\theta \in [aY, bY]) = \left(\frac{1}{a}\right)^n - \left(\frac{1}{b}\right)^n 
+$$
+
+---
+
+(b) Here
+$$
+P_\theta(\theta \in [Y+c, Y+ d]) = \left(1 - \frac{c}{\theta} \right)^n - \left(1 - \frac{d}{\theta} \right)^n
+$$
+which depends on $\theta$. Note that
+$$
+\lim_{\theta \to \infty} P_\theta(\theta \in [Y+c, Y+ d]) = \lim_{\theta \to \infty} \left[ \left(1 - \frac{c}{\theta} \right)^n - \left(1 - \frac{d}{\theta} \right)^n \right] = 0
+$$
+
+So, confidence coefficient = $\inf_\theta P_\theta (\theta \in[Y+c, Y+ d]) = 0$.
+
+---
+
+# Methods of Finding Interval Estimators
+
+(a) Invert a test statistic.\vfill
+
+(b) Use pivotal quantities. \vfill
+
+
+## Correspondence Between Confidence Intervals and Hypothesis Testing
+
+- There is a very strong correspondence between hypothesis testing and interval estimation.\vfill
+
+- In general, every confidence interval corresponds to a test, and vice versa.
+
+---
+
+**Example (Inverting a Normal Test):** Let $\rs\sim\operatorname{iid~N}(\mu,\sigma^2)$.
+Suppose we are testing $H_0  : \mu=\mu_0$
+vs. $H_1  : \mu\neq\mu_0$. Consider the rejection region
+$$R=\left\lbrace\mathbf{x}\,:\,|\overline{x}-\mu_0|>z_{\alpha/2}\frac{\sigma}{\sqrt{n}}\right\rbrace.$$
+The acceptance region of the hypothesis test (the subset of the sample space for which $H_0:\mu=\mu_0$ is accepted) is
+$$
+\begin{aligned}
+A(\mu_0) & = \left\lbrace\mathbf{x}\,:\,\mu_0-z_{\alpha/2}\frac{\sigma}{\sqrt{n}}\leq\overline{x}\leq\mu_0+z_{\alpha/2}\frac{\sigma}{\sqrt{n}}\right\rbrace \\
+& = \left\lbrace\mathbf{x}\,:\,\overline{x}-z_{\alpha/2}\frac{\sigma}{\sqrt{n}}\leq\mu_0\leq\overline{x}+z_{\alpha/2}\frac{\sigma}{\sqrt{n}}\right\rbrace.
+\end{aligned}
+$$
+
+
+Note that since $P(\mathbf{x}\in R\,|\,\mu=\mu_0)=\alpha$, we can deduce that
+$$P(\mathbf{x}\in A(\mu_0)\,|\,\mu=\mu_0)=1-\alpha$$
+for every $\mu_0$.
+
+---
+
+So $P_{\mu}(\mathbf{x}\in A(\mu))=1-\alpha$.
+
+\enter
+
+The $1-\alpha$ confidence interval (the subset of the parameter space containing plausible values of $\mu$) is
+$$C(\mathbf{x})=\left\lbrace\mu\,:\,\overline{x}-z_{\alpha/2}\frac{\sigma}{\sqrt{n}}\leq\mu\leq\overline{x}+z_{\alpha/2}\frac{\sigma}{\sqrt{n}}\right\rbrace.$$
+\vskip .2in
+So we see that
+$$\mathbf{x}\in A(\mu_0)\iff\mu_0\in C(\mathbf{x}),$$
+i.e., $\mathbf{x}$ is in the acceptance region for $H_0:\mu=\mu_0$ if and only if $\mu_0$ is a plausible value for the parameter $\mu$.
+
+---
+
+# Correspondence Between Confidence Intervals and Hypothesis Testing
+
+
+- Both hypothesis tests and confidence intervals look for consistency between sample statistics and population parameters.\vfill
+
+
+- The hypothesis test fixes the parameter and asks what sample values are consistent with that fixed value (the acceptance region).\vfill
+
+
+- The confidence interval fixes the sample value and asks what parameter values make this sample value most plausible (the confidence interval).
+
+
+---
 
 # Homework
 
--   Read p. $387-392$.
+-  Hypothesis tests: Read p. $388-399$.
+
+-  Interval Estimation: Read p. $417-421$.
 
 -   Exercises: TBA.
 
----
