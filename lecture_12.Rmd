@@ -52,19 +52,11 @@ knitr::opts_chunk$set(echo = FALSE)
 
 \vspace{0.1in}
 
-- Interval Estimation
+- Interval Estimation - inverting hypothesis tests
 
 \vspace{0.1in}
 
-- non-existence of UMP tests
-
-\enter
-
-- Interval Estimation
-
-\enter
-
-- Method of Finding Interval Estimates
+- pivotal method
 
 
 ---
@@ -211,7 +203,7 @@ To obtain such an interval we'll consider the one sided tests $H_0: \mu = \mu_0$
 
 \enter 
 
-[Note $H_1: \mu < \mu_0$ specifies "large values" of $\mu$, so the confidence interval, which is obtained from inverting the acceptance region (favorable to $H_0$) will contain "small" values of $\mu$].
+[Note $H_1: \mu < \mu_0$ specifies "large values" of $\mu_0$, so the confidence interval, which is obtained from inverting the acceptance region (favorable to $H_0$) will contain "small" values of $\mu_0$].
 
 \enter
 
@@ -400,9 +392,7 @@ $$
 
 # Homework
 
--  Hypothesis tests: Read p. $388-399$.
-
--  Interval Estimation: Read p. $417-421$.
+-  Read p. $417-430$.
 
 -   Exercises: TBA.
 
