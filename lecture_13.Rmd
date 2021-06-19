@@ -1,0 +1,375 @@
+---
+title: |
+  | STA 522, Spring 2021  
+  | Introduction to Theoretical Statistics II
+author: | 
+  | Lecture 13
+  | 
+  | Department of Biostatistics
+  | University at Buffalo 
+date: "26 April, 2021"
+output: 
+  beamer_presentation:
+    toc: false
+header-includes:
+  - \usepackage{bm}
+  - \usepackage{amsmath}
+  - \usepackage{mathrsfs}
+bibliography: references.bib
+fontsize: 10pt
+editor_options: 
+  markdown: 
+    wrap: 80
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+\newcommand{\rs}{X_1,X_2,\dots,X_n}
+\newcommand{\on}{\operatorname}
+\newcommand{\enter}{\vspace{0.1in}}
+\newcommand{\ds}{\displaystyle}
+\renewcommand{\bar}{\overline}
+\newcommand{\N}{\text{N}}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Ss}{\mathcal{S}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\E}{\on{E}}
+\newcommand{\var}{\on{Var}}
+\newcommand{\cov}{\on{Cov}}
+\newcommand{\MSE}{\on{MSE}}
+\renewcommand{\vec}{\underline}
+\newcommand{\asim}{\stackrel{a}{\sim}}
+\renewcommand{\mathbf}{\vec}
+<!-- \renewcommand{\mathcal}{\mathscr} -->
+
+
+# AGENDA
+
+\vspace{0.1in}
+
+- Asymptotic Evaluations
+
+
+
+---
+
+# Consistent Estimators
+
+**Definition:** A sequence of estimators $W_n=W_n(\mathbf{X})$ is a (weakly) \textbf{consistent sequence of estimators} of the parameter $\theta$ if and only if for every $\theta\in\Theta$, $W_n \xrightarrow{P} \theta$ i.e., for every $\epsilon>0$,
+$$\lim_{n\to\infty}{P_{\theta}\left(|W_n-\theta|\geq\epsilon\right)}=0,$$
+or, equivalently,
+$$\lim_{n\to\infty}{P_{\theta}\left(|W_n-\theta|<\epsilon\right)}=1.$$
+
+\enter \vfill
+
+**Definition:** A sequence of estimators $W_n=W_n(\mathbf{X})$ is a strongly \textbf{consistent sequence of estimators} of the parameter $\theta$ if and only if $W_n \xrightarrow{a.s.} \theta$,  for every $\theta\in\Theta$, i.e.,
+$$P\left(\lim_{n \to \infty} W_n = \theta\right) = 1.$$ 
+
+
+---
+
+**Example:** Let $\rs\sim\operatorname{iid~N}(\theta,1)$. Then $\overline{X}_n$ is a consistent sequence of estimators of $\theta$.
+
+\vfill
+
+Recall that $\bar X_n \sim \N(\theta, 1/n)$. So,
+$$
+\begin{aligned}
+P_\theta(|\bar X_n - \theta| < \epsilon) &= \int_{\theta-\epsilon}^{\theta+\epsilon} \left(\frac{n}{2\pi}\right)^{1/2} e^{-(n/2)(\bar x_n - \theta)^2} \ d\bar x_n \\
+&= \int_{-\epsilon}^{\epsilon} \left(\frac{n}{2\pi}\right)^{1/2} e^{-(n/2)y^2} \ dy && (y = \bar x_n - \theta) \\
+&= \int_{-\epsilon \sqrt{n}}^{\epsilon \sqrt{n}} \left(\frac{1}{2\pi}\right)^{1/2} e^{-(1/2)t^2} \ dt && (t = y\sqrt{n}) \\
+&= P(-\epsilon \sqrt{n} < Z < \epsilon \sqrt{n}) && (Z \sim \N(0, 1)) \\
+&\to 1 \quad \text{as } n \to \infty
+\end{aligned}
+$$
+This shows $\bar X_n \xrightarrow{P} \theta$.
+
+
+---
+
+# How to Verify Consistency for a Sequence of Estimators
+
+
+## Theorem 10.1.3
+
+Let $W_n$ be a sequence of estimators of a parameter $\theta$ satisfying
+\begin{enumerate}[(a)]
+\item $\ds{\lim_{n\to\infty}{\var_{\theta}(W_n)}=0}$ and\vskip .1in
+\item $\ds{\lim_{n\to\infty}{\operatorname{Bias}_{\theta}(W_n)}=0}$
+\end{enumerate}
+\vskip .1in
+for every $\theta\in\Theta$.
+\vskip .1in
+Then $W_n$ is a consistent sequence of estimators of $\theta$.
+
+\enter \vfill
+
+**Example (contd.):** $\rs\sim\operatorname{iid~N}(\theta,1)$, consider the estimator $\bar X_n$ of $\theta$.
+
+\enter
+
+We have $\ds \E_\theta(\bar X_n) = \theta$ for all $\theta$, i.e., $\ds \operatorname{Bias}_{\theta}(\bar X_n) = 0$, and $\var_{\theta}(\bar X_n) = \frac{1}{n} \to 0$. Hence, from the above theorem, it follows that $\bar X_n$ is consistent for $\theta$.
+
+
+---
+
+# Theorem 10.1.6 (Consistency of MLEs)
+
+Let $\rs\sim\operatorname{iid~}f(x\,|\,\theta)$.
+\vskip .1in
+Let $L(\theta\,|\,\mathbf{x})=\prod_{i=1}^n{f(x_i\,|\,\theta)}$ be the likelihood function.
+\vskip .1in
+Let $\hat{\theta}$ denote the MLE of $\theta$.
+\vskip .1in
+Let $\tau(\theta)$ be a continuous function of $\theta$.
+\vskip .1in
+Under certain regularity conditions on $f(x\,|\,\theta)$ (see  Miscellanea 10.6.2; these hold, e.g., for the regular exponential family) and, hence, $L(\theta\,|\,\mathbf{x})$, for every $\epsilon>0$ and every $\theta\in\Theta$,
+$$\lim_{n\to\infty}{P_{\theta}\left(|\tau(\hat{\theta})-\tau(\theta)|\geq\epsilon\right)}=0.$$
+\vskip .1in
+In other words, $\tau(\hat{\theta})$ is a consistent estimator of $\tau(\theta)$, i.e., MLEs are weakly consistent (converge in probability).
+
+
+---
+
+# Asymptotic Variance & Efficiency
+
+**Definition:** For an estimator $T_n$, suppose that $k_n(T_n-\tau(\theta))\xrightarrow{d}\operatorname{N}(0,\sigma^2)$, where $\lbrace k_n\rbrace$ is a sequence of constants. The parameter $\sigma^2$ is called the \textbf{asymptotic variance} or \textbf{variance of the limit distribution} of $T_n$.
+
+\enter \vfill
+
+**Definition:** A sequence of estimators $W_n$ is \textbf{asymptotically efficient} for a parameter $\tau(\theta)$ if and only if
+$$\sqrt{n}(W_n-\tau(\theta))\xrightarrow{d}W\sim\operatorname{N}(0,v(\theta))$$
+and
+$$v(\theta)= \frac{\left[\tau'(\theta)\right]^2}{I_1(\theta)} = \frac{\left[\tau'(\theta)\right]^2}{\E_{\theta}\left[\left(\frac{\partial}{\partial\theta}\log{f(X\,|\,\theta)}\right)^2\right]};$$
+that is, the asymptotic variance of $W_n$ (almost) achieves the Cramér–Rao Lower Bound. $I_1(\theta)$ is the _unit_ Fisher information  (i.e., Fisher information computed for _one_ random observation). 
+
+
+---
+
+
+# Notes on Asymptotic Efficiency
+
+\begin{enumerate}[(a)]
+\item There is no $n$ in the denominator of $v(\theta)$, as it got moved to the left-hand side.
+\vfill
+\item This definition does not mean
+$$W_n\xrightarrow{d}\operatorname{N}(\tau(\theta),{\rm{CRLB}}),$$
+since
+$${\rm{CRLB}}=\frac{\left[\tau'(\theta)\right]^2}{n\E_{\theta}\left[\left(\frac{\partial}{\partial\theta}\log{f(X\,|\,\theta)}\right)^2\right]}.$$
+$v(\theta)$ is written without the $n$ because we are letting $n \to \infty$
+
+\vfill
+
+\item In practical terms, what this does mean is that $W_n$ is approximately normally distributed with mean $\tau(\theta)$ and variance equal to the CRLB, evaluated at $\hat{\theta}$. This is often denoted as $W_n \asim \N\left(\tau(\theta), CRLB(\hat \theta)\right)$.
+
+\end{enumerate}
+
+
+---
+
+# Asymptotic distribution of a function of a sequence of random variables
+
+
+## Theorem 5.5.24 (Delta Method)
+Suppose $Y_n$ is a sequence of random variables  that satisfies $\sqrt{n} (Y_n - \theta) \xrightarrow{d} \N(0, \sigma^2)$. For a given function $g$ and a specific value of $\theta$, suppose that $g'(\theta)$ exists and is not $0$. Then
+$$
+\sqrt{n} [g(Y_n) - g(\theta)] \xrightarrow{d} \N(0, \sigma^2 [g'(\theta)]^2)
+$$
+\enter \vfill
+
+**Heuristic Proof:** The Taylor expansion of $g(Yn)$ around $Y_n = \theta$ is
+$$
+g(Y_n) = g(\theta) + g'(\theta)(Y_n - \theta) + R_n
+$$
+where $R_n$  is such that  $\sqrt{n} R_n \xrightarrow{P} 0$ as $n \to \infty$. Therefore,
+$$
+\sqrt{n} \ [g(Y_n) - g(\theta)] = g'(\theta) \sqrt{n} \ (Y_n - \theta) + \sqrt{n}\ R_n \xrightarrow{d} \N(0, \sigma^2 [g'(\theta)]^2)
+$$
+by Slutsky's theorem.
+
+
+---
+
+
+
+## Theorem 10.1.12 (Asymptotic Efficiency of MLEs)
+
+Let $\rs\sim\operatorname{iid}f(x\,|\,\theta)$. Let $\hat{\theta}$ denote the MLE of $\theta$. Under certain regularity conditions (see Miscellanea 10.6.2) on $f(x\,|\,\theta)$ and, hence, on $L(\theta\,|\,\mathbf{x})$,
+$$\sqrt{n}(\hat{\theta}-\theta)\xrightarrow{d}\operatorname{N}\left(0,\frac{1}{I_1(\theta)}\right),$$
+where $I_1(\theta)$ is the unit Fisher information.
+
+
+## Corollary
+Suppose $\tau(\theta)$ is a differentiable function of theta. If $\hat \theta$ denotes the MLE of $\theta$, then $\tau(\hat \theta)$ is the MLE of $\tau(\theta)$. The asymptotic distribution of $\tau(\hat \theta)$ is obtained using the delta method:
+$$\sqrt{n}(\tau(\hat{\theta})-\tau(\theta))\xrightarrow{d} \operatorname{N}(0,v(\theta))$$
+In other words, $\tau(\hat{\theta})$ is a consistent and asymptotically efficient estimator of $\tau(\theta)$. 
+<!-- Note that $\var{[\tau(\hat{\theta})]}={\rm{CRLB}}$. -->
+
+
+---
+
+**Example:** Suppose $\rs \sim \on{iid}{Bernoulli}(p)$. The MLE of $p$ is $\hat p = \frac{1}{n} \sum_{i=1}^n X_i$. We have seen an asymptotic distribution of $\bar X_n$ via de Moivre-Laplace CLT.
+
+\enter \vfill
+
+To apply the asymptotic normality of the MLE, note that here  $I_1(\theta) = \frac{1}{p(1-p)}$. 
+
+Hence 
+$$
+\sqrt{n} \ (\hat p - p) \xrightarrow{d} \N(0, p(1-p))
+\implies \frac{\sqrt{n}  \ (\hat p - p)}{\sqrt{p(1-p)}} \xrightarrow{d} \N(0, 1)
+$$
+
+The standard deviation $\sqrt{p(1-p)}$ has MLE $\sqrt{\hat p(1- \hat p)}$, and due to consistency of $\hat p$
+$$
+\sqrt{\hat p(1- \hat p)} \xrightarrow{P} \sqrt{p(1-p)}
+$$
+Therefore using Slutsky's theorem
+$$
+\frac{\sqrt{n}  \ (\hat p - p)}{\sqrt{\hat p(1- \hat p)}} \xrightarrow{d} \N(0, 1)
+$$
+
+In practical terms this means $\hat p \asim \N\left(p, \frac{p(1-p)}{n}\right)$.
+
+
+
+---
+
+# Asymptotic Relative Efficiency (ARE)
+
+If two estimators $W_n$ and $V_n$ satisfy
+$$
+\begin{aligned}
+\sqrt{n} \ [W_n - \tau(\theta)] &\xrightarrow{d} \N(0, \sigma^2_W) \\
+\sqrt{n} \ [V_n - \tau(\theta)] &\xrightarrow{d}  \N(0, \sigma^2_V)
+\end{aligned}
+$$
+then the asymptotic relative efficiency (ARE) of $V_n$ with respect to $W_n$ is 
+$$
+\on{ARE}(V_n, W_n) = \frac{\sigma^2_W}{\sigma^2_V}
+$$
+
+---
+
+**Example (AREs of Poisson Estimators):** Suppose that $X_1, X_2, \dots$ are iid $\on{Poisson}(\lambda)$, and we are interested in estimating $\tau(\lambda) = P_\lambda(X = 0) = e^{-\lambda}$. Consider two estimators of $\lambda$, viz., 
+
+(a) $\ds V_n = \frac{1}{n} \sum_{i=1}^n I(X_i = 0) = \frac{1}{n} Y_i  =: \bar Y_n$ and 
+(b) $\ds W_n = \tau(\bar X) = e^{-\bar X_n}$. Note that $\bar X_n$ is the MLE of $\lambda$.
+
+and find the ARE of $V_n$ relative to $W_n$. 
+
+\enter
+
+For (a), note that $Y_i = I(X_i = 0) \sim \on{iid~Binomial}(1, \tau(\lambda))$. Therefore, 
+$$
+\E_\lambda(V_n) = e^{-\lambda} \ \text{ and } \ \var_\lambda(V_n) = \frac{e^{-\lambda}(1-e^{-\lambda})}{n} 
+$$
+
+For (b), using delta method approximation we have (HW)
+$$
+\E_\lambda(W_n) \approx e^{-\lambda}   \ \text{ and } \ \var_\lambda(W_n) = \frac{\lambda e^{-2\lambda}}{n}
+$$
+
+---
+
+Since 
+
+$$
+\begin{aligned}
+\sqrt{n} \ \left[V_n - e^{-\lambda}\right] &\xrightarrow{d}  \N\left(0, e^{-\lambda}(1-e^{-\lambda}) \right) \\
+\sqrt{n} \ \left[W_n - e^{-\lambda}\right] &\xrightarrow{d} \N\left(0, \lambda e^{-2\lambda} \right)
+\end{aligned}
+$$
+
+Therefore 
+$$
+\on{ARE}(V_n, W_n) = \frac{\lambda e^{-2\lambda}}{e^{-\lambda}(1-e^{-\lambda})} = \frac{\lambda}{1-e^{-\lambda})}
+$$
+The ARE  is strictly decreasing with a maximum of 1 attained at $\lambda = 0$.
+
+\enter \vfill
+
+Note that the UMVUE for $e^{-\lambda}$ is $U_n = \left(\frac{n-1}{n}\right)^{\sum_{i=1}^n X_i} = \left[\left(1 - \frac{1}{n}\right)^n\right]^{\bar X_n} \approx e^{-\bar X_n} = V_n$ for large $n$. 
+
+
+
+---
+
+# Asymptotic Distribution of LRT
+
+Suppose $\rs\sim\operatorname{iid~poisson}(\lambda)$, and we want to construct a level $\alpha$ test of
+\begin{align*}
+H_0 & : \lambda=\lambda_0\\[.5em]
+H_1 & : \lambda\neq\lambda_0.
+\end{align*}
+\vskip .2in
+A level $\alpha$ test is obtained using rejection region
+$$R=\lbrace\mathbf{x}\,:\,-2\log{\lambda(\mathbf{x})}>\chi_{1,\alpha}^2\rbrace,$$
+where $\chi_{1,\alpha}^2$ is the $\chi_1^2$ value with area $\alpha$ to its right.
+
+
+---
+
+**Example (Poisson Testing):** Suppose that $X_1, X_2, \dots$ are iid $\on{Poisson}(\lambda)$, and we are interested in testing $H_0: \lambda = \lambda_0$ vs. $H_1: \lambda \neq \lambda_0$. 
+
+\enter \vfill
+
+We have 
+$$
+-2 \log \lambda(\vec x) = -2 \log \left( \frac{e^{-n\lambda_0} \ \lambda_0^{\sum_{i=1}^n x_i}}{e^{-n \hat \lambda} \ \hat \lambda^{\sum_{i=1}^n x_i}}\right) = 2n \left[ (\lambda_0 - \hat \lambda) - \hat \lambda \log(\lambda_0/\hat \lambda) \right]
+$$
+where $\hat \lambda = \bar x$ is the MLE of $\lambda$. 
+
+
+\enter \vfill
+
+The asymptotic theory based test would be to reject $H_0$ at level $\alpha$ if $-2 \log \lambda(\vec x) > \lambda_{1, \alpha}$
+
+---
+
+# Asymptotic normality based tests
+
+Suppose $\rs$ is a random sample from some population $f_\theta(x)$.
+
+
+\enter \vfill
+
+
+## Wald test
+
+Let $\hat \theta_n = \hat \theta_n(\rs)$ be the MLE of $\theta$. Then using the asymptotic normality of $\hat \theta_n$ (holds under certain regularity conditions):
+$$
+\sqrt{n} \left(\hat \theta_n - \theta \right) \xrightarrow{d} \N\left(0, \frac{1}{I_1(\theta)}\right)
+$$
+one can perform tests of hypotheses about the real valued parameter $\theta$.
+
+
+---
+
+## Score test
+
+The _score statistic_ is defined as 
+$$
+S(\theta) = \frac{\partial}{\partial \theta} \log f(\vec X \mid \theta) = \frac{\partial}{\partial \theta}  \log L(\theta \mid \vec X)
+$$
+We know that $\E_\theta(S(\theta)) = 0$ for all $\theta$. Furthermore 
+$$
+\var_\theta(S(\theta)) = \E_\theta \left[\left( \frac{\partial}{\partial \theta}  \log L(\theta \mid \vec X) \right)^2 \right] = -E_\theta \left( \frac{\partial^2}{\partial \theta^2}  \log L(\theta \mid \vec X) \right) =  I_n(\theta)
+$$
+where $I_1(\theta)$ is the Fisher information obtained from one random observations.  Tests of hypothesis such as $H_0: \theta = \theta_0$ vs. $H_1: \theta \neq \theta_0$ can be performed using the asymptotic normality of the score statistic:
+$$
+\frac{S(\theta)}{\sqrt{I_n(\theta)}} \xrightarrow{d} \N(0, 1)
+$$
+
+
+# Homework
+
+-  Read p. $467-481$, $488-495$.
+
+-   Exercises: TBA.
+
