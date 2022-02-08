@@ -204,7 +204,7 @@ $$
 $$
 This means
 $$
-P(|h(X_n) - h(X) | < \epsilon) \geq P(|X_n - h(X)| < \delta) \to 1
+P(|h(X_n) - h(X) | < \epsilon) \geq P(|X_n - X| < \delta) \to 1
 $$
 as $n \to \infty$ (the limit is due to the in probability convergence of $X_n$). This means that $h(X_n) \xrightarrow{P} h(X)$. 
 
