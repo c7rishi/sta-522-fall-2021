@@ -1,13 +1,13 @@
 ---
 title: |
-  | STA 522, Spring 2021  
+  | STA 522, Spring 2022  
   | Introduction to Theoretical Statistics II
 author: | 
   | Lecture 3
   | 
   | Department of Biostatistics
   | University at Buffalo 
-date: "15 February, 2021"
+date: ""
 output: 
   beamer_presentation:
     toc: false
@@ -197,7 +197,7 @@ This means that $T(\vec X) = \bar X$ is sufficient for $\mu$.
 
 ---
 
-## Proof of Theorem 6.2.6 
+## Proof of Theorem 6.2.6 (Factorization Theorem) 
 
 \enter
 
@@ -337,24 +337,25 @@ is a sufficient statistic for $\boldsymbol{\theta}$.
 
 ---
 
-# Invariance Principle for Sufficient Statistics
+# Sufficient Statistics are NOT unique
 
-## Theorem 
+## Theorem (Invariance of Sufficient Statistic)
 Suppose $T(\vec{X})$ is sufficient for a parameter $\theta$, and let $u$ be a one-to-one function. Then $T^*(\vec X) = u(T(\vec{X}))$ is also sufficient for $\theta$.
 
+
+<!-- **Proof:** Since $u$ is one-to-one, $u^{-1}$ exists as a function and $T(\vec X) = u^{-1}(T^*(\vec{X}))$  Then by the Factorization Theorem there exists $g$ and $h$ such that -->
+<!-- $$ -->
+<!-- f(\vec x \mid \theta) = g(T(\vec x) \mid \theta) \ h(\vec x) = g(u^{-1} (T^*(\vec x)) \mid \theta) \ h(\vec x) = g^*(T^*(\vec x) \mid \theta) \ h(\vec x) -->
+<!-- $$ -->
+<!-- where $g^*(t \mid \theta) = g(u^{-1} (t) \mid \theta)$. Again from the Factorization theorem this shows that $T^*(\vec X)$ is also sufficient for $\theta$. -->
+
+
+<!-- --- -->
+
 \enter
 \enter
 
-**Proof:** Since $u$ is one-to-one, $u^{-1}$ exists as a function and $T(\vec X) = u^{-1}(T^*(\vec{X}))$  Then by the Factorization Theorem there exists $g$ and $h$ such that
-$$
-f(\vec x \mid \theta) = g(T(\vec x) \mid \theta) \ h(\vec x) = g(u^{-1} (T^*(\vec x)) \mid \theta) \ h(\vec x) = g^*(T^*(\vec x) \mid \theta) \ h(\vec x)
-$$
-where $g^*(t \mid \theta) = g(u^{-1} (t) \mid \theta)$. Again from the Factorization theorem this shows that $T^*(\vec X)$ is also sufficient for $\theta$.
-
-
----
-
-# Sufficient Statistics are NOT unique
+**Remarks:**
 
 -  Based on the Invariance Principle, we see that one-to-one functions of sufficient statistics are also sufficient.
 
@@ -399,48 +400,58 @@ If $\sigma$ were unknown, however, things would be different.
 
 ---
 
-# Checking for Minimal Sufficiency
+# Results on Minimal Sufficiency
 
-## Theorem 6.2.13
+## Theorem 6.2.13 (Checking for Minimal Sufficiency)
 
 Let $f(\vec{x} \mid \theta)$ be the pdf/pmf of a sample $\vec{X}$. Suppose there exists a function $T(\vec{X})$ such that, for every $\vec{x}$ and $\vec{y}$, the ratio
 $$\frac{f(\vec{x} \mid \theta)}{f(\vec{y} \mid \theta)}$$
 is constant as a function of $\theta$ if and only if $T(\vec{x}) = T(\vec{y})$. Then $T(\vec{X})$ is a minimal sufficient statistic for $\theta$.
 
-\enter
+
+
+## Invariance Theorem (Establishes non uniqueness)
+Suppose $T(\mathbf{X})$ is a minimal sufficient statistic for a parameter $\theta$, and let $u$ be a one-to-one function. Then $T^*(\mathbf{X}) = u(T(\mathbf{X}))$ is also a minimal sufficient statistic for $\theta$.
 
 \enter
 
-**Proof:** To simplify proof assume $f(x \mid \theta) > 0$ for all $x \in \X$ and $\theta$.
-
-\enter
-
-**$T(\vec X)$ is sufficient:**  Let $\mathcal{T} = \{t: t = T(\vec x) \text{ for some } \vec x \in \X \}$ be the image of $\X$ under $T(\vec x)$. 
-
-Define the partition set $A_t = \{\vec x: T(\vec x) = t\}$, and choose and fix $\vec x_t \in A_t$ for each $t$. 
-
-For any $\vec x \in \X$, $\vec x_{T(\vec x)}$ is the fixed element that is in the same set, $A_t$, as $\vec x$. 
+**Example:** $\ds{\left(\sum_{i=1}^n{X_i},\sum_{i=1}^n{X_i^2}\right)}$ is a minimal sufficient statistic for $(\mu,\sigma^2)$.
 
 
----
+<!-- \enter -->
+
+<!-- \enter -->
+
+<!-- **Proof:** To simplify proof assume $f(x \mid \theta) > 0$ for all $x \in \X$ and $\theta$. -->
+
+<!-- \enter -->
+
+<!-- **$T(\vec X)$ is sufficient:**  Let $\mathcal{T} = \{t: t = T(\vec x) \text{ for some } \vec x \in \X \}$ be the image of $\X$ under $T(\vec x)$.  -->
+
+<!-- Define the partition set $A_t = \{\vec x: T(\vec x) = t\}$, and choose and fix $\vec x_t \in A_t$ for each $t$.  -->
+
+<!-- For any $\vec x \in \X$, $\vec x_{T(\vec x)}$ is the fixed element that is in the same set, $A_t$, as $\vec x$.  -->
 
 
-$\text{Both } \vec x,  \vec x_{T(\vec x)} \in A_t   \implies T(\vec x) = T(\vec x_{T(\vec x)})$
-
-$\implies h(\vec x) = f(\vec x \mid \theta)/f(\vec x_{T(\vec x)} \mid \theta)$ is a constant function of $\theta$. Define $g(t \mid \theta) = f(\vec x_t \mid \theta)$. Then 
-$$
-f(\vec x \mid \theta) = \frac{f(\vec x_{T(\vec x)} \mid \theta) \ f(\vec x \mid \theta)}{f(\vec x_{T(\vec x)} \mid \theta)} = g(T(\vec x) \mid \theta) \ h(\vec x)
-$$
-which implies sufficiency of $T(\vec X)$ by the Factorization Theorem. 
-
-\enter
+<!-- --- -->
 
 
-**$T(\vec X)$ is minimal:** Let $T'(X)$ be any other sufficient statistic. By the Factorization Theorem, there exist functions $g'$ and $h'$ such that $f(\vec x \mid \theta) = g'(T'(\vec x) \mid \theta) \ h'(\vec x)$. Let $x$ and $y$ be two sample points with $T'(\vec x) = T'(\vec y)$. Then
-$$
-\frac{f(\vec x \mid \theta)}{f(\vec y \mid \theta)} = \frac{g'(T'(\vec x) \mid \theta) \ h'(\vec x)}{g'(T'(\vec y) \mid \theta) \ h'(\vec y)} = \frac{h'(\vec x)}{h'(\vec y)}
-$$
-Since this ratio does not depend on $\theta$, therefore from the assertion of the theorem, we have $T(\vec x) = T(\vec y)$. So, $T(\vec x)$ is a function of $T'(\vec x)$ and $T(\vec x)$ is a minimal sufficient statistic.
+<!-- $\text{Both } \vec x,  \vec x_{T(\vec x)} \in A_t   \implies T(\vec x) = T(\vec x_{T(\vec x)})$ -->
+
+<!-- $\implies h(\vec x) = f(\vec x \mid \theta)/f(\vec x_{T(\vec x)} \mid \theta)$ is a constant function of $\theta$. Define $g(t \mid \theta) = f(\vec x_t \mid \theta)$. Then  -->
+<!-- $$ -->
+<!-- f(\vec x \mid \theta) = \frac{f(\vec x_{T(\vec x)} \mid \theta) \ f(\vec x \mid \theta)}{f(\vec x_{T(\vec x)} \mid \theta)} = g(T(\vec x) \mid \theta) \ h(\vec x) -->
+<!-- $$ -->
+<!-- which implies sufficiency of $T(\vec X)$ by the Factorization Theorem.  -->
+
+<!-- \enter -->
+
+
+<!-- **$T(\vec X)$ is minimal:** Let $T'(X)$ be any other sufficient statistic. By the Factorization Theorem, there exist functions $g'$ and $h'$ such that $f(\vec x \mid \theta) = g'(T'(\vec x) \mid \theta) \ h'(\vec x)$. Let $x$ and $y$ be two sample points with $T'(\vec x) = T'(\vec y)$. Then -->
+<!-- $$ -->
+<!-- \frac{f(\vec x \mid \theta)}{f(\vec y \mid \theta)} = \frac{g'(T'(\vec x) \mid \theta) \ h'(\vec x)}{g'(T'(\vec y) \mid \theta) \ h'(\vec y)} = \frac{h'(\vec x)}{h'(\vec y)} -->
+<!-- $$ -->
+<!-- Since this ratio does not depend on $\theta$, therefore from the assertion of the theorem, we have $T(\vec x) = T(\vec y)$. So, $T(\vec x)$ is a function of $T'(\vec x)$ and $T(\vec x)$ is a minimal sufficient statistic. -->
 
 
 
@@ -515,25 +526,13 @@ $$
 $$
 This is constant in $(\alpha, \beta)$ if and only if $\sum_{i=1}^n \log x_i  = \sum_{i=1}^n \log y_i$ and $\sum_{i=1}^n \log (1-x_i) = \sum_{i=1}^n \log (1-y_i)$.
 
----
 
 
-# Invariance Principle for Minimal Sufficient Statistics
+<!-- --- -->
+
+<!-- # Homework -->
 
 
-## Theorem
-Suppose $T(\mathbf{X})$ is a minimal sufficient statistic for a parameter $\theta$, and let $u$ be a one-to-one function. Then $T^*(\mathbf{X}) = u(T(\mathbf{X}))$ is also a minimal sufficient statistic for $\theta$.
+<!-- - Read p. $274-282$. -->
 
-\enter
-
-**Example:** $\ds{\left(\sum_{i=1}^n{X_i},\sum_{i=1}^n{X_i^2}\right)}$ is a minimal sufficient statistic for $(\mu,\sigma^2)$.
-
-
----
-
-# Homework
-
-
-- Read p. $274-282$.
-
-- Exercises: TBA.
+<!-- - Exercises: TBA. -->
