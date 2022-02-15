@@ -506,8 +506,8 @@ First note on the outset that
 $$
 \begin{aligned}
 f(\vec x \mid \alpha, \beta) 
-&= \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha) \ \Gamma(\beta)} \prod_{i=1}^n \left\{x_i^{\alpha-1} (1 - x_i)^{\beta-1} \right\}\\ 
-&= \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha) \ \Gamma(\beta)} \ \exp\left[ (\alpha-1) \sum_{i=1}^n \log x_i + (\beta-1) \sum_{i=1}^n \log(1-x_i) \right]
+&= \left(\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha) \ \Gamma(\beta)} \right)^n \prod_{i=1}^n \left\{x_i^{\alpha-1} (1 - x_i)^{\beta-1} \right\}\\ 
+&= \left(\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha) \ \Gamma(\beta)} \right)^n \ \exp\left[ (\alpha-1) \sum_{i=1}^n \log x_i + (\beta-1) \sum_{i=1}^n \log(1-x_i) \right]
 \end{aligned}
 $$
 
@@ -518,8 +518,8 @@ Now show minimal sufficiency:
 $$
 \begin{aligned}
 \frac{f(\vec x \mid \alpha, \beta)}{f(\vec y \mid \alpha, \beta)} 
-&= \frac{\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha) \ \Gamma(\beta)} \exp\left[ (\alpha-1) \sum_{i=1}^n \log x_i + (\beta-1) \sum_{i=1}^n \log(1-x_i) \right]}
-{\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha) \ \Gamma(\beta)} \exp\left[ (\alpha-1) \sum_{i=1}^n \log y_i + (\beta-1) \sum_{i=1}^n \log(1-y_i) \right]} \\ 
+&= \frac{\left(\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha) \ \Gamma(\beta)} \right)^n \exp\left[ (\alpha-1) \sum_{i=1}^n \log x_i + (\beta-1) \sum_{i=1}^n \log(1-x_i) \right]}
+{\left(\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha) \ \Gamma(\beta)} \right)^n \exp\left[ (\alpha-1) \sum_{i=1}^n \log y_i + (\beta-1) \sum_{i=1}^n \log(1-y_i) \right]} \\ 
 &= \exp\left[ (\alpha-1)\left(\sum_{i=1}^n \log x_i  - \sum_{i=1}^n \log y_i \right) \right. \\ 
 &\qquad \qquad +\left. (\beta - 1) \left(\sum_{i=1}^n \log (1-x_i)  - \sum_{i=1}^n \log (1-y_i) \right) \right].
 \end{aligned}
