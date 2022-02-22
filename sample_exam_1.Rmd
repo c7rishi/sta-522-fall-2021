@@ -1,0 +1,84 @@
+---
+title: "Sample Exam 1"
+author: ""
+date: ""
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{=tex}
+
+%\usepackage[noname]{bpexam}
+\usepackage{amsmath}
+%\usepackage{probstat}
+\usepackage{enumerate}
+\usepackage{color}
+\usepackage[margin = 0.8in]{geometry}
+\usepackage{graphics,graphicx}
+
+%\testname{Exam 1}
+%\coursenumber{STA 521}
+%\coursename{Intro to Theoretical Stat 1}
+%\semester{Fall 2020}
+%
+
+\renewcommand{\S}{\mathcal{S}}
+%\renewcommand{\triangle}{\: \triangle \:}
+
+\setlength{\parindent}{0pt}
+
+\newcommand{\points}[1]{\hfill \textbf{(#1 pts)}}
+
+%\newcounter{totalpoints}
+%\newcounter{apcpnts}
+
+%\newcommand{\points}[1]%
+%{\addtocounter{totalpoints}{#1}\hspace*{\fill}\mbox{\bf (#1 pts)}}
+
+%\newcommand{\eqpoints}[1]%
+%{\addtocounter{totalpoints}{#1}\tag*{\bf (#1 pts)}}
+
+
+\begin{document}
+
+
+\begin{large}
+   \textbf{STA 522, Sample Exam 1} \\
+   Date and time:  ----------------------------
+\end{large}
+
+\vspace{0.3in}
+
+
+%\pledge
+\makebox[\textwidth]{\textit{\textbf{Print Name}}: \enspace \rule{3truein}{.5pt} \textbf{\textit{UB Person ID:}} \enspace \hrulefill}
+%\bigskip
+
+\vspace*{0.5 in}
+
+```
+
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

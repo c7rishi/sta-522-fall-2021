@@ -1,0 +1,26 @@
+---
+title: "Exam 1 Notes"
+author: ""
+date: ""
+output: beamer_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+
+# Exam 1 Notes
+
+* Scheduled on Thursday, 3/3/22, 5-7 pm @Kimball 720
+
+* Will cover materials we discuss till the first half of Monday 2/28 class. The second half will be devoted to discussions
+
+* The exam will contain about 5-6 problems
+
+* You'll get formula sheets  listing pdfs, pmfs, moments, mgfs etc of some common distributions (pages 621-626 from CB 2E).
+
+* You can use a non-programmable calculator during exam. However, you may not use any books, notes, other references, or any other electronic device
+
+* A sample exam will be posted today.

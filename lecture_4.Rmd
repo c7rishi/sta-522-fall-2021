@@ -407,7 +407,7 @@ Then $\bar X$ is a complete sufficient statistic for $\mu$.
 \enter
 
 
-For any fixed $\sigma^2_0$, the family $\N(\mu, \sigma^2_0)$ is a location family with location parameter $\mu$. It can be shown that (homework) $S^2$, a statistic based on $X_1 - \bar X, \dots, X_n - bar X$, is ancillary for $\mu$.
+For any fixed $\sigma^2_0$, the family $\N(\mu, \sigma^2_0)$ is a location family with location parameter $\mu$. It can be shown that (homework) $S^2$, a statistic based on $X_1 - \bar X, \dots, X_n - \bar X$, is ancillary for $\mu$.
 
 
 \enter
