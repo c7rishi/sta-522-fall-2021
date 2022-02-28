@@ -1,0 +1,313 @@
+---
+title: |
+  | STA 522, Spring 2022  
+  | Introduction to Theoretical Statistics II
+author: | 
+  | Lecture 5
+  | 
+  | Department of Biostatistics
+  | University at Buffalo 
+date: ""
+output: 
+  beamer_presentation:
+    toc: false
+    #latex_engine: xelatex
+header-includes:
+  - \usepackage{bm}
+bibliography: references.bib
+fontsize: 10pt
+editor_options: 
+  markdown: 
+    wrap: 80
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+\newcommand{\rs}{X_1,X_2,\dots,X_n}
+\newcommand{\on}{\operatorname}
+\newcommand{\enter}{\vspace{0.1in}}
+\newcommand{\ds}{\displaystyle}
+\renewcommand{\bar}{\overline}
+\newcommand{\N}{\text{N}}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Ss}{\mathcal{S}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\E}{\on{E}}
+\newcommand{\var}{\on{Var}}
+\renewcommand{\vec}{\underline}
+\newcommand{\asim}{\stackrel{a}{\sim}}
+\renewcommand{\mathbf}{\vec}
+
+
+
+# AGENDA
+
+\enter
+
+- Comments on Exam 1
+
+\enter 
+
+-  Point Estimation
+
+\enter 
+
+-  Method of Moments
+
+\enter
+
+-  Method of Maximum Likelihood
+
+\enter 
+-  Review for Exam 1
+
+
+   
+
+--------------------------------------------------------------------------------
+
+
+# Review: Likelihood Function
+
+- Let $f (\vec x \mid \theta)$ denote the joint pdf or pmf of the sample $\vec X = (\rs)$. Then, given that $\vec X = \vec x$ is observed, the function of $\theta$ defined by $L(\theta \mid \vec x) = f (\vec x \mid \theta)$ is called the **likelihood function**.
+
+\enter
+
+- **Example (Poisson Likelihood):** Let $\vec{X}=(\rs)$ denote a random sample from a Poisson distribution with mean $\lambda$.  The likelihood function for $0 < \lambda < \infty$ is given by:
+$$
+L(\lambda \mid \vec x) = P_\lambda(\vec X = \vec x) =  \exp(-n \lambda) \ \frac{\lambda^{\sum_{i=1}^n x_i}}{\prod_{i=1}^n x_i!}
+$$
+
+\enter
+
+- **Example (Normal Likelihood):** Let $\vec{X}=(\rs)$ denote a random sample from a $\operatorname{N}{(\mu,\sigma^2)}$ distribution. The likelihood function for $-\infty < \mu < \infty$ and $\sigma > 0$ is given by
+$$
+L(\mu, \sigma \mid \vec x) = f (\vec x \mid \mu, \sigma^2) = \frac{1}{\sqrt{2\pi}} \ (\sigma^2)^{-n/2} \exp\left( -\frac{1}{2\sigma^2} \sum_{i=1}^n \left(x_i - \mu\right)^2 \right)
+$$
+
+--------------------------------------------------------------------------------
+
+# Point Estimation
+
+
+**Background:** When sampling is from a population with pdf/pmf $f (\vec x | \theta)$, knowledge of $\theta$ yields knowledge of the entire population. Given a sample we to find a meaningful reasonable "estimator" of the point $\theta$.
+
+- **Example:** Suppose you have a random sample $\rs$ from a $N(\mu, \sigma^2)$ population. How do we determine $\mu$ and $\sigma^2$ from $\rs$? 
+
+\enter
+
+
+**Definition:** A point estimator is *any function* $W(\rs)$ of a sample; that is, any statistic is a point estimator.
+
+
+- **NOTE:** There is no mention in the definition of any correspondence between the estimator and the parameter. Also there is no mention in the definition of the range of the statistic $W(\rs)$. This ensures that we do not eliminate any candidates from consideration.
+
+---
+
+## Estimate vs. Estimator
+
+\enter
+
+- An estimator is a function of the random  sample, while an estimate is the *realized value* of an estimator that is obtained when a sample is actually taken. 
+
+\enter
+
+- Thus, an estimator is a random variable whereas an estimate is its observed value.
+
+
+\enter \enter
+
+
+## Method of Finding Point Estimators
+
+\enter
+
+- Method of moments
+
+\enter
+
+- Method of maximum likelihood
+
+\enter 
+
+- Bayesian Methods (later)
+
+
+--------------------------------------------------------------------------------
+
+# Moments
+
+**Definition:** The $r$-th moment about the origin (or raw moment) of a random variable $X$, denoted by $\mu_r'$ , is defined as $\mu_r' = E(X^r)$. 
+
+- Note that $\mu_1' = E(X) = \mu =$ population mean.
+
+
+\enter \enter
+
+**Definition:** The $r$-th moment about the mean (or central moment) of a random variable $X$, denoted by $\mu_r$ , is defined
+as $\mu_r = E[(X - \mu)^r]$ where $\mu = \mu_1'$ is the population mean (first raw moment).
+
+- Note that $\mu_1 = E[(X - \mu)] = 0$ and $\mu_2 = E(X - \mu)^2 = \sigma^2$ = population variance.
+
+\enter \enter
+
+
+**Definition:** The $k$th sample (raw) moment of a random sample $\rs$ is the mean of the $k$th powers, denoted by $m_k$ and defined as
+$\ds m_k = \frac{1}{n} \sum_{i=1}^n X_i^k$. Note that $m_1 = \bar X$  and  $\ds \tilde{S}^ 2 := m_2 - m_1^2 = \sum_{i=1}^n (X_i - \bar X)^2$.
+
+
+---
+
+# Method of Moments
+
+Let $\rs$ be a sample from a population with pdf/pmf $f (\vec x \mid \theta_1, \dots , \theta_k)$·
+
+\enter 
+
+Method of moments estimators of $\theta_1, \dots , \theta_k$ are obtained by equating the first $k$ sample *raw* moments to the corresponding $k$ population *raw* moments, then solving to get $\hat \theta_1, \dots, \hat \theta_k$.
+
+- i.e., set $m_j = \mu_j' = \mu_j'(\theta_1, \dots, \theta_k)$ for $j = 1, \dots, k$ (as many equations as we have
+parameters) and solve for the parameters.
+
+
+\enter
+
+Note that $m_j = m_{j,n} \xrightarrow{a.s.} \mu'_j$ for $j \geq 1$ under standard regularity conditions, using
+SLLN.
+
+- i.e., in large samples the sample moment get arbitrarily close to the population moments, so the estimation will be reasonable.
+- Estimation can be sub-optimal in small samples
+
+
+\enter
+
+**NOTE:** When there are just two parameters in the distribution (e.g., $\N(\mu, \sigma^2)$), it is sometimes easier to solve the equations $\mu = \bar X$ and $\sigma^2 = \tilde{S}^2$. Must write $\mu$ and $\sigma^2$ in terms of the model parameters first.
+
+---
+
+**Example (Normal Method of Moments):** Suppose $\rs \sim \on{iid} \N(\mu, \sigma^2)$. Use the method of moments to find estimators of the parameters $\mu$ and $\sigma^2$.
+
+For a $\N(\mu, \sigma^2)$ distribution, $\mu_1' = \mu$ and $\mu_2 = \sigma^2$. Therefore the method of moment estimators are given by $\hat \mu = \bar X$ and $\ds \hat \sigma^2 = \frac 1n \sum_{i=1}^n (X_i - \bar X)^2$.
+
+
+\vspace{0.05in} 
+
+**Example (Uniform Method of Moments):** Let $\rs \sim \on{iid Uniform}(0, \theta)$ for $\theta > 0$. Use the method of moments to find an estimator of the parameter $\theta$. 
+
+Here $\mu_1' = E(X) = \frac{\theta}{2}$. Therefore the method of moments estimator for $\theta$ is obtained as $\hat \theta = 2 \bar X$. 
+
+\vspace{0.05in} 
+
+
+**Example (Gamma Method of Moments):** Let $\rs \sim \on{iid~Gamma}(\alpha, \beta)$, $\alpha > 0$, $\beta > 0$. Use the method of
+moments to find estimators of the parameters $\alpha$ and $\beta$.
+
+
+Note at the outset that for the Gamma($\alpha$, $\beta$) distribution, $\mu_1' = \alpha\beta$ and $\mu_2 = \alpha \beta^2$.
+Write $\tilde{S}^2 = \frac{1}{n} \sum_{i=1}^n (X_i - \bar X)^2$. Then the method of moment estimators
+are: $\hat \beta = \tilde{S}^2/\bar X$ and $\alpha = \bar X^2/\tilde{S}^2$
+
+---
+
+
+**Example (Binomial Method of Moments):** Let $X1, X2, . . . , Xn \sim \on{iid~Binomial}(k, p)$, $k$ is a positive integer, $p > 0$ and
+both $k$ and $p$ are unknown. 
+
+\enter 
+
+\underline{Exemplary Situation:} want to estimate crime rates for crimes that are known to have many unreported occurrences. For such a crime, both the true reporting rate, $p$, and the total number of occurrences, $k$, are both unknown.
+
+\enter
+
+Write $\tilde{S}^2 = \frac{1}{n} \sum_{i=1}^n (X_i - \bar X)^2$. Method of moment estimators are obtained from the system of equations:
+$$
+\begin{gathered}
+\bar X = \hat k \hat p \\
+\tilde{S}^2 = \hat k \hat p (1 - \hat p)
+\end{gathered}
+$$
+Solving, we get 
+$$
+\hat k = \frac{\bar X^2}{\bar X - \tilde{S}^2} \ \text{and} \ \hat p = \frac{\bar X}{\hat k}
+$$
+**NOTE:** $\hat k$ can be negative.
+
+----
+
+# Maximum Likelihood Estimation
+
+
+**Definition:** For each sample point $\vec x$, let $\hat \theta(\vec x)$ be a parameter value at
+which the likelihood function $L(\theta \mid \vec x)$ attains its maximum as a function
+of $\theta$, with $\vec x$ held fixed. A maximum likelihood estimator (MLE) of
+the parameter $\theta$ based on a sample $\hat X$ is $\hat \theta(\vec X)$.
+
+
+\enter \enter
+
+**Notes:** 
+- Since the logarithm function is strictly increasing on $(0, \infty)$ (and so one-to-one), the value which maximizes $\log L(\theta \mid \vec x)$ is the same value that maximizes $L(\theta \mid \vec x)$. 
+
+- $l(\theta \mid \vec x) := \log L(\theta \mid \vec x)$ is called the *log-likelihood* function
+- Often maximizing  $\log L(\theta \mid \vec x)$ is easier than maximizing $L(\theta \mid \vec x)$.
+
+
+----
+
+**Example: (Binomial MLE)** Let $\rs \sim \on{iid~Bernoulli}(p)$ where $0 \leq p \leq 1$. Find the MLE for $p$. 
+
+\enter
+
+The likelihood function is 
+$$
+L(p \mid \vec x) = \prod_{i=1}^n p^{x_i} (1-p)^{1-x_i} = p^y (1-p)^{n-y}
+$$
+where $y = \sum_{i=1}^n x_i$. 
+
+First consider $0 < y < n$. We'll maximize the log-likelihood:
+$$
+l(p \mid \vec x) := \log L(p \mid \vec x) = y \log p + (n-y) \log (1-p) 
+$$
+$$
+\frac{\partial}{\partial p} l(p \mid \vec x) = \frac{y}{p} - \frac{n-y}{1-p} \stackrel{\on{set}}{=} 0 \implies p = \frac{y}{n}
+$$
+Straightforward to verify that $\ds \left. \frac{\partial^2}{\partial p^2} l (p \mid \vec x) \right|_{p=y/n} < 0$ meaning $p = y/n$ maximizes $l(p \mid \vec x)$ when $0 < y < n$. 
+
+----
+
+If $y = 0$ or $y=n$ then 
+$$
+l(p \mid \vec x) := \log L(p \mid \vec x) = 
+\begin{cases} 
+n \log (1-p) & \text{if } y = 0 \\
+n \log p & \text{if } y = n
+\end{cases}
+$$
+In each case $l(p \mid \vec x)$ is a monotone function of $p$, and is maximized at $p = y/n$. 
+
+
+\enter
+
+Thus, $\ds \hat p = \frac{y}{n}$ is the MLE of $\hat p$. 
+
+
+\enter
+
+**Homework:**
+
+1. Find the method of moment estimator of $p$.
+
+2. Consider $\rs \sim \on{iid~Binomial}(m, p)$ where $m$ is a fixed, known positive integer, and $p$ is unknown. What are the MLE and method of moments estimator of $p$?
+
+
+
+<!-- # Homework -->
+
+<!-- -   Read p. $316-326$. -->
+
+<!-- -   Exercises: TBA. -->
