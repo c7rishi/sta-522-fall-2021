@@ -102,7 +102,7 @@ Here $X_i \sim \text{iid~Bernoulli}(\theta)$ for $i = 1, \dots, n=10$.
 
 **Part (a):** The likelihood of $\theta$ is 
 $$
-L(\theta \mid \vec{x}) = P(\vec X = \vec{x} \mid \theta) = \theta^{\sum_{i=1}^{10} x_i} (1-\theta)^{10- \sum_{i=1}^{10} X_i}
+L(\theta \mid \vec{x}) = P(\vec X = \vec{x} \mid \theta) = \theta^{\sum_{i=1}^{10} x_i} (1-\theta)^{10- \sum_{i=1}^{10} x_i}
 $$
 
 **Part (b):** Given that $\sum_{i=1}^{10} X_i = 6$. The likelihood is:
