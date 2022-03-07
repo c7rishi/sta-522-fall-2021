@@ -101,7 +101,7 @@ L(\theta \mid \vec x) = \prod_{i=1}^n  \exp(-\theta) \frac{\theta^{x_i}}{x_i!} \
 $$
 The log likelihood is:
 $$
-l(\theta \mid \vec x) = \log L(\theta \mid \vec x) = -n \theta  + \left(\sum_{i=1}^n x_i\right) \log \theta + \log \left( {\prod_{i=1}^n x_i!}\right)
+l(\theta \mid \vec x) = \log L(\theta \mid \vec x) = -n \theta  + \left(\sum_{i=1}^n x_i\right) \log \theta - \log \left( {\prod_{i=1}^n x_i!}\right)
 $$
 Therefore,
 $$
@@ -441,7 +441,7 @@ $$m(\mathbf{x})=\int{f(\mathbf{x} \mid \theta)\pi(\theta)\,d\theta}.$$
 
 
 **Example (Binomial Bayes estimation):** Let $\rs\sim\operatorname{iid~Bernoulli}{(p)}$, and let
-$\ds=\sum_{i=1}^n{X_i}$. Then $Y\sim\operatorname{binomial}(n,p)$. 
+$\ds Y =\sum_{i=1}^n{X_i}$. Then $Y\sim\operatorname{binomial}(n,p)$. 
 
 \enter 
 

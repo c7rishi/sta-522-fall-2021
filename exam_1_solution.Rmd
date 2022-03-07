@@ -76,7 +76,7 @@ $$
 which means $X_{(n)} \xrightarrow{P} 1$. 
 
 
-Now apply the continuous mapping result: if $X_n \xrightarrow{P} X$ then $h(X_n) \xrightarrow{P} X$ for any continuous funciton $h$. Because here $X_{(n)} \xrightarrow{P} 1$ and $h(x) = x/2$ is a continuous function, therefore, $X_{(n)}/2 \xrightarrow{P} 1/2$.
+Now apply the continuous mapping result: if $X_n \xrightarrow{P} X$ then $h(X_n) \xrightarrow{P} h(X)$ for any continuous funciton $h$. Because here $X_{(n)} \xrightarrow{P} 1$ and $h(x) = x/2$ is a continuous function, therefore, $X_{(n)}/2 \xrightarrow{P} 1/2$.
 
 
 
@@ -131,7 +131,7 @@ $$
 Therefore, by the Factorization theorem, $T(\vec X) = \sum_{i=1}^n X_i^\gamma$ is sufficient for $\theta$. 
 
 
-**Part (b)** It follows from the joint density above that a factorization based on a univariate or bivariate or a lower (than $n$) dimensional) statistic is not feasible when both $\theta$ and $\gamma$ are unknown. Therefore, by the necessity half of the factorization theorem (must have factorization for a lower dimensional sufficient statistic to exit) it follows that no univariate sufficient statistic exist in this case. A non-trivial sufficient statistic would be the order statistics: $(X_{(1)}, \dots, X_{(n)})$.
+**Part (b):** It follows from the joint density above that a factorization based on any univariate or bivariate or lower (than $n$) dimensional statistic is not feasible when both $\theta$ and $\gamma$ are unknown. Therefore, by the necessity half of the factorization theorem (i.e., we need to have a factorization of joint pdf for a lower dimensional sufficient statistic to exit) it follows that no univariate sufficient statistic exist in this case. A (semi-trivial) sufficient statistic would be the order statistics: $(X_{(1)}, \dots, X_{(n)})$.
 
 
 
@@ -164,11 +164,11 @@ $$
 $$
 where the RHS contains random variables whose distribution does not depend on the parameter $\sigma$. Hence $\log M - \log \bar X$ is an ancillary statistic.
 
-**Part(b):** [\underline{NOTE:} Recall that for Uniform$(0, \theta)$, $T = X_{(n)}$ is sufficient, and not $\sum_{i=1}^n X_i$. So we can't use Basu's theorem directly. However, for this specific type of problem, there is a much quicker way, shown as follows.] 
+**Part(b):** [\underline{NOTE:} Recall that for Uniform$(0, \theta)$, $T = X_{(n)}$ is sufficient, and not $\sum_{i=1}^n X_i$. So we can't use Basu's theorem directly. However, for this specific types of problem, there is a much quicker way, shown as follows.] 
 
 As suggested in the hint, the random variables $\ds \frac{X_i}{X_1 + \dots + X_n}$ all have the same distribution and hence mean as $X_i$'s are iid.
 
-Therefore, for some constant $k$, $\ds E\left[\frac{X_i}{X_1 + \dots + X_n}\right] = k$ for all $i = 1, \dots, n$. 
+Therefore, for some constant $k ( > 0)$, $\ds E\left[\frac{X_i}{X_1 + \dots + X_n}\right] = k$ for all $i = 1, \dots, n$. 
 
 So,
 $$
