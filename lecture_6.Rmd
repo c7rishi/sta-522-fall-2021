@@ -1,13 +1,13 @@
 ---
 title: |
-  | STA 522, Spring 2021  
+  | STA 522, Spring 2022  
   | Introduction to Theoretical Statistics II
 author: | 
   | Lecture 6
   | 
   | Department of Biostatistics
   | University at Buffalo 
-date: "8 March, 2021"
+date: ""
 output: 
   beamer_presentation:
     toc: false
@@ -90,7 +90,7 @@ knitr::opts_chunk$set(echo = FALSE)
 --------------------------------------------------------------------------------
 
 **Example:** Let $X_1,X_2,\dots,X_n \sim \operatorname{iid~Poisson}(\theta)$, where
-$\theta$. Find the MLE of $\theta$.
+$\theta > 0$. Find the MLE of $\theta$.
 
 \enter
 \enter
@@ -101,7 +101,7 @@ L(\theta \mid \vec x) = \prod_{i=1}^n  \exp(-\theta) \frac{\theta^{x_i}}{x_i!} \
 $$
 The log likelihood is:
 $$
-\log L(\theta \mid \vec x) = -n \theta  + \left(\sum_{i=1}^n x_i\right) \log \theta + \log \left( {\prod_{i=1}^n x_i!}\right)
+l(\theta \mid \vec x) = \log L(\theta \mid \vec x) = -n \theta  + \left(\sum_{i=1}^n x_i\right) \log \theta + \log \left( {\prod_{i=1}^n x_i!}\right)
 $$
 Therefore,
 $$
@@ -231,7 +231,7 @@ This is maximum when $\theta = x_{(1)}$. Hence the MLE for $\theta$ is $\hat \th
 $X_1,X_2,\dots,X_n\sim \operatorname{iid~Binomial}(k,p)$, where $p$ is known and
 $k$ is unknown. The likelihood function is: $$
 L(k \mid \underline x, p) = \prod_{i=1}^n \binom{k}{x_i} \ p^{x_i} (1-p)^{k-x_i} \ I(x_i \in \{0, 1, \dots, k\})
-$$ Maximizing with differentiation is difficult because of factorials and
+$$ Maximizing with differentiation is not possible because of factorials and
 because $k$ is integer.
 
 \vspace{0.1in}
@@ -283,7 +283,7 @@ $\sin(\theta)$ is $\sin(\overline X)$.
 
 \vspace{0.025in}
 
-Need to be careful when $\tau$ is not one-to-one.
+Need to be careful when $\tau$ is NOT one-to-one.
 
 \vspace{0.1in}
 
@@ -306,31 +306,31 @@ the MLE of $\tau(\theta)$ is $\tau(\hat{\theta})$.
 
 \vspace{0.1in}
 
-**Proof:** Define the induced likelihood $L^*$ as before. Let $\hat \eta$ denote the value that maximizes $L^*(\eta \mid \underline{x})$.
+<!-- **Proof:** Define the induced likelihood $L^*$ as before. Let $\hat \eta$ denote the value that maximizes $L^*(\eta \mid \underline{x})$. -->
 
-\vspace{0.1in}
+<!-- \vspace{0.1in} -->
 
-Need to show that
-$L^*(\hat\eta \mid \underline{x}) = L^*(\tau(\hat \theta) \mid \underline{x})$.
+<!-- Need to show that -->
+<!-- $L^*(\hat\eta \mid \underline{x}) = L^*(\tau(\hat \theta) \mid \underline{x})$. -->
 
-\vspace{0.1in}
+<!-- \vspace{0.1in} -->
 
-Since the maxima of $L$ and $L^*$ coincide, therefore, 
-$$
-\begin{aligned}
-L^*(\hat \eta \mid \underline{x}) 
-&= \sup_{\lbrace\theta\,:\,\tau(\theta)=\eta\rbrace}{L(\theta \mid \underline{x})} \\
-&= \sup_\theta {L(\theta \mid \underline{x})} \\
-&= L(\hat \theta \mid \underline x) \\
-&= \sup_{\lbrace\theta\,:\,\tau(\theta)=\tau(\hat\theta)\rbrace} L(\theta \mid \underline x) \\
-&= L^*(\tau(\hat \theta) \mid \underline{x}) 
-\end{aligned} 
-$$
-Hence, $\tau(\hat \theta)$ is the MLE of $\tau(\theta)$
+<!-- Since the maxima of $L$ and $L^*$ coincide, therefore,  -->
+<!-- $$ -->
+<!-- \begin{aligned} -->
+<!-- L^*(\hat \eta \mid \underline{x})  -->
+<!-- &= \sup_{\lbrace\theta\,:\,\tau(\theta)=\eta\rbrace}{L(\theta \mid \underline{x})} \\ -->
+<!-- &= \sup_\theta {L(\theta \mid \underline{x})} \\ -->
+<!-- &= L(\hat \theta \mid \underline x) \\ -->
+<!-- &= \sup_{\lbrace\theta\,:\,\tau(\theta)=\tau(\hat\theta)\rbrace} L(\theta \mid \underline x) \\ -->
+<!-- &= L^*(\tau(\hat \theta) \mid \underline{x})  -->
+<!-- \end{aligned}  -->
+<!-- $$ -->
+<!-- Hence, $\tau(\hat \theta)$ is the MLE of $\tau(\theta)$ -->
 
----
+<!-- --- -->
 
-Examples of the invariance property of MLE:
+**Examples of the invariance property of MLE:**
 
 - If $\rs \on{iid~N}(\theta, 1)$ then the MLE of $\theta^2$ is $\bar X^2$.
 
@@ -526,8 +526,8 @@ $$
 
 <!-- --- -->
 
-# Homework
+<!-- # Homework -->
 
--   Read p. $316-326$.
+<!-- -   Read p. $316-326$. -->
 
--   Exercises: TBA.
+<!-- -   Exercises: TBA. -->

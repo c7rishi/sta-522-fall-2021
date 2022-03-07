@@ -1,0 +1,182 @@
+---
+title: "STA 522 Exam 1 Solutions"
+author: ""
+date: ""
+output: pdf_document
+---
+
+
+\newcommand{\rs}{X_1,X_2,\dots,X_n}
+\newcommand{\on}{\operatorname}
+\newcommand{\enter}{\vspace{0.1in}}
+\newcommand{\ds}{\displaystyle}
+\renewcommand{\bar}{\overline}
+\newcommand{\N}{\text{N}}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Ss}{\mathcal{S}}
+\newcommand{\E}{\on{E}}
+\newcommand{\var}{\on{Var}}
+<!-- \renewcommand{\vec}[1]{{\underaccent{\tilde}{#1}}} -->
+\renewcommand{\vec}{\underline}
+\newcommand{\asim}{\stackrel{a}{\sim}}
+\newcommand{\points}[1]{\hfill \textbf{(#1 pts)}}
+
+
+
+
+# Problem 1
+
+**Part (a):** Since $\rs$ are iid Uniform(0, 1), the cdf of each $X_i$ is given by:
+$$
+F(x) = \begin{cases}
+0 & \text{if } x \leq 0 \\
+{x} & \text{if } 0 < x < 1 \\
+1 & \text{if } x \geq 1
+\end{cases}
+$$
+Therefore, 
+$$
+\begin{aligned}
+P\left(X_{(1)} < 0.25\right) 
+&= 1- \left(X_{(1)} \geq 0.25\right) \\ 
+&= 1 - P\left(X_i \geq 0.25 \text{ for all } i \right) \\
+&= 1 - \{1-F(0.25)\}^n && \text{(iid)} \\
+&= 1 - (1 - 0.25)^n = \boxed{1 - (0.75)^n}
+\end{aligned}
+$$
+and
+$$
+\begin{aligned}
+P\left(X_{(n)} < 0.25\right) 
+&= P\left(X_i < 0.25 \text{ for all } i \right) \\
+&= \{F(0.25)\}^n && \text{(iid)} \\
+&= \boxed{(0.25)^n}
+\end{aligned}
+$$
+
+Because $X_{(1)} \leq X_{(n)}$, therefore $X_{(n)} < 0.25$ *implies* $X_{(1)} < 0.25$, so that $P(X_{(n)} < 0.25) \leq P(X_{(1)} < 0.25)$.
+
+**Part (b):** Yes, it does. We'll first show that $X_{(n)} \xrightarrow{P} 1$. This is similar to the solution for Problem 1(b) in the sample exam, with the difference being that here we have a Uniform$(0, 1)$ population instead of a Uniform$(-1, 1)$ population.  
+
+Fix $\epsilon > 0$ small. We have
+$$
+\begin{aligned}
+P(|X_{(n)} - 1| \geq \epsilon) &= P(X_{(n)} - 1 \geq \epsilon) + P(X_{(n)} - 1 < -\epsilon) \\
+&=  P(X_{(n)} \geq 1 + \epsilon) + P(X_{(n)}  < 1 -\epsilon) \\
+&= 0 + P(X_i < 1 -\epsilon, \text{ all } i) \\
+&= \left\{P(X_1 < 1-\epsilon)\right\}^n && \text{(iid)} \\
+&= \begin{cases}
+\left(1-\epsilon\right)^n & \text{ if } \epsilon < 1 \\
+0 & \text{if } \epsilon \geq 1
+\end{cases} \\
+&\to  0 \qquad \text{as } {n \to \infty}
+\end{aligned}
+$$
+which means $X_{(n)} \xrightarrow{P} 1$. 
+
+
+Now apply the continuous mapping result: if $X_n \xrightarrow{P} X$ then $h(X_n) \xrightarrow{P} X$ for any continuous funciton $h$. Because here $X_{(n)} \xrightarrow{P} 1$ and $h(x) = x/2$ is a continuous function, therefore, $X_{(n)}/2 \xrightarrow{P} 1/2$.
+
+
+
+
+
+# Problem 2
+
+This is from Lecture 2: see lecture notes. To verify that $F(v) = e^{-1/v} I(v > 0)$ is a cdf, observe:
+
+(i) $F(-\infty) = \lim_{v \to -\infty} F(v) = 0$ and $F(+\infty) = \lim_{v \to \infty} F(v) = \lim_{v \to \infty} e^{-1/v} = 1$.
+
+(ii) $F$ is continuous everywhere on $(-\infty, \infty)$ (actually differentiable everywhere except $v = 0$), and hence is right continuous. 
+
+(iii) Note that $F(v)$ is exactly zero for all $v \leq 0$, meaning $F$ is non-decreasing in $(-\infty, 0]$. On $(0, \infty)$, $F$ is differentiable, and  $\ds \frac{d}{dv} e^{-1/v} = e^{-1/v}  \left( - \frac{1}{v^2}\right) \ (-1) = e^{-1/v} \frac{1}{v^2} > 0$ for all $v > 0$. Hence, $F(v)$ is increasing on $(0, \infty)$. Combining, we see that $F$ is non-decreasing on the entirety of $(-\infty, \infty)$.
+
+These three collectively imply that $F$ is a cdf.
+
+
+
+# Problem 3
+
+Here $X_i \sim \text{iid~Bernoulli}(\theta)$ for $i = 1, \dots, n=10$. 
+
+**Part (a):** The likelihood of $\theta$ is 
+$$
+L(\theta \mid \vec{x}) = P(\vec X = \vec{x} \mid \theta) = \theta^{\sum_{i=1}^{10} x_i} (1-\theta)^{10- \sum_{i=1}^{10} X_i}
+$$
+
+**Part (b):** Given that $\sum_{i=1}^{10} X_i = 6$. The likelihood is:
+$$
+L(\theta \mid \sum_{i=1}^{10} X_i = 6) = \theta^{6} (1-\theta)^{4}
+$$
+Therefore 
+$$L(\theta = 0.2 \mid \sum_{i=1}^{10} X_i = 6) = (0.2)^6 (0.8)^4 = \boxed{2.61 \times 10^{-5}}$$
+and 
+$$L(\theta = 0.8 \mid \sum_{i=1}^{10} X_i = 6) = (0.8)^6 (0.2)^4 = \boxed{4.19 \times 10^{-4}}.$$
+This shows that $\theta = 0.8$ has a higher likelihood. Intuitively, the observed data of 6 successes are more compatible with the configuration where population probability of success $\theta = 0.8$ than with $\theta = 0.2$.
+
+
+
+# Problem 4
+
+The joint density of $\vec X$ is:
+$$
+f(\vec x \mid \theta , \gamma) = \prod_{i=1}^n \left(\frac{\gamma}{\theta} \ x_i^{\gamma-1} e^{-x_i^\gamma/\theta} \right) = \left(\frac{\gamma}{\theta}\right)^n \prod_{i=1}^n x_i^{\gamma-1} \ \exp\left( - \frac{1}{\theta} \sum_{i=1}^n x_i^\gamma \right)
+$$
+
+**Part (a):** If $\gamma > 0$ is known, then
+$$
+f(\vec x \mid \theta) = \left(\frac{\gamma}{\theta}\right)^n  \underbrace{\exp\left( - \frac{1}{\theta} \sum_{i=1}^n x_i^\gamma \right)}_{= g(T(\vec x) \mid \theta)} \underbrace{\prod_{i=1}^n x_i^{\gamma-1}}_{=h(\vec x)} 
+$$
+Therefore, by the Factorization theorem, $T(\vec X) = \sum_{i=1}^n X_i^\gamma$ is sufficient for $\theta$. 
+
+
+**Part (b)** It follows from the joint density above that a factorization based on a univariate or bivariate or a lower (than $n$) dimensional) statistic is not feasible when both $\theta$ and $\gamma$ are unknown. Therefore, by the necessity half of the factorization theorem (must have factorization for a lower dimensional sufficient statistic to exit) it follows that no univariate sufficient statistic exist in this case. A non-trivial sufficient statistic would be the order statistics: $(X_{(1)}, \dots, X_{(n)})$.
+
+
+
+# Problem 5
+
+**Part (a):** Because $X_1, \dots, X_n$ are iid from the scale family $\frac{1}{\sigma} f(x/\sigma)$, we can construct iid observations $Z_1, \dots, Z_n$ from the density $f(x)$ (the standard density of the family which is free of $\sigma$) such that $Z_i = X_i / \sigma$, i.e., $X_i = \sigma Z_i$.
+
+Note that the sample median is: 
+$$
+\begin{aligned}
+M(\rs) &= 
+\begin{cases}
+X_{\left(\frac{n+1}{2}\right)} & n \text{ is odd} \\
+\frac{X_{\left(\frac{n}{2}\right)} + X_{\left(\frac{n}{2} + 1\right)}}{2} & n \text{ is even}
+\end{cases} \\
+&= \begin{cases}
+\sigma \ Z_{\left(\frac{n+1}{2}\right)} & n \text{ is odd} \\
+\sigma \ \frac{Z_{\left(\frac{n}{2}\right)} + Z_{\left(\frac{n}{2} + 1\right)}}{2} & n \text{ is even}
+\end{cases} \\
+&= \sigma  M(Z_1, \dots, Z_n)
+\end{aligned}
+$$
+Again,
+$$
+\bar X = \frac{1}{n} \sum_{i=1}^n X_i = \frac{1}{n} \sum_{i=1}^n (\sigma  Z_i) = \sigma  \bar{Z}
+$$
+Hence
+$$
+\log M - \log \bar X = \log \left(\frac{M(\rs)}{\bar X} \right) = \log \left(\frac{\sigma  M(Z_1, \dots, Z_n)}{\sigma  \bar Z} \right) = \log \left(\frac{ M(Z_1, \dots, Z_n)}{ \bar Z} \right)
+$$
+where the RHS contains random variables whose distribution does not depend on the parameter $\sigma$. Hence $\log M - \log \bar X$ is an ancillary statistic.
+
+**Part(b):** [\underline{NOTE:} Recall that for Uniform$(0, \theta)$, $T = X_{(n)}$ is sufficient, and not $\sum_{i=1}^n X_i$. So we can't use Basu's theorem directly. However, for this specific type of problem, there is a much quicker way, shown as follows.] 
+
+As suggested in the hint, the random variables $\ds \frac{X_i}{X_1 + \dots + X_n}$ all have the same distribution and hence mean as $X_i$'s are iid.
+
+Therefore, for some constant $k$, $\ds E\left[\frac{X_i}{X_1 + \dots + X_n}\right] = k$ for all $i = 1, \dots, n$. 
+
+So,
+$$
+\begin{aligned}
+&\quad E\left[\frac{X_1}{X_1 + \dots + X_n}\right] + \dots + E\left[\frac{X_n}{X_1 + \dots + X_n}\right] = \underbrace{k + \dots + k}_{n \text{ many}} = nk \\
+&\implies \underbrace{E\left[\frac{X_1}{X_1 + \dots + X_n} + \dots + \frac{X_n}{X_1 + \dots + X_n} \right]}_{= E\left[\frac{X_1 + \dots + X_n}{X_1 + \dots + X_n}\right] = E(1) = 1} = nk \\
+&\text{i.e., } nk = 1 \implies k = \frac{1}{n}
+\end{aligned}
+$$
+Therefore, $\ds E\left[\frac{X_n}{X_1 + \dots + X_n}\right] = k = \frac{1}{n}$.
+

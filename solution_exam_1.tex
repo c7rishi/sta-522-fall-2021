@@ -1,0 +1,313 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={STA 522 Sample Exam 1 Solutions},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{STA 522 Sample Exam 1 Solutions}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\newcommand{\rs}{X_1,X_2,\dots,X_n}
+\newcommand{\on}{\operatorname}
+\newcommand{\enter}{\vspace{0.1in}}
+\newcommand{\ds}{\displaystyle}
+\renewcommand{\bar}{\overline}
+\newcommand{\N}{\text{N}}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Ss}{\mathcal{S}}
+\newcommand{\E}{\on{E}}
+\newcommand{\var}{\on{Var}}
+
+\renewcommand{\vec}{\underline}
+\newcommand{\asim}{\stackrel{a}{\sim}}
+\newcommand{\points}[1]{\hfill \textbf{(#1 pts)}}
+
+\hypertarget{problem-1}{%
+\section{Problem 1}\label{problem-1}}
+
+\textbf{Part (a):} Since \(X_1,X_2,\dots,X_n\) are iid Uniform(0, 1),
+the cdf of each \(X_i\) is given by: \[
+F(x) = \begin{cases}
+0 & \text{if } x \leq 0 \\
+{x} & \text{if } 0 < x < 1 \\
+1 & \text{if } x \geq 1
+\end{cases}
+\] Therefore, \[
+\begin{aligned}
+P\left(X_{(1)} < 0.25\right) 
+&= 1- \left(X_{(1)} \geq 0.25\right) \\ 
+&= 1 - P\left(X_i \geq 0.25 \text{ for all } i \right) \\
+&= 1 - \{1-F(0.25)\}^n && \text{(iid)} \\
+&= 1 - (1 - 0.25)^n = \boxed{1 - (0.75)^n}
+\end{aligned}
+\] and \[
+\begin{aligned}
+P\left(X_{(n)} < 0.25\right) 
+&= P\left(X_i < 0.25 \text{ for all } i \right) \\
+&= \{F(0.25)\}^n && \text{(iid)} \\
+&= \boxed{(0.25)^n}
+\end{aligned}
+\]
+
+Because \(X_{(1)} \geq X_{(n)}\), therefore \(X_{(n)} < 0.25\)
+\emph{implies} \(X_{(1)} < 0.25\), so that
+\(P(X_{(n)} < 0.25) \leq P(X_{(1)} < 0.25)\).
+
+\textbf{Part (b):} Yes, it does. We'll first show that
+\(X_{(n)} \xrightarrow{P} 1\). This is similar to the solution for
+Problem 1(b) in the sample exam, with the difference being that here we
+have a Uniform\((0, 1)\) population instead of a Uniform\((-1, 1)\)
+population.
+
+Fix \(\varepsilon> 0\) small. We have \[
+\begin{aligned}
+P(|X_{(n)} - 1| \geq \varepsilon) &= P(X_{(n)} - 1 \geq \varepsilon) + P(X_{(n)} - 1 < -\varepsilon) \\
+&=  P(X_{(n)} \geq 1 + \varepsilon) + P(X_{(n)}  < 1 -\varepsilon) \\
+&= 0 + P(X_i < 1 -\varepsilon, \text{ all } i) \\
+&= \left\{P(X_1 < 1-\varepsilon)\right\}^n && \text{(iid)} \\
+&= \begin{cases}
+\left(1-\varepsilon\right)^n & \text{ if } \varepsilon< 1 \\
+0 & \text{if } \varepsilon\geq 1
+\end{cases} \\
+&\to  0 \qquad \text{as } {n \to \infty}
+\end{aligned}
+\] which means \(X_{(n)} \xrightarrow{P} 1\).
+
+Now apply the continuous mapping result: if \(X_n \xrightarrow{P} X\)
+then \(h(X_n) \xrightarrow{P} X\) for any continuous funciton \(h\).
+Because here \(X_{(n)} \xrightarrow{P} 1\) and \(h(x) = x/2\) is a
+continuous function, therefore, \(X_{(n)}/2 \xrightarrow{P} 1/2\).
+
+\newcommand{\rs}{X_1,X_2,\dots,X_n}
+\newcommand{\on}{\operatorname}
+\newcommand{\enter}{\vspace{0.1in}}
+\newcommand{\ds}{\displaystyle}
+\renewcommand{\bar}{\overline}
+\newcommand{\N}{\text{N}}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Ss}{\mathcal{S}}
+\newcommand{\E}{\on{E}}
+\newcommand{\var}{\on{Var}}
+
+\renewcommand{\vec}{\underline}
+\newcommand{\asim}{\stackrel{a}{\sim}}
+\newcommand{\points}[1]{\hfill \textbf{(#1 pts)}}
+
+\hypertarget{problem-1-1}{%
+\section{Problem 1}\label{problem-1-1}}
+
+\textbf{Part (a):} Since \(X_1,X_2,\dots,X_n\) are iid, the cdf of each
+\(X_i\) is given by: \[
+F(x) = \begin{cases}
+0 & \text{if } x \leq -1 \\
+\frac{x+1}{2} & \text{if } - 1 < x < 1 \\
+1 & \text{if } x \geq 1
+\end{cases}
+\] Therefore, \[
+\begin{aligned}
+P\left(X_{(1)} > 0.25 \text{ and } X_{(n)} \leq 0.8\right) 
+&= P\left(X_i > 0.25 \text{ for all } i \text{ and } X_{i} \leq 0.8 \text{ for all } i \right) \\
+&= P(0.25 < X_i \leq 0.8 \text{ for all } i) \\
+&= \{P(0.25 < X_1 \leq 0.8)\}^n && \text{(iid)} \\
+&= \{F(0.8) - F(0.25) \}^n  \\
+&= \left\{\frac{0.8+1}{2} - \frac{0.25+1}{2} \right\}^n = (0.55/2)^n = \boxed{(0.275)^n}.
+\end{aligned}
+\]
+
+\textbf{Part (b):} Yes, it does. Fix \(\varepsilon> 0\). We have \[
+\begin{aligned}
+P(|X_{(n)} - 1| \geq \varepsilon) &= P(X_{(n)} - 1 \geq \varepsilon) + P(X_{(n)} - 1 < -\varepsilon) \\
+&=  P(X_{(n)} \geq 1 + \varepsilon) + P(X_{(n)}  < 1 -\varepsilon) \\
+&= 0 + P(X_i < 1 -\varepsilon, \text{ all } i) \\
+&= \left\{P(X_1 < 1-\varepsilon)\right\}^n && \text{(iid)} \\
+&= \begin{cases}
+\left(\frac{1-\varepsilon+1}{2}\right)^n = \left(1- \frac{\varepsilon}{2}\right)^n & \text{ if } \varepsilon< 2 \\
+0 & \text{if } \varepsilon\geq 2
+\end{cases} \\
+&\to  0 \qquad \text{as } {n \to \infty}
+\end{aligned}
+\] which means \(X_{(n)} \xrightarrow{P} 1\).
+
+\hypertarget{problem-2}{%
+\section{Problem 2}\label{problem-2}}
+
+This is from Lecture 2: see lecture notes. To verify that
+\(F(v) = e^{-1/v} I(v > 0)\) is a cdf, observe:
+
+\begin{enumerate}
+\def\labelenumi{(\roman{enumi})}
+\item
+  \(F(-\infty) = \lim_{v \to -\infty} F(v) = 0\) and
+  \(F(+\infty) = \lim_{v \to \infty} F(v) = 1\).
+\item
+  \(F\) is continuous (actually differentiable everywhere except
+  \(v = 0\)), and hence right continuous.
+\item
+  \(\displaystyle\frac{d}{dv} e^{-1/v} = e^{-1/v} \left( - \frac{1}{v^2}\right) \ (-1) = e^{-1/v} \frac{1}{v^2} > 0\)
+  for all \(v\). Hence, \(F(v)\) is increasing.
+\end{enumerate}
+
+These three collectively imply that \(F\) is a cdf.
+
+\hypertarget{problem-3}{%
+\section{Problem 3}\label{problem-3}}
+
+Here \(X_i \sim \text{iid~Bernoulli}(\theta)\) for
+\(i = 1, \dots, n=10\).
+
+\textbf{Part (a):} The likelihood of \(\theta\) is \[
+L(\theta \mid \underline{x}) = P(\underline X = \underline{x} \mid \theta) = \theta^{\sum_{i=1}^{10} x_i} (1-\theta)^{10- \sum_{i=1}^{10} X_i}
+\]
+
+\textbf{Part (b):} Given that \(\sum_{i=1}^{10} X_i = 6\). The
+likelihood is: \[
+L(\theta \mid \sum_{i=1}^{10} X_i = 6) = \theta^{6} (1-\theta)^{4}
+\] Therefore
+\[L(\theta = 0.2 \mid \sum_{i=1}^{10} X_i = 6) = (0.2)^6 (0.8)^4 = \boxed{2.61 \times 10^{-5}}\]
+and
+\[L(\theta = 0.8 \mid \sum_{i=1}^{10} X_i = 6) = (0.8)^6 (0.2)^4 = \boxed{4.19 \times 10^{-4}}.\]
+This shows that \(\theta = 0.8\) has a higher likelihood. Intuitively,
+the observed data of 6 successes are more compatible with the
+configuration where population probability of success \(\theta = 0.8\)
+than with \(\theta = 0.2\).
+
+\hypertarget{problem-4}{%
+\section{Problem 4}\label{problem-4}}
+
+The joint density of \(\underline X\) is: \[
+f(\underline x \mid \theta , \gamma) = \prod_{i=1}^n \left(\frac{\gamma}{\theta} \ x_i^{\gamma-1} e^{-x_i^\gamma/\theta} \right) = \left(\frac{\gamma}{\theta}\right)^n \prod_{i=1}^n x_i^{\gamma-1} \ \exp\left( - \frac{1}{\theta} \sum_{i=1}^n x_i^\gamma \right)
+\]
+
+\textbf{Part (a):} If \(\gamma > 0\) is known, then \[
+f(\underline x \mid \theta) = \left(\frac{\gamma}{\theta}\right)^n  \underbrace{\exp\left( - \frac{1}{\theta} \sum_{i=1}^n x_i^\gamma \right)}_{= g(T(\underline x) \mid \theta)} \underbrace{\prod_{i=1}^n x_i^{\gamma-1}}_{=h(\underline x)} 
+\] Therefore, by the Factorization theorem,
+\(T(\underline X) = \sum_{i=1}^n X_i^\gamma\) is sufficient for
+\(\theta\).
+
+\textbf{Part (b)} It follows from the joint density above that a
+factorization based on a univariate or bivariate or a lower (than \(n\))
+dimensional) statistic is not feasible when both \(\theta\) and
+\(\gamma\) are unknown. Therefore, by the necessity half of the
+factorization theorem (must have factorization for a lower dimensional
+sufficient statistic to exit) it follows that no univariate sufficient
+statistic exist in this case. A non-trivial sufficient statistic would
+be the order statistics: \((X_{(1)}, \dots, X_{(n)})\).
+
+\hypertarget{problem-5}{%
+\section{Problem 5}\label{problem-5}}
+
+\textbf{Part (a):} Because \(X_1, \dots, X_n\) are iid from the scale
+family \(\frac{1}{\sigma} f(x/\sigma)\), we can construct iid
+observations \(Z_1, \dots, Z_n\) from the density \(f(x)\) (the standard
+density of the family which is free of \(\sigma\)) such that
+\(Z_i = X_i / \sigma\), i.e., \(X_i = \sigma Z_i\).
+
+Note that the sample median is: \[
+\begin{aligned}
+M(X_1,X_2,\dots,X_n) &= 
+\begin{cases}
+X_{\left(\frac{n+1}{2}\right)} & n \text{ is odd} \\
+\frac{X_{\left(\frac{n}{2}\right)} + X_{\left(\frac{n}{2} + 1\right)}}{2} & n \text{ is even}
+\end{cases} \\
+&= \begin{cases}
+\sigma \ Z_{\left(\frac{n+1}{2}\right)} & n \text{ is odd} \\
+\sigma \ \frac{Z_{\left(\frac{n}{2}\right)} + Z_{\left(\frac{n}{2} + 1\right)}}{2} & n \text{ is even}
+\end{cases} \\
+&= \sigma  M(Z_1, \dots, Z_n)
+\end{aligned}
+\] Again, \[
+\overline X = \frac{1}{n} \sum_{i=1}^n X_i = \frac{1}{n} \sum_{i=1}^n (\sigma  Z_i) = \sigma  \overline{Z}
+\] Hence \[
+\log M - \log \overline X = \log \left(\frac{M(X_1,X_2,\dots,X_n)}{\overline X} \right) = \log \left(\frac{\sigma  M(Z_1, \dots, Z_n)}{\sigma  \overline Z} \right) = \log \left(\frac{ M(Z_1, \dots, Z_n)}{ \overline Z} \right)
+\] where the RHS contains random variables whose distribution does not
+depend on the parameter \(\sigma\). Hence \(\log M - \log \overline X\)
+is an ancillary statistic.
+
+\textbf{Part(b):} {[}\underline{NOTE:} Recall that for
+Uniform\((0, \theta)\), \(T = X_{(n)}\) is sufficient, and not
+\(\sum_{i=1}^n X_i\). So we can't use Basu's theorem directly. However,
+for this specific type of problem, there is a much quicker way, shown as
+follows.{]}
+
+As suggested in the hint, the random variables
+\(\displaystyle\frac{X_i}{X_1 + \dots + X_n}\) all have the same
+distribution and hence mean as \(X_i\)'s are iid.
+
+Therefore, for some constant \(k\),
+\(\displaystyle E\left[\frac{X_i}{X_1 + \dots + X_n}\right] = k\) for
+all \(i = 1, \dots, n\).
+
+So, \[
+\begin{aligned}
+&\quad E\left[\frac{X_1}{X_1 + \dots + X_n}\right] + \dots + E\left[\frac{X_n}{X_1 + \dots + X_n}\right] = \underbrace{k + \dots + k}_{n \text{ many}} = nk \\
+&\implies \underbrace{E\left[\frac{X_1}{X_1 + \dots + X_n} + \dots + \frac{X_n}{X_1 + \dots + X_n} \right]}_{= E\left[\frac{X_1 + \dots + X_n}{X_1 + \dots + X_n}\right] = E(1) = 1} = nk \\
+&\text{i.e., } nk = 1 \implies k = \frac{1}{n}
+\end{aligned}
+\] Therefore,
+\(\displaystyle E\left[\frac{X_n}{X_1 + \dots + X_n}\right] = k = \frac{1}{n}\).
+
+\end{document}
