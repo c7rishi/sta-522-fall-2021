@@ -158,7 +158,7 @@ as $\mu_r = E[(X - \mu)^r]$ where $\mu = \mu_1'$ is the population mean (first r
 
 
 **Definition:** The $k$th sample (raw) moment of a random sample $\rs$ is the mean of the $k$th powers, denoted by $m_k$ and defined as
-$\ds m_k = \frac{1}{n} \sum_{i=1}^n X_i^k$. Note that $m_1 = \bar X$  and  $\ds \tilde{S}^ 2 := m_2 - m_1^2 = \sum_{i=1}^n (X_i - \bar X)^2$.
+$\ds m_k = \frac{1}{n} \sum_{i=1}^n X_i^k$. Note that $m_1 = \bar X$  and  $\ds \tilde{S}^ 2 := m_2 - m_1^2 = \frac1n \sum_{i=1}^n (X_i - \bar X)^2$.
 
 
 ---
@@ -197,7 +197,7 @@ For a $\N(\mu, \sigma^2)$ distribution, $\mu_1' = \mu$ and $\mu_2 = \sigma^2$. T
 
 \vspace{0.05in} 
 
-**Example (Uniform Method of Moments):** Let $\rs \sim \on{iid Uniform}(0, \theta)$ for $\theta > 0$. Use the method of moments to find an estimator of the parameter $\theta$. 
+**Example (Uniform Method of Moments):** Let $\rs \sim \on{iid~Uniform}(0, \theta)$ for $\theta > 0$. Use the method of moments to find an estimator of the parameter $\theta$. 
 
 Here $\mu_1' = E(X) = \frac{\theta}{2}$. Therefore the method of moments estimator for $\theta$ is obtained as $\hat \theta = 2 \bar X$. 
 
@@ -251,10 +251,11 @@ the parameter $\theta$ based on a sample $\hat X$ is $\hat \theta(\vec X)$.
 \enter \enter
 
 **Notes:** 
+
 - Since the logarithm function is strictly increasing on $(0, \infty)$ (and so one-to-one), the value which maximizes $\log L(\theta \mid \vec x)$ is the same value that maximizes $L(\theta \mid \vec x)$. 
 
 - $l(\theta \mid \vec x) := \log L(\theta \mid \vec x)$ is called the *log-likelihood* function
-- Often maximizing  $\log L(\theta \mid \vec x)$ is easier than maximizing $L(\theta \mid \vec x)$.
+- Often maximizing  $l(\theta \mid \vec x)$ is easier than maximizing $L(\theta \mid \vec x)$.
 
 
 ----
@@ -267,7 +268,7 @@ The likelihood function is
 $$
 L(p \mid \vec x) = \prod_{i=1}^n p^{x_i} (1-p)^{1-x_i} = p^y (1-p)^{n-y}
 $$
-where $y = \sum_{i=1}^n x_i$. 
+where $y = \sum_{i=1}^n x_i$ = total number of "successes". 
 
 First consider $0 < y < n$. We'll maximize the log-likelihood:
 $$

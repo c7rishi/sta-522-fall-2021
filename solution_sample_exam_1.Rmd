@@ -1,5 +1,5 @@
 ---
-title: "STA 522 Exam 1 Solutions"
+title: "STA 522 Sample Exam 1 Solutions"
 author: ""
 date: ""
 output: pdf_document
@@ -66,115 +66,60 @@ which means $X_{(n)} \xrightarrow{P} 1$.
 
 # Problem 2
 
-**Part (a):** Fix $\epsilon > 0$. Then
-$$
-\begin{aligned}
-P(|X_n - 0| \geq \epsilon) 
-= P\left(X_n^2 \geq \epsilon^2\right) 
-\leq P\left(\frac{X_n^2}{1 + X_n^2} \geq \frac{\epsilon^2}{1+\epsilon^2}\right)  
-\stackrel{(*)}{\leq}  \frac{ \E\left[\frac{X_n^2}{1 + X_n^2}\right]}{ \frac{\epsilon^2}{1+\epsilon^2}}
-\to  0 \quad \text{as } {n \to \infty}
-\end{aligned}
-$$
-where $(\star)$ is due to Chebyshev's inequality $\left(\frac{X_n^2}{1 + X_n^2} \text{ is non-negative} \right)$. This implies that $X_n \xrightarrow{P} 0$.
+This is from Lecture 2: see lecture notes. To verify that $F(v) = e^{-1/v} I(v > 0)$ is a cdf, observe:
 
+(i) $F(-\infty) = \lim_{v \to -\infty} F(v) = 0$ and $F(+\infty) = \lim_{v \to \infty} F(v) = 1$.
 
+(ii) $F$ is continuous (actually differentiable everywhere except $v = 0$), and hence right continuous. 
 
-**Part (b):** Fix $\epsilon > 0$. Consider an arbitrary $\delta > 0$. As suggested in the hint, there exists $k = k_\delta > 0$ such that $P(|Y| > k) < \delta$. Therefore,
-$$
-\begin{aligned}
-P(|X_n Y - XY| \geq \epsilon) 
-&= P(|X_n - X| \ |Y| \geq \epsilon) \\ 
-&= P(|X_n - X| \ |Y| \geq \epsilon, |Y| > k) +  P(|X_n - X| \ |Y| \geq \epsilon, |Y| \leq k) \\
-&\leq  P(|Y| > k) + P(|X_n - X| \ k \geq \epsilon) \\
-&< \delta + P(|X_n - X| \geq \epsilon/k) && \left(\text{since } P(|Y| > k) < \delta\right) \\
-& \xrightarrow{n \ \to \ \infty}  \delta + 0  = \delta && (X_n \xrightarrow{P} X) \\
-& \xrightarrow{\delta \ \to \ 0} 0. && (\delta \text{ is arbitrary})
-\end{aligned}
-$$
-This proves that $X_n Y \xrightarrow{P} XY$.
+(iii) $\ds \frac{d}{dv} e^{-1/v} = e^{-1/v}  \left( - \frac{1}{v^2}\right) \ (-1) = e^{-1/v} \frac{1}{v^2} > 0$ for all $v$. Hence, $F(v)$ is increasing.
+
+These three collectively imply that $F$ is a cdf.
 
 
 
 # Problem 3
 
-**Part (a):** \underline{Sufficiency:} There is only one random observation $X$  which constitutes the entire sample. Therefore, $X$ is trivially sufficient.
+Here $X_i \sim \text{iid~Bernoulli}(\theta)$ for $i = 1, \dots, n=10$. 
+
+**Part (a):** The likelihood of $\theta$ is 
+$$
+L(\theta \mid \vec{x}) = P(\vec X = \vec{x} \mid \theta) = \theta^{\sum_{i=1}^{10} x_i} (1-\theta)^{10- \sum_{i=1}^{10} X_i}
+$$
+
+**Part (b):** Given that $\sum_{i=1}^{10} X_i = 6$. The likelihood is:
+$$
+L(\theta \mid \sum_{i=1}^{10} X_i = 6) = \theta^{6} (1-\theta)^{4}
+$$
+Therefore 
+$$L(\theta = 0.2 \mid \sum_{i=1}^{10} X_i = 6) = (0.2)^6 (0.8)^4 = \boxed{2.61 \times 10^{-5}}$$
+and 
+$$L(\theta = 0.8 \mid \sum_{i=1}^{10} X_i = 6) = (0.8)^6 (0.2)^4 = \boxed{4.19 \times 10^{-4}}.$$
+This shows that $\theta = 0.8$ has a higher likelihood. Intuitively, the observed data of 6 successes are more compatible with the configuration where population probability of success $\theta = 0.8$ than with $\theta = 0.2$.
 
 
-\underline{Completeness:} consider
-$$
-\begin{aligned}
-\E_\theta(X) &= (-1) \ P_\theta(X = -1) + (0) \ P_\theta(X = 0) + (1) \ P_\theta(X = 1) \\
-&= (-1) \left(\frac{\theta}{2}\right)^{1} (1-\theta)^{1-1} + (1) \left(\frac{\theta}{2}\right)^{1} (1-\theta)^{1-1} = 0 \quad  \text{ for all } \theta \\
-\end{aligned}
-$$
-Thus the function $g(X) = X$ is such that $E_\theta[g(X)] = 0$ for all $\theta$, but $P_\theta(g(X) = 0) = P_\theta(X = 0) = \left(\frac{\theta}{2}\right)^{0} (1-\theta)^{1-0} = 1-\theta \neq 1$ for any $0 < \theta < 1$. Hence $X$ is NOT complete.
-
-\vspace{0.2in}
-
-**Part (b):**  \underline{Sufficiency:} The pmf of $X$ is
-$$
-f(x \mid \theta ) = \left(\frac{\theta}{2}\right)^{|x|} (1-\theta)^{1-|x|} = \underbrace{\theta^{|x|} (1-\theta)^{1-|x|}}_{=g(T(x) \mid \theta)} \ \underbrace{2^{- |x| }}_{=h(x)}
-$$
-where $T(x) = |x|$. Therefore, by the Factorization theorem, $|X|$ is sufficient for $\theta$.
-
-\underline{Completeness:} As suggested in the hint, we first find the pmf of $Y = |X|$. We note that the support of $Y$ is $\{0, 1\}$. Clearly, $P(Y = 0) = P(X = 0) = \left(\frac{\theta}{2}\right)^{0} (1-\theta)^{1-0} = 1-\theta$, and 
-$$
-\begin{aligned}
-P(Y = 1) &= P(X = 1) + P(X = -1) \\
-&= \left(\frac{\theta}{2}\right)^{1} (1-\theta)^{1-1} + \left(\frac{\theta}{2}\right)^{1} (1-\theta)^{1-1} = \theta
-\end{aligned}
-$$
-Thus, 
-$$
-P(Y = y) = \begin{cases}
-\theta & y=1 \\
-1-\theta & y=0
-\end{cases}
-$$
-for $0 < \theta < 1$, which means $Y \sim \on{Bernoulli}(\theta)$ for $0 < \theta < 1$. Therefore, by the completeness of Binomial family (proved in class) it follows that $Y = |X|$ is complete.
- 
 
 # Problem 4
 
-Let $\vec x = (x_1, \dots, x_n)$ and $\vec y = (y_1, \dots, y_n)$ be two sample points from the density $f(x \mid \theta)$.
+The joint density of $\vec X$ is:
+$$
+f(\vec x \mid \theta , \gamma) = \prod_{i=1}^n \left(\frac{\gamma}{\theta} \ x_i^{\gamma-1} e^{-x_i^\gamma/\theta} \right) = \left(\frac{\gamma}{\theta}\right)^n \prod_{i=1}^n x_i^{\gamma-1} \ \exp\left( - \frac{1}{\theta} \sum_{i=1}^n x_i^\gamma \right)
+$$
 
-**Part(a):** We have
+**Part (a):** If $\gamma > 0$ is known, then
 $$
-\begin{aligned}
-\frac{f(\vec x \mid \theta)}{f(\vec y \mid \theta)}
-&= \frac{\prod_{i=1}^n \frac{\gamma}{\theta} \ x_i^{\gamma-1} e^{-x_i^\gamma/\theta}}{\prod_{i=1}^n \frac{\gamma}{\theta} \ y_i^{\gamma-1} e^{-y_i^\gamma/\theta}} = \frac{\prod_{i=1}^n x_i^{\gamma-1} }{\prod_{i=1}^n y_i^{\gamma-1}} \ \exp\left[ -\frac{1}{\theta} \left(\sum_{i=1}^n x_i^{\gamma} - \sum_{i=1}^n y_i^{\gamma}\right)\right]
-\end{aligned}
+f(\vec x \mid \theta) = \left(\frac{\gamma}{\theta}\right)^n  \underbrace{\exp\left( - \frac{1}{\theta} \sum_{i=1}^n x_i^\gamma \right)}_{= g(T(\vec x) \mid \theta)} \underbrace{\prod_{i=1}^n x_i^{\gamma-1}}_{=h(\vec x)} 
 $$
-This is constant as a function of $\theta$ \underline{if and only if} $\sum_{i=1}^n x_i^{\gamma} = \sum_{i=1}^n y_i^{\gamma}$. Therefore, $\sum_{i=1}^n X_i^{\gamma}$ is minimal sufficient for $\theta$.
+Therefore, by the Factorization theorem, $T(\vec X) = \sum_{i=1}^n X_i^\gamma$ is sufficient for $\theta$. 
 
-**Part (b):** We have 
-$$
-\begin{aligned}
-\frac{f(\vec x \mid \mu, \lambda)}{f(\vec y \mid \mu, \lambda)}
-&= \frac{\prod_{i=1}^n \frac{1}{\lambda} \exp\left[-\frac{1}{\lambda} (x_i - \mu)\right] I (x_i > \mu)}{\prod_{i=1}^n \frac{1}{\lambda} \exp\left[-\frac{1}{\lambda} (y_i - \mu)\right] I (y_i > \mu)} \\ 
-&= \exp\left[ -\frac{1}{\lambda} \left(\sum_{i=1}^n x_i - \sum_{i=1}^n y_i\right)\right] \frac{\prod_{i=1}^n I(x_i > \mu) }{\prod_{i=1}^n I(y_i > \mu)} \\ 
-&= \exp\left[ -\frac{1}{\lambda} \left(\sum_{i=1}^n x_i - \sum_{i=1}^n y_i\right)\right] \frac{I(x_{(1)} > \mu) }{ I(y_{(1)} > \mu)}
-\end{aligned}
-$$
-This is constant as a function of $(\mu, \lambda)$ \underline{if and only if}
-$x_{(1)} = y_{(1)}$ and $\sum_{i=1}^n x_i = \sum_{i=1}^n y_i$. Therefore, $(X_{(1)},  \sum_{i=1}^n X_i)$ is minimal sufficient for $(\mu, \lambda)$.
 
-**Part (c):** We have
-$$
-\begin{aligned}
-\frac{f(\vec x \mid \theta)}{f(\vec y \mid \theta)}
-&= \frac{\prod_{i=1}^n \frac{1}{\theta} I (\theta < x_i < 2 \theta)}{\prod_{i=1}^n \frac{1}{\theta} I (\theta < y_i < 2 \theta)}
-= \frac{I (\theta < x_{(1)} < x_{(n)} < 2 \theta)}{I (\theta < x_{(1)} < x_{(n)} < 2 \theta)} = \frac{I (x_{(n)}/2 < \theta < x_{(1)})}{I (y_{(n)}/2 < \theta < y_{(1)})}
-\end{aligned}
-$$
-This is constant as a function of $\theta$ \underline{if and only if} $x_{(1)} = y_{(1)}$ and $x_{(n)} = y_{(n)}$. Therefore, $(X_{(1)}, X_{(n)})$ is minimal sufficient for $\theta$.
+**Part (b)** It follows from the joint density above that a factorization based on a univariate or bivariate or a lower (than $n$) dimensional) statistic is not feasible when both $\theta$ and $\gamma$ are unknown. Therefore, by the necessity half of the factorization theorem (must have factorization for a lower dimensional sufficient statistic to exit) it follows that no univariate sufficient statistic exist in this case. A non-trivial sufficient statistic would be the order statistics: $(X_{(1)}, \dots, X_{(n)})$.
 
 
 
 # Problem 5
 
-**Part (a):** Let us denote by $f(x - \mu)$ the common location family density of $\rs$. Then there exist iid observations $Z_1, \dots, Z_n$ from the density $f(x)$ (the standard density of the family) such that $Z_i = X_i - \mu$, i.e., $X_i = Z_i + \mu$.
+**Part (a):** Because $X_1, \dots, X_n$ are iid from the scale family $\frac{1}{\sigma} f(x/\sigma)$, we can construct iid observations $Z_1, \dots, Z_n$ from the density $f(x)$ (the standard density of the family which is free of $\sigma$) such that $Z_i = X_i / \sigma$, i.e., $X_i = \sigma Z_i$.
 
 Note that the sample median is: 
 $$
@@ -185,79 +130,35 @@ X_{\left(\frac{n+1}{2}\right)} & n \text{ is odd} \\
 \frac{X_{\left(\frac{n}{2}\right)} + X_{\left(\frac{n}{2} + 1\right)}}{2} & n \text{ is even}
 \end{cases} \\
 &= \begin{cases}
-\mu + Z_{\left(\frac{n+1}{2}\right)} & n \text{ is odd} \\
-\mu + \frac{Z_{\left(\frac{n}{2}\right)} + Z_{\left(\frac{n}{2} + 1\right)}}{2} & n \text{ is even}
+\sigma \ Z_{\left(\frac{n+1}{2}\right)} & n \text{ is odd} \\
+\sigma \ \frac{Z_{\left(\frac{n}{2}\right)} + Z_{\left(\frac{n}{2} + 1\right)}}{2} & n \text{ is even}
 \end{cases} \\
-&= \mu + M(Z_1, \dots, Z_n)
+&= \sigma  M(Z_1, \dots, Z_n)
 \end{aligned}
 $$
 Again,
 $$
-\bar X = \frac{1}{n} \sum_{i=1}^n X_i = \frac{1}{n} \sum_{i=1}^n (\mu + Z_i) = \mu + \bar{Z}
+\bar X = \frac{1}{n} \sum_{i=1}^n X_i = \frac{1}{n} \sum_{i=1}^n (\sigma  Z_i) = \sigma  \bar{Z}
 $$
 Hence
 $$
-M(\rs) - \bar X = M(Z_1, \dots, Z_n) - \bar Z
+\log M - \log \bar X = \log \left(\frac{M(\rs)}{\bar X} \right) = \log \left(\frac{\sigma  M(Z_1, \dots, Z_n)}{\sigma  \bar Z} \right) = \log \left(\frac{ M(Z_1, \dots, Z_n)}{ \bar Z} \right)
 $$
-where the RHS contains random variables whose distribution does not depend on the parameter $\mu$. Hence $M - \bar X$ is an ancillary statistic.
+where the RHS contains random variables whose distribution does not depend on the parameter $\sigma$. Hence $\log M - \log \bar X$ is an ancillary statistic.
 
-**Part (b):** Note at the outset that conditional on $N = n$, $X \mid N = n \sim \on{Binomial}(n, \theta)$. 
+**Part(b):** [\underline{NOTE:} Recall that for Uniform$(0, \theta)$, $T = X_{(n)}$ is sufficient, and not $\sum_{i=1}^n X_i$. So we can't use Basu's theorem directly. However, for this specific type of problem, there is a much quicker way, shown as follows.] 
 
+As suggested in the hint, the random variables $\ds \frac{X_i}{X_1 + \dots + X_n}$ all have the same distribution and hence mean as $X_i$'s are iid.
 
+Therefore, for some constant $k$, $\ds E\left[\frac{X_i}{X_1 + \dots + X_n}\right] = k$ for all $i = 1, \dots, n$. 
 
-\underline{Minimal Sufficiency:} Let $(x, n)$ and $(y, m)$ be two sample points from the joint pmf of $(X, N)$.  Then
-$$
-\begin{aligned}
-\frac{P_\theta(X = x, N = n)}{P_\theta(X = y, N = m)}
-&= \frac{P_\theta(X = x \mid N = n) \ P(N = n)}{P_\theta(X = y \mid N = m) \ P(N = m)} = 
-\frac{\binom{n}{x} \theta^x (1-\theta)^{n-x} \ p_n}{\binom{m}{y} \theta^y (1-\theta)^{m-y} \ p_m}
-= \frac{\binom{n}{x} p_n}{\binom{m}{y} p_m} \ \theta^{x-y} (1-\theta)^{(n-x)-(m-y)}
-\end{aligned}
-$$
-This is constant as a function in $\theta$ \underline{if and only if} $x = y$ and $n-x = m - y$, i.e., $x = y$ and $n = m$. Hence $(X, N)$ is minimal sufficient for $\theta$.
-
-\underline{N is ancillary:} Clearly, the pmf of $N$ is $P(N = n) = p_n$ which is free of $\theta$. Hence $N$ is ancillary. 
-
-
-
-# Problem 6
-
-**Part (a):** The derivation is essentially similar to that for a binomial distribution, which has been derived in class.
-
-\underline{Sufficiency:} The joint pmf of $X_1, \dots, X_n$ is 
-$$
-f(\vec x \mid \lambda) = \prod_{i=1}^n e^{-\lambda} \frac{\lambda^{x_i}}{x_i!} = \underbrace{e^{-n\lambda} \lambda^{\sum_{i=1}x_i}}_{=g(T(\vec x \mid \lambda))} \underbrace{ \prod_{i=1}^n \frac{1}{x_i!}}_{=h(\vec x)}
-$$
-where $T(\vec x) = \sum_{i=1}^n x_i$. Therefore, by the factorization theorem, $\sum_{i=1}^n X_i$ is sufficient for $\lambda$.
-
-
-\underline{Completeness:}  First obtain the pmf of $Y = \sum_{i=1}^n X_i$. The mgf of each $X_i$ is $M(t) = e^{\lambda (e^t-1)}$. The mgf of $Y = \sum_{i=1}^n X_i$ is
-$$
-M_Y(t) = \E\left(e^{tY}\right) = \E\left(e^{t\sum_{i=1}^n X_i}\right) \overset{\on{iid}}{=} \left[\E(e^{tX_1})\right]^n = M(t)^n = e^{n\lambda (e^t  -1)}
-$$
-which is the mgf of $\on{Poisson}(n\lambda)$. Therefore, by the uniqueness of mgf, $\sum_{i=1}^n X_i \sim \on{Poisson}(n\lambda)$.
-
-
-Consider any function  $g(y)$ of $y = \sum_{i=1}^n$. Then
-$$
-\E_\lambda(g(Y)) = \sum_{y=0}^\infty g(y) \ P_\lambda(Y = y) = \sum_{y=0}^\infty g(y)\  \ \underbrace{e^{-n\lambda} \frac{(n\lambda)^y}{y!}}_{>0, \text{ for all } \lambda>0}
-$$
-Therefore $E_\lambda (g(Y)) = 0$ for all $\lambda > 0$ means $g(y) = 0$ for $y = 0, 1, \dots$, i.e., $P_\lambda(g(Y) = 0) = 1$. This means that $Y$ is complete.
-
-
-**Part (b):** As suggested in the hint consider a sequence $X_n$ where $X_n = X$, and $Y = 1-X$, where $X \sim \on{Binomial}(1, 0.5)$. Then $X$ and $Y = 1-X$. Then $X_n \xrightarrow{d} X$ (trivially; all have the same distribution) which means $X_n \xrightarrow{d} Y$ as $X$ and $Y$ have the same distribution. 
-
-However, for any $0 < \epsilon < 1$, 
+So,
 $$
 \begin{aligned}
-P(|X_n - Y| \geq \epsilon) = P(|X - 1 + X| \geq \epsilon) 
-&= P(|2X - 1| \geq \epsilon) = P(2X \geq 1 + \epsilon) + P(2X \leq 1 - \epsilon) \\ 
-&= P\left(X \geq \frac{1 + \epsilon}{2}\right) + P\left(X \leq \frac{1 - \epsilon}{2}\right) \\
-&= P(X = 1) + P(X = 0) = 1 \not \rightarrow 0 
+&\quad E\left[\frac{X_1}{X_1 + \dots + X_n}\right] + \dots + E\left[\frac{X_n}{X_1 + \dots + X_n}\right] = \underbrace{k + \dots + k}_{n \text{ many}} = nk \\
+&\implies \underbrace{E\left[\frac{X_1}{X_1 + \dots + X_n} + \dots + \frac{X_n}{X_1 + \dots + X_n} \right]}_{= E\left[\frac{X_1 + \dots + X_n}{X_1 + \dots + X_n}\right] = E(1) = 1} = nk \\
+&\text{i.e., } nk = 1 \implies k = \frac{1}{n}
 \end{aligned}
 $$
-as $n \to \infty$. Hence $X_n \not \xrightarrow{P} Y$.
-
-
-
+Therefore, $\ds E\left[\frac{X_n}{X_1 + \dots + X_n}\right] = k = \frac{1}{n}$.
 
