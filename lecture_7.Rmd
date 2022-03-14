@@ -1,13 +1,13 @@
 ---
 title: |
-  | STA 522, Spring 2021  
+  | STA 522, Spring 2022  
   | Introduction to Theoretical Statistics II
 author: | 
   | Lecture 7
   | 
   | Department of Biostatistics
   | University at Buffalo 
-date: "15 March, 2021"
+date: ""
 output: 
   beamer_presentation:
     toc: false
@@ -75,8 +75,8 @@ knitr::opts_chunk$set(echo = FALSE)
 - After drawing a sample find the likelihood function for $\theta$, and use Bayes' Rule to update the prior with the  likelihood function to get the \textbf{posterior distribution}:
 $$
 \begin{aligned}
-\pi(\theta \mid \mathbf{x})  = \frac{f(\mathbf{x} \mid \theta)\pi(\theta)}{m(\mathbf{x})}
- = \frac{f(\mathbf{x},\theta)}{m(\mathbf{x})},
+\pi(\theta \mid \mathbf{x})  = \frac{f(\mathbf{x},\theta)}{m(\mathbf{x})} = \frac{f(\mathbf{x} \mid \theta)\pi(\theta)}{m(\mathbf{x})}
+ \propto f(\vec x \mid \theta) \pi(\theta),
 \end{aligned}
 $$
 where $m(\mathbf{x})$ is the marginal distribution of $\mathbf{X}$:
@@ -191,7 +191,9 @@ $\ds{\MSE=\E_{\theta}\left[(W-\theta)^2\right]=\var_{\theta}(W)+\left[\operatorn
 - For an unbiased estimator, we have
 $$\MSE =\E_{\theta}\left[(W-\theta)^2\right]=\var_{\theta}(W)$$
 
-- Unbiased is a good property for an estimator to have, but it can be misleading.
+- Unbiasedness is a good property for an estimator to have, but it can be misleading.
+  
+  * Modern statistical methods for high-diemensional data often trades unbiasedness for a reduced variance ("bias-variance tradeoff") to achieve an estimator with smaller MSE.
 
 
 ---
@@ -334,9 +336,9 @@ $$
 $$
 Take $U \equiv W(\vec X)$ and $V \equiv \frac{\partial}{\partial\theta}\log{f(\mathbf{X} \mid \theta)}$. Note that
 $$
-\E(V) = E_\theta\left(\frac{\partial}{\partial\theta}\log{f(\mathbf{X} \mid \theta)}\right) = \int_{\mathcal{X}}   \frac{\partial}{\partial\theta}\log{f(\mathbf{x} \mid \theta)} \ f(\vec x \mid \theta) \ d \vec x = \frac{\partial}{\partial\theta} E(1) = 0
+\E(V) = \E_\theta\left(\frac{\partial}{\partial\theta}\log{f(\mathbf{X} \mid \theta)}\right) = \int_{\mathcal{X}}   \frac{\partial}{\partial\theta}\log{f(\mathbf{x} \mid \theta)} \ f(\vec x \mid \theta) \ d \vec x = \frac{\partial}{\partial\theta} E(1) = 0
 $$
-So, $\on{Cov}(U, V) = E(U V)$ and $\var(V) = \E(V^2)$. Note that 
+So, $\on{Cov}(U, V) = \E(U V)$ and $\var(V) = \E(V^2)$. Note that 
 $$
 \E(UV) = \int_{\mathcal{X}} W(\vec x) \ \frac{\partial}{\partial\theta} {f(\mathbf{x} \mid \theta)} \ d\vec x = \frac{d}{d\theta} \E_\theta \left( W(\vec X) \right)
 $$
