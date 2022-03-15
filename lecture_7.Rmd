@@ -407,7 +407,7 @@ $$
 $$
 Of course, $W(\mathbf{X})=\frac{1}{\alpha}\overline{X}$ being unbiased for $\beta$ means $\frac{d}{d\beta}\E_{\beta}\left[W(\mathbf{X})\right] = 1$. Hence, the CR lower bound is (iid):
 $$
-\frac{\left[\frac{d}{d\beta}\E_{\beta}\left[W(\mathbf{X})\right]\right]^2}{n \E_{\beta}\left[\left[\frac{\partial}{\partial\beta}\log{f(X_1 \mid \beta)}\right]^2\right]} = \frac{1}{\alpha/\beta^2} = \frac{\beta^2}{\alpha} = \var_\beta(W(\vec X))
+\frac{\left[\frac{d}{d\beta}\E_{\beta}\left[W(\mathbf{X})\right]\right]^2}{n \E_{\beta}\left[\left[\frac{\partial}{\partial\beta}\log{f(X_1 \mid \beta)}\right]^2\right]} = \frac{1}{n \alpha/\beta^2} = \frac{\beta^2}{n \alpha} = \var_\beta(W(\vec X))
 $$
 
 ---
