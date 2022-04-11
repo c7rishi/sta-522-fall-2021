@@ -48,7 +48,22 @@ knitr::opts_chunk$set(echo = FALSE)
 <!-- \renewcommand{\mathcal}{\mathscr} -->
 
 
-# AGENDA
+## NOTES
+
+\vspace{0.1in}
+
+- Exam 2 this Thursday, April 7, 5-7 pm @ Kimball 720
+
+\vspace{0.1in}
+
+- Will cover everything we discuss till this afternoon
+
+
+\vspace{0.2in}
+
+
+
+## AGENDA
 
 \vspace{0.1in}
 
@@ -56,12 +71,13 @@ knitr::opts_chunk$set(echo = FALSE)
 
 \enter
 
-- Properties of tests, finding $c$ in LRT
+- LRT examples
 
-\enter
+<!-- - Properties of tests, finding $c$ in LRT -->
 
-- Methods of evaluating tests
+<!-- \enter -->
 
+<!-- - Methods of evaluating tests -->
 
 
 
@@ -272,204 +288,204 @@ $$
 
 
 
----
+<!-- --- -->
 
-# Errors in Hypothesis Testing
+<!-- # Errors in Hypothesis Testing -->
 
-**Definition:** Suppose we are testing
-$$
-\begin{aligned}
-H_0 & : \theta\in\Theta_0\\[.5em]
-\text{vs. } H_1 & : \theta\in\Theta_0^c.
-\end{aligned}
-$$
+<!-- **Definition:** Suppose we are testing -->
+<!-- $$ -->
+<!-- \begin{aligned} -->
+<!-- H_0 & : \theta\in\Theta_0\\[.5em] -->
+<!-- \text{vs. } H_1 & : \theta\in\Theta_0^c. -->
+<!-- \end{aligned} -->
+<!-- $$ -->
 
-\enter
+<!-- \enter -->
 
-If $\theta\in\Theta_0$, but the test incorrectly rejects $H_0$, then the test has made a \textbf{Type I error}.
+<!-- If $\theta\in\Theta_0$, but the test incorrectly rejects $H_0$, then the test has made a \textbf{Type I error}. -->
 
-\enter
+<!-- \enter -->
 
-If, on the other hand, $\theta\in\Theta_0^c$, but the test decides to accept $H_0$, then the test has made a \textbf{Type II error}.
+<!-- If, on the other hand, $\theta\in\Theta_0^c$, but the test decides to accept $H_0$, then the test has made a \textbf{Type II error}. -->
 
-![](images/table-8-3-1.PNG){height=30%}
+<!-- ![](images/table-8-3-1.PNG){height=30%} -->
 
----
+<!-- --- -->
 
 
-# Computing Error Probabilities
+<!-- # Computing Error Probabilities -->
 
-**Definition:** Let $R$ denote the rejection region of a hypothesis test.
-\vskip .2in
-If $\theta\in\Theta_0$, then the probability of a Type I error is
-$$P_{\theta}(\mathbf{X}\in R).$$
-\vskip .2in
-If $\theta\in\Theta_0^c$, then the probability of a Type II error is
-$$P_{\theta}(\mathbf{X}\notin R)=1-P_{\theta}(\mathbf{X}\in R).$$
+<!-- **Definition:** Let $R$ denote the rejection region of a hypothesis test. -->
+<!-- \vskip .2in -->
+<!-- If $\theta\in\Theta_0$, then the probability of a Type I error is -->
+<!-- $$P_{\theta}(\mathbf{X}\in R).$$ -->
+<!-- \vskip .2in -->
+<!-- If $\theta\in\Theta_0^c$, then the probability of a Type II error is -->
+<!-- $$P_{\theta}(\mathbf{X}\notin R)=1-P_{\theta}(\mathbf{X}\in R).$$ -->
 
 
 
----
+<!-- --- -->
 
-# Power Function
+<!-- # Power Function -->
 
-**Definition:** The \textbf{power function} of a hypothesis test with rejection region $R$ is the function of $\theta$ defined by
-$$
-\begin{aligned}
-\beta(\theta) & = P_{\theta}(\mathbf{X}\in R)\\[.5em]
-& = \begin{cases}\text{probability of a Type I error}&\text{if }\theta\in\Theta_0\\1-\text{ probability of a Type II error}&\text{if }\theta\in\Theta_0^c.\end{cases}
-\end{aligned}
-$$
+<!-- **Definition:** The \textbf{power function} of a hypothesis test with rejection region $R$ is the function of $\theta$ defined by -->
+<!-- $$ -->
+<!-- \begin{aligned} -->
+<!-- \beta(\theta) & = P_{\theta}(\mathbf{X}\in R)\\[.5em] -->
+<!-- & = \begin{cases}\text{probability of a Type I error}&\text{if }\theta\in\Theta_0\\1-\text{ probability of a Type II error}&\text{if }\theta\in\Theta_0^c.\end{cases} -->
+<!-- \end{aligned} -->
+<!-- $$ -->
 
-**Comments on the Power function:**
+<!-- **Comments on the Power function:** -->
 
-(a) Ideally, we want $\beta(\theta)=0$ for all $\theta\in\Theta_0$ and $\beta(\theta)=1$ for all $\theta\in\Theta_0^c$.\vfill
+<!-- (a) Ideally, we want $\beta(\theta)=0$ for all $\theta\in\Theta_0$ and $\beta(\theta)=1$ for all $\theta\in\Theta_0^c$.\vfill -->
 
-(b) Depends on the hypothesis test (what are we testing?).\vfill
+<!-- (b) Depends on the hypothesis test (what are we testing?).\vfill -->
 
-(c) Depends on the rejection region (value of $c$).\vfill
+<!-- (c) Depends on the rejection region (value of $c$).\vfill -->
 
-(d) It's a function of $\theta$, not the data.\vfill
+<!-- (d) It's a function of $\theta$, not the data.\vfill -->
 
-(e) Since it's a probability, $0\leq\beta(\theta)\leq1$ for all $\theta$.
+<!-- (e) Since it's a probability, $0\leq\beta(\theta)\leq1$ for all $\theta$. -->
 
 
----
+<!-- --- -->
 
 
-**Example:** Suppose $X\sim\operatorname{binomial}(5,\theta)$, and we are testing
-$\ds H_0 : \theta\leq\frac{1}{2} \text{vs. } H_1  : \theta>\frac{1}{2}.$ Consider the two rejection regions
-$$
-\begin{aligned}
-R_1 & = \lbrace x\,:\,x=5\rbrace\\[.5em]
-R_2 & = \lbrace x\,:\,x=3,4,5\rbrace.
-\end{aligned}
-$$
-Note that with $R_1$, we reject $H_0$ if and only if we observe all successes, whereas with $R_2$, we reject $H_0$ if and only if we observe at least $3$ successes. Determine the power function for each test.
+<!-- **Example:** Suppose $X\sim\operatorname{binomial}(5,\theta)$, and we are testing -->
+<!-- $\ds H_0 : \theta\leq\frac{1}{2} \text{vs. } H_1  : \theta>\frac{1}{2}.$ Consider the two rejection regions -->
+<!-- $$ -->
+<!-- \begin{aligned} -->
+<!-- R_1 & = \lbrace x\,:\,x=5\rbrace\\[.5em] -->
+<!-- R_2 & = \lbrace x\,:\,x=3,4,5\rbrace. -->
+<!-- \end{aligned} -->
+<!-- $$ -->
+<!-- Note that with $R_1$, we reject $H_0$ if and only if we observe all successes, whereas with $R_2$, we reject $H_0$ if and only if we observe at least $3$ successes. Determine the power function for each test. -->
 
 
-\enter
+<!-- \enter -->
 
-Here
-$$
-\beta_1(\theta) = P_\theta(X \in R_1) = P_\theta(X = 5) = \binom{5}{5} \theta^5 (1-\theta)^{5-5} = \theta^5
-$$
-$$
-\beta_2(\theta) = P_\theta(X \in R_2) = \sum_{j=3}^5 P_\theta(X = j) = \sum_{j=3}^5 \binom{5}{j} \theta^j (1-\theta)^{5-j}
-$$
+<!-- Here -->
+<!-- $$ -->
+<!-- \beta_1(\theta) = P_\theta(X \in R_1) = P_\theta(X = 5) = \binom{5}{5} \theta^5 (1-\theta)^{5-5} = \theta^5 -->
+<!-- $$ -->
+<!-- $$ -->
+<!-- \beta_2(\theta) = P_\theta(X \in R_2) = \sum_{j=3}^5 P_\theta(X = j) = \sum_{j=3}^5 \binom{5}{j} \theta^j (1-\theta)^{5-j} -->
+<!-- $$ -->
 
 
 
----
+<!-- --- -->
 
-# Comments about the two power functions
+<!-- # Comments about the two power functions -->
 
 
 
-![](images/fig-8-3-1.PNG){width=40%}
+<!-- ![](images/fig-8-3-1.PNG){width=40%} -->
 
 
 
 
-(a) $\beta_2(\theta)$ has higher Type I error and lower Type II error.
+<!-- (a) $\beta_2(\theta)$ has higher Type I error and lower Type II error. -->
 
-(b) $\beta_1(\theta)$ has lower Type I error and higher Type II error.
+<!-- (b) $\beta_1(\theta)$ has lower Type I error and higher Type II error. -->
 
-(c) Ideally, what we will do is try to maximize power while controlling Type I error.
+<!-- (c) Ideally, what we will do is try to maximize power while controlling Type I error. -->
 
-(d) This is how we will choose $c$ in our previous calculations of rejection regions.
+<!-- (d) This is how we will choose $c$ in our previous calculations of rejection regions. -->
 
----
+<!-- --- -->
 
-# Size and Level
+<!-- # Size and Level -->
 
-**Definition:** For $0\leq\alpha\leq1$, a test with power function $\beta(\theta)$ is a \textbf{size $\alpha$ test} if
-$$\sup_{\theta\in\Theta_0}{\beta(\theta)}=\alpha.$$
-\vskip .2in
-For $0\leq\alpha\leq1$, a test with power function $\beta(\theta)$ is a \textbf{level $\alpha$ test} if 
-$$\sup_{\theta\in\Theta_0}{\beta(\theta)}\leq\alpha.$$
+<!-- **Definition:** For $0\leq\alpha\leq1$, a test with power function $\beta(\theta)$ is a \textbf{size $\alpha$ test} if -->
+<!-- $$\sup_{\theta\in\Theta_0}{\beta(\theta)}=\alpha.$$ -->
+<!-- \vskip .2in -->
+<!-- For $0\leq\alpha\leq1$, a test with power function $\beta(\theta)$ is a \textbf{level $\alpha$ test} if  -->
+<!-- $$\sup_{\theta\in\Theta_0}{\beta(\theta)}\leq\alpha.$$ -->
 
 
-\enter
-\vfill
-**Notes:** the set of size $\alpha$ tests is a subset of the set of level $\alpha$ tests.
-\vfill
-By specifying the level of a test, we are only controlling the Type I error, not the Type II error.
+<!-- \enter -->
+<!-- \vfill -->
+<!-- **Notes:** the set of size $\alpha$ tests is a subset of the set of level $\alpha$ tests. -->
+<!-- \vfill -->
+<!-- By specifying the level of a test, we are only controlling the Type I error, not the Type II error. -->
 
 
----
+<!-- --- -->
 
-# Choosing $c$ For LRTs
+<!-- # Choosing $c$ For LRTs -->
 
 
-- Restricting to size $\alpha$ tests allows us to determine the value of $c$ to use in the LRT.\vfill
+<!-- - Restricting to size $\alpha$ tests allows us to determine the value of $c$ to use in the LRT.\vfill -->
 
-- We can build a size $\alpha$ LRT by choosing $c$ so that
-$$\sup_{\theta\in\Theta_0}{P_{\theta}(\mathbf{X}\in R)}=\alpha,\quad\text{i.e.,}\quad\sup_{\theta\in\Theta_0}{P_{\theta}(\lambda(\mathbf{X})\leq c)}=\alpha.$$
+<!-- - We can build a size $\alpha$ LRT by choosing $c$ so that -->
+<!-- $$\sup_{\theta\in\Theta_0}{P_{\theta}(\mathbf{X}\in R)}=\alpha,\quad\text{i.e.,}\quad\sup_{\theta\in\Theta_0}{P_{\theta}(\lambda(\mathbf{X})\leq c)}=\alpha.$$ -->
 
----
+<!-- --- -->
 
-**Example (contd.):** Let $\rs\sim\operatorname{iid~N}(\theta,1)$. Suppose we wish to test
-$H_0: \theta=\theta_0 \text{vs. } H_1 : \theta\neq\theta_0$.
-We saw that the LRT rejection region is given by
-$$R=\lbrace\mathbf{x}\,:\,|\overline{x}-\theta_0|\geq k\rbrace,$$
-where $k=\sqrt{\frac{-2\log{c}}{n}}$. Find the value of $c$ so that we have a size $\alpha$ test.
+<!-- **Example (contd.):** Let $\rs\sim\operatorname{iid~N}(\theta,1)$. Suppose we wish to test -->
+<!-- $H_0: \theta=\theta_0 \text{vs. } H_1 : \theta\neq\theta_0$. -->
+<!-- We saw that the LRT rejection region is given by -->
+<!-- $$R=\lbrace\mathbf{x}\,:\,|\overline{x}-\theta_0|\geq k\rbrace,$$ -->
+<!-- where $k=\sqrt{\frac{-2\log{c}}{n}}$. Find the value of $c$ so that we have a size $\alpha$ test. -->
 
-Since $\Theta_0 = \{\theta_0\}$ is singleton, hence 
-$$
-\on{size} = \sup_{\Theta_0} P_\theta\left(|\overline{X}-\theta_0|\geq k\right) = P_{\theta_0}\left(|\overline{X}-\theta_0|\geq k\right) 
-$$
-Now, under $H_0$, $\bar X \sim N(\theta_0, 1/n)$ so that $Z = \sqrt{n}(\bar X - \theta_0) \sim N(0, 1)$. Therefore the size of the LRT being $\alpha$ implies
-$$
-\begin{aligned}
-\alpha &= P_{\theta_0}\left(|\sqrt{n}(\bar X - \theta_0)| \geq \sqrt{n} \ k \right) \\ 
-&= P_{\theta_0}(|Z| \geq \sqrt{n} \ k) \\
-&= P(Z \geq \sqrt{n} \ k) + P(Z \leq -\sqrt{n} \ k) \\
-&= P(Z \geq \sqrt{n} \ k) + P(-Z \geq  -\sqrt{n} \ k) = 2 \ P(Z \geq \sqrt{n} \ k)
-\end{aligned}
-$$
-Let $z_{\alpha}$ be the upper $\alpha$-th quantile of $Z$ such that $P(Z \geq z_\alpha) = \alpha$.
+<!-- Since $\Theta_0 = \{\theta_0\}$ is singleton, hence  -->
+<!-- $$ -->
+<!-- \on{size} = \sup_{\Theta_0} P_\theta\left(|\overline{X}-\theta_0|\geq k\right) = P_{\theta_0}\left(|\overline{X}-\theta_0|\geq k\right)  -->
+<!-- $$ -->
+<!-- Now, under $H_0$, $\bar X \sim N(\theta_0, 1/n)$ so that $Z = \sqrt{n}(\bar X - \theta_0) \sim N(0, 1)$. Therefore the size of the LRT being $\alpha$ implies -->
+<!-- $$ -->
+<!-- \begin{aligned} -->
+<!-- \alpha &= P_{\theta_0}\left(|\sqrt{n}(\bar X - \theta_0)| \geq \sqrt{n} \ k \right) \\  -->
+<!-- &= P_{\theta_0}(|Z| \geq \sqrt{n} \ k) \\ -->
+<!-- &= P(Z \geq \sqrt{n} \ k) + P(Z \leq -\sqrt{n} \ k) \\ -->
+<!-- &= P(Z \geq \sqrt{n} \ k) + P(-Z \geq  -\sqrt{n} \ k) = 2 \ P(Z \geq \sqrt{n} \ k) -->
+<!-- \end{aligned} -->
+<!-- $$ -->
+<!-- Let $z_{\alpha}$ be the upper $\alpha$-th quantile of $Z$ such that $P(Z \geq z_\alpha) = \alpha$. -->
 
 
 
----
+<!-- --- -->
 
-Here $\alpha/2 = P(Z \geq \sqrt{n} \ k)$, which implies $$\sqrt{n} \ k = z_{\alpha/2} \implies k = \frac{1}{\sqrt{n}} z_{\alpha/2} \implies c = \exp\left(- z_{\alpha/2}^2 / 2\right)$$
+<!-- Here $\alpha/2 = P(Z \geq \sqrt{n} \ k)$, which implies $$\sqrt{n} \ k = z_{\alpha/2} \implies k = \frac{1}{\sqrt{n}} z_{\alpha/2} \implies c = \exp\left(- z_{\alpha/2}^2 / 2\right)$$ -->
 
-\enter \vfill
+<!-- \enter \vfill -->
 
 
-**Example (contd.): ** Let $\rs\sim\operatorname{iid}$ from a location exponential population with pdf
-$$f(x\,|\,\theta)=e^{-(x-\theta)}I_{[\theta,\infty)}(x).$$ Suppose we wish to test $H_0 : \theta\leq\theta_0$ vs. $H_1 : \theta>\theta_0$. We showed that the LRT rejection region is given by
-$$R=\left\lbrace\mathbf{x}\,:\,x_{(1)}\geq\theta_0-\frac{\log{c}}{n}\right\rbrace.$$
-Find the value of $c$ so that we have a size $\alpha$ test.
+<!-- **Example (contd.): ** Let $\rs\sim\operatorname{iid}$ from a location exponential population with pdf -->
+<!-- $$f(x\,|\,\theta)=e^{-(x-\theta)}I_{[\theta,\infty)}(x).$$ Suppose we wish to test $H_0 : \theta\leq\theta_0$ vs. $H_1 : \theta>\theta_0$. We showed that the LRT rejection region is given by -->
+<!-- $$R=\left\lbrace\mathbf{x}\,:\,x_{(1)}\geq\theta_0-\frac{\log{c}}{n}\right\rbrace.$$ -->
+<!-- Find the value of $c$ so that we have a size $\alpha$ test. -->
 
-HW. See p. 386 in the textbook.
+<!-- HW. See p. 386 in the textbook. -->
 
----
+<!-- --- -->
 
-# Evaluating Tests
+<!-- # Evaluating Tests -->
 
-**Definition:** A test with power function $\beta(\theta)$ is \textbf{unbiased} if
-$$\beta(\theta')\geq\beta(\theta'')$$
-for every $\theta'\in\Theta_0^c$ and $\theta''\in\Theta_0$.
+<!-- **Definition:** A test with power function $\beta(\theta)$ is \textbf{unbiased} if -->
+<!-- $$\beta(\theta')\geq\beta(\theta'')$$ -->
+<!-- for every $\theta'\in\Theta_0^c$ and $\theta''\in\Theta_0$. -->
 
-\enter 
-\vfill
+<!-- \enter  -->
+<!-- \vfill -->
 
-**Definition:** Let $\mathcal{C}$ be a class of tests for testing $H_0 : \theta\in\Theta_0$ vs. $H_1 : \theta\in\Theta_0^c$. A test in class $\mathcal{C}$, with power function $\beta(\theta)$, is a \textbf{uniformly most powerful (UMP) class $\mathcal{C}$ test} if $\beta(\theta)\geq\beta'(\theta)$ for every $\theta\in\Theta_0^c$ and every $\beta'(\theta)$ that is a power function of a test in class $\mathcal{C}$.
+<!-- **Definition:** Let $\mathcal{C}$ be a class of tests for testing $H_0 : \theta\in\Theta_0$ vs. $H_1 : \theta\in\Theta_0^c$. A test in class $\mathcal{C}$, with power function $\beta(\theta)$, is a \textbf{uniformly most powerful (UMP) class $\mathcal{C}$ test} if $\beta(\theta)\geq\beta'(\theta)$ for every $\theta\in\Theta_0^c$ and every $\beta'(\theta)$ that is a power function of a test in class $\mathcal{C}$. -->
 
-\enter
+<!-- \enter -->
 
-**Note:** if we take $\mathcal{C}$ to be the class of all level $\alpha$ tests, the test described in the above definition is called a \textbf{UMP level $\alpha$ test}.
+<!-- **Note:** if we take $\mathcal{C}$ to be the class of all level $\alpha$ tests, the test described in the above definition is called a \textbf{UMP level $\alpha$ test}. -->
 
----
+<!-- --- -->
 
 
 
-# Homework
+<!-- # Homework -->
 
--   Read p. $374-379$, $382-387$.
+<!-- -   Read p. $374-379$, $382-387$. -->
 
--   Exercises: TBA.
+<!-- -   Exercises: TBA. -->
 

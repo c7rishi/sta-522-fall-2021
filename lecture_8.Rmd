@@ -1,13 +1,13 @@
 ---
 title: |
-  | STA 522, Spring 2021  
+  | STA 522, Spring 2022  
   | Introduction to Theoretical Statistics II
 author: | 
   | Lecture 8
   | 
   | Department of Biostatistics
   | University at Buffalo 
-date: "22 March, 2021"
+date: ""
 output: 
   beamer_presentation:
     toc: false
@@ -48,9 +48,23 @@ knitr::opts_chunk$set(echo = FALSE)
 <!-- \renewcommand{\mathcal}{\mathscr} -->
 
 
-# AGENDA
+## NOTES 
 
 \vspace{0.1in}
+
+- Exam 2 will be on April 7
+
+\vspace{0.1in}
+
+- Will cover everything up to Lecture 9 (first half of April 4).
+
+
+\vspace{0.1in}
+
+## AGENDA
+
+\vspace{0.1in}
+
 
 -  Wrap up discussion on Cramér-Rao Lower Bound
 
@@ -62,7 +76,7 @@ knitr::opts_chunk$set(echo = FALSE)
 \vspace{0.1in}
 
 
--  Lehmann–Scheffé THeorem
+-  Lehmann–Scheffé Theorem
 
 
 \vspace{0.1in}
@@ -170,29 +184,29 @@ $$a(\theta)\left[W(\mathbf{x})-\tau(\theta)\right]=\frac{\partial}{\partial\thet
 for some function $a(\theta)$.
 
 
----
+<!-- --- -->
 
-**Proof: (steps)**
+<!-- **Proof: (steps)** -->
 
-- Write the Cramér-Rao Inequality as
+<!-- - Write the Cramér-Rao Inequality as -->
 
-$${\footnotesize\left[\operatorname{Cov}_{\theta}{\left[W(\mathbf{X}),\frac{\partial}{\partial\theta}\log{\prod_{i=1}^n{f(x_i\,|\,\theta)}}\right]}\right]^2\leq\var_{\theta}{\left[W(\mathbf{X})\right]}\var_{\theta}{\left[\frac{\partial}{\partial\theta}\log{\prod_{i=1}^n{f(x_i\,|\,\theta)}}\right]}}.$$
-\vfill
+<!-- $${\footnotesize\left[\operatorname{Cov}_{\theta}{\left[W(\mathbf{X}),\frac{\partial}{\partial\theta}\log{\prod_{i=1}^n{f(x_i\,|\,\theta)}}\right]}\right]^2\leq\var_{\theta}{\left[W(\mathbf{X})\right]}\var_{\theta}{\left[\frac{\partial}{\partial\theta}\log{\prod_{i=1}^n{f(x_i\,|\,\theta)}}\right]}}.$$ -->
+<!-- \vfill -->
 
-- Now use property of correlation coefficient: for any random variables $X$ and $Y$, $|\rho_{XY}|=1$ if and only if there exist numbers $a\neq0$ and $b$ such that $P(Y=aX+b)=1$.
-\vfill
+<!-- - Now use property of correlation coefficient: for any random variables $X$ and $Y$, $|\rho_{XY}|=1$ if and only if there exist numbers $a\neq0$ and $b$ such that $P(Y=aX+b)=1$. -->
+<!-- \vfill -->
 
--  $\E_{\theta}\left[W(\mathbf{X})\right]=\tau(\theta)$ for all $\theta$ due to unbiasedness.
-\vfill
+<!-- -  $\E_{\theta}\left[W(\mathbf{X})\right]=\tau(\theta)$ for all $\theta$ due to unbiasedness. -->
+<!-- \vfill -->
 
-- $\E_{\theta}\left[\frac{\partial}{\partial\theta}\log{\prod_{i=1}^n{f(x_i\,|\,\theta)}}\right]=0$ (proved in lecture 7).
-\vfill
+<!-- - $\E_{\theta}\left[\frac{\partial}{\partial\theta}\log{\prod_{i=1}^n{f(x_i\,|\,\theta)}}\right]=0$ (proved in lecture 7). -->
+<!-- \vfill -->
 
-- Thus, we can have equality if and only if $W(\mathbf{X})-\tau(\theta)$ is proportional to $\frac{\partial}{\partial\theta}\log{L(\theta\,|\,\mathbf{x})}$
+<!-- - Thus, we can have equality if and only if $W(\mathbf{X})-\tau(\theta)$ is proportional to $\frac{\partial}{\partial\theta}\log{L(\theta\,|\,\mathbf{x})}$ -->
 
 
 
----
+<!-- --- -->
 
 # Rao-Blackwell Theorem
 
@@ -294,64 +308,64 @@ Equality in Cauchy-Schwarz inequality holds only if $W' = a(\theta) W + b(\theta
 ---
 
 
-# Necessary and Sufficient Conditions for UMVUE
+# Characterization of UMVUE
 
-## Theorem (7.3.20)
+## Theorem (7.3.20; Necessary \& Sufficient Condition for UMVUE)
 
 If $\E_{\theta}(W)=\tau(\theta)$, then $W$ is the best unbiased estimator of $\tau(\theta)$ if and only if $W$ is uncorrelated with all unbiased estimators of $0$.
 
-\vfill
-\vspace{0.2in}
+<!-- \vfill -->
+\vspace{0.1in}
 
 **NOTE:**  this theorem can sometimes be used to show that an unbiased estimator is not UMVUE, by showing that the estimator is correlated with an unbiased estimator of $0$.
 
-\vfill
-\vspace{0.2in}
+<!-- \vfill -->
+\vspace{0.1in}
 
-**Proof: (Only if part)**
-Let  $W$ be the UMVUE and $U$ be any unbiased estimator of $0$. Define $\phi_a = W + aU$ for some arbitrary number $a$. Then $\phi_a$ is unbiased for $\tau(\theta)$ and
-$$
-\var_\theta(\phi_a) = \var_\theta(W + aU) = \var_\theta(W) + a^2 \var_\theta(U) + 2 a \cov_\theta(W, U)
-$$
+<!-- **Proof: (Only if part)** -->
+<!-- Let  $W$ be the UMVUE and $U$ be any unbiased estimator of $0$. Define $\phi_a = W + aU$ for some arbitrary number $a$. Then $\phi_a$ is unbiased for $\tau(\theta)$ and -->
+<!-- $$ -->
+<!-- \var_\theta(\phi_a) = \var_\theta(W + aU) = \var_\theta(W) + a^2 \var_\theta(U) + 2 a \cov_\theta(W, U) -->
+<!-- $$ -->
 
----
+<!-- --- -->
 
-If for some $\theta=\theta_0$, $\cov_{\theta_0}(W, U) < 0$ then for $a \in \left(0, -2\frac{\cov_{\theta_0}(W, U)}{\var_{\theta_0}(U)} \right)$ we have $a^2 \var_\theta(U) + 2 a \cov_{\theta_0}(W, U) < 0$, i.e., $\var_\theta(\phi_a) < \var_\theta(W)$ for $\theta = \theta_0$ which contradicts to $W$ being UMVUE.
+<!-- If for some $\theta=\theta_0$, $\cov_{\theta_0}(W, U) < 0$ then for $a \in \left(0, -2\frac{\cov_{\theta_0}(W, U)}{\var_{\theta_0}(U)} \right)$ we have $a^2 \var_\theta(U) + 2 a \cov_{\theta_0}(W, U) < 0$, i.e., $\var_\theta(\phi_a) < \var_\theta(W)$ for $\theta = \theta_0$ which contradicts to $W$ being UMVUE. -->
 
-\vspace{0.2in} 
-
-
-Similar contradiction arises if $\cov_{\theta_0}(W, U) > 0$. 
-
-\vspace{0.2in} 
+<!-- \vspace{0.2in}  -->
 
 
-Hence $\cov_\theta(W, U)$ must be $0$ for all $\theta$ and for all $U$.
+<!-- Similar contradiction arises if $\cov_{\theta_0}(W, U) > 0$.  -->
 
-\vspace{0.2in} 
-
-
-**(if part):** Reading exercise. See p. 345 of the textbook.
+<!-- \vspace{0.2in}  -->
 
 
-\vfill
+<!-- Hence $\cov_\theta(W, U)$ must be $0$ for all $\theta$ and for all $U$. -->
 
----
-
-# Lehmann–Scheffé Theorem
+<!-- \vspace{0.2in}  -->
 
 
-## Theorem
+<!-- **(if part):** Reading exercise. See p. 345 of the textbook. -->
+
+
+<!-- \vfill -->
+
+<!-- --- -->
+
+## Lehmann–Scheffé Theorem
+
 Let $T$ be a complete sufficient statistic for a parameter $\theta$, and let $\phi(T)$ be any estimator based only on $T$. Then $\phi(T)$ is the unique best unbiased estimator of its expected value.
 
-\vfill
-\vspace{0.2in}
+<!-- \vfill -->
+\vspace{0.1in}
 
 **Proof:** Since $T$ is complete, $X=0$ is the only unbiased estimator of $0$.  Since   $\phi(T)$ is uncorrelated with $0$, and hence uncorrelated with all unbiased estimators of $0$, we have that $\phi(T)$ is UMVUE of $\E_{\theta}\left[\phi(T)\right]$.
 
-\vfill
-\vspace{0.2in}
 
+
+
+
+---
 
 **Remark:** The Lehmann–Scheffé theorem and the Rao-Blackwell theorem together provide UMVUE for parametric functions from many standard probability distributions.
 
@@ -359,10 +373,8 @@ Let $T$ be a complete sufficient statistic for a parameter $\theta$, and let $\p
 
 Suppose we want the UMVUE for $\tau(\theta)$. We have a complete sufficient statistic $T$ for $\theta$ and we have an unbiased estimator $W$ of $\tau(\theta)$. Then the Rao-Blackwell estimator $\ds \phi(T) = \E[W \mid T]$ is UMVUE for $\tau(\theta)$.
 
+\enter
 
-
-
----
 
 **Example:** Let $\rs\sim\operatorname{iid~Poisson}(\lambda)$. (a) Find the UMVUE of $\lambda$, if it exists. (b) Find the UMVUE of $\tau(\lambda)=e^{-\lambda}=P(X=0)$, if it exists.
 

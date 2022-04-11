@@ -1,0 +1,105 @@
+---
+title: "STA 522 Sample Exam 1 Solutions"
+author: ""
+date: ""
+output: pdf_document
+---
+
+\newcommand{\rs}{X_1,X_2,\dots,X_n}
+\newcommand{\on}{\operatorname}
+\newcommand{\enter}{\vspace{0.1in}}
+\newcommand{\ds}{\displaystyle}
+\renewcommand{\bar}{\overline}
+\newcommand{\N}{\text{N}}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Ss}{\mathcal{S}}
+\newcommand{\E}{\on{E}}
+\newcommand{\var}{\on{Var}}
+<!-- \renewcommand{\vec}[1]{{\underaccent{\tilde}{#1}}} -->
+\renewcommand{\vec}{\underline}
+\newcommand{\asim}{\stackrel{a}{\sim}}
+\newcommand{\points}[1]{\hfill \textbf{(#1 pts)}}
+
+
+
+
+# Problem 1
+
+$\rs$ are iid with common cdf 
+
+$$
+F(x \mid \alpha, \beta) = \begin{cases}
+0, & x < 0 \\
+(x/\beta)^\alpha, & 0 \leq x \leq \beta \\
+1, & x > \beta
+\end{cases}.
+$$
+Therefore, the common pdf of $\rs$ is given by:
+$$
+f(x \mid \alpha, \beta) = \frac{d}{dx} F(x \mid \alpha, \beta) = \frac{\alpha}{\beta^\alpha} x^{\alpha-1} I(0 \leq x \leq \beta)
+$$
+
+
+**Part (a):** The joint pdf of $\rs$ is:
+$$
+\begin{aligned}
+f(x_1, \dots, x_n \mid \alpha, \beta) & \stackrel{\text{iid}}{=} \prod_{i=1}^n f(x_i \mid \alpha, \beta) \\
+&= \frac{\alpha^n}{\beta^{n\alpha}} \left(\prod_{i=1}^n x_i\right)^{\alpha-1} \prod_{i=1}^n I(0 \leq x_i \leq \beta) \\
+&= \underbrace{\frac{\alpha^n}{\beta^{n\alpha}} \left(\prod_{i=1}^n x_i\right)^{\alpha-1} I(x_{(n)} \leq \beta)}_{= g(T(\vec x \mid \alpha, \beta))} \ \ \underbrace{I(x_{(1)} > 0)}_{=h(\vec x)}
+\end{aligned}
+$$
+where $T(\vec x) = (\prod_{i=1}^n x_i, x_{(n)})$. Therefore, by the Factorization theorem, $T(\vec X) = (\prod_{i=1}^n X_i, X_{(n)})$ is sufficient for $\alpha, \beta$. 
+
+
+**Part (b):** The joint likelihood for $\alpha, \beta$ is:
+$$
+L(\alpha, \beta \mid \vec x) = \frac{\alpha^n}{\beta^{n\alpha}} \left(\prod_{i=1}^n x_i\right)^{\alpha-1} I(x_{(n)} \leq \beta) \ I(x_{(1)} > 0)
+$$
+For any $\alpha$, the likelihood function is decreasing in $\beta$ and is non-zero when $\beta \geq x_{(n)}$. Hence, $\hat \beta = X_{(n)}$ is the MLE of $\beta$ for all $\alpha$. 
+
+
+The profile likelihood for $\alpha$ is: 
+$$
+\log \tilde L(\alpha \mid \vec x) = \frac{\alpha^n}{x_{(n)}^{n\alpha}} \left(\prod_{i=1}^n x_i\right)^{\alpha-1} \implies \log \tilde L(\alpha \mid \vec x) = n \log \alpha - n \alpha \log x_{(n)} + (\alpha - 1) \sum_{i=1}^n \log x_i
+$$
+Therefore
+$$
+\begin{gathered}
+\frac{\partial}{\partial \alpha} \log \tilde L(\alpha \mid \vec x) = \frac{n}{\alpha} - n \log x_{(n)} + \sum_{i=1}^n \log x_i \gtreqless 0 \\
+\iff \frac{n}{\alpha} \gtreqless n \log x_{(n)} - \sum_{i=1}^n \log x_i = \log \left(  \frac{x_{(n)}^n}{\prod_{i=1}^n x_i} \right) \\
+\iff \alpha \lesseqgtr \frac{n}{\log \left(  \frac{x_{(n)}^n}{\prod_{i=1}^n x_i} \right)}
+\end{gathered}
+$$
+Hence, the MLE of $\alpha$ is $\displaystyle \hat \alpha = \frac{n}{\log \left(  \frac{X_{(n)}^n}{\prod_{i=1}^n X_i} \right)}$ and the MLE of $\beta$ is $\hat \beta = X_{(n)}$.
+
+
+# Problem 2
+
+**Part (a):** First find the MLE of $\theta$. This is from Lecture 6:
+
+The likelihood of $\theta$ is 
+$$
+L(\theta \mid \vec x) = \prod_{i=1}^n  \exp(-\theta) \frac{\theta^{x_i}}{x_i!} \ =  \exp(-n \theta) \ \frac{\theta^{\sum_{i=1}^n x_i}}{\prod_{i=1}^n x_i!}
+$$
+The log likelihood is:
+$$
+l(\theta \mid \vec x) = \log L(\theta \mid \vec x) = -n \theta  + \left(\sum_{i=1}^n x_i\right) \log \theta - \log \left( {\prod_{i=1}^n x_i!}\right)
+$$
+Therefore,
+$$
+\frac{d \ \log L(\theta \mid \underline x)}{d\theta} = - n + \left(\sum_{i=1}^n x_i\right)  \frac{1}{\theta} \gtreqless 0 \ \text{ according as } \ \theta \lesseqgtr \frac{1}{n} \sum_{i=1}^n x_i = \overline x
+$$
+Therefore, $\hat \theta = \bar x$ is the MLE of $\theta$. Hence, by the invariance property of the MLE $e^{-\bar X}$ is the MLE of $P(X_1 = 0) = e^{-\theta}$.
+
+
+
+**Part (b):** No, the MLE is \underline{not} unbiased. To see this, first note that $g(x) = - e^{-x}$ is a convex function. Therefore as suggested in the hint,
+$$
+\begin{aligned}
+\E [g(\bar X)] &\stackrel{\text{Jensen}}{>} g (\E(\bar X)) \ \ (\text{strict inequality as } g \text{ is strictly convex}) \\
+\text{i.e.,} \E[-e^{-\bar X}] & > -e^{-\E(\bar X)} = -e^{-\theta} \\
+\iff \E[e^{-\bar X}] & < e^{-\theta}
+\end{aligned}
+$$
+**Part (c):** This is from Lecture 8. See class notes.
