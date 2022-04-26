@@ -1,13 +1,13 @@
 ---
 title: |
-  | STA 522, Spring 2021  
+  | STA 522, Spring 2022  
   | Introduction to Theoretical Statistics II
 author: | 
   | Lecture 11
   | 
   | Department of Biostatistics
   | University at Buffalo 
-date: "12 April, 2021"
+date: ""
 output: 
   beamer_presentation:
     toc: false
@@ -48,7 +48,7 @@ knitr::opts_chunk$set(echo = FALSE)
 <!-- \renewcommand{\mathcal}{\mathscr} -->
 
 
-# AGENDA
+## AGENDA
 
 \vspace{0.1in}
 
@@ -267,25 +267,25 @@ $$p(\mathbf{x})=\operatorname{sup}_{\theta\in\Theta_0}{P_{\theta}\left[W(\mathbf
 Then $p(\mathbf{X})$ is a valid $p$-value.
 
 
----
+<!-- --- -->
 
-**Proof:** Fix $\theta\in\Theta_0$. Let $F_\theta(w)$ denote the cdf of $-W(X)$. Define
-$$p_\theta(\vec x) = P_{\theta}\left[W(\mathbf{X})\geq W(\mathbf{x})\right] = P_{\theta}\left[-W(\mathbf{X})\leq -W(\mathbf{x})\right] = F_\theta(-W(x)).$$
-Then the random variable $p_\theta(\vec X)$ is equal to $F_\theta(-W(\vec X))$. 
+<!-- **Proof:** Fix $\theta\in\Theta_0$. Let $F_\theta(w)$ denote the cdf of $-W(X)$. Define -->
+<!-- $$p_\theta(\vec x) = P_{\theta}\left[W(\mathbf{X})\geq W(\mathbf{x})\right] = P_{\theta}\left[-W(\mathbf{X})\leq -W(\mathbf{x})\right] = F_\theta(-W(x)).$$ -->
+<!-- Then the random variable $p_\theta(\vec X)$ is equal to $F_\theta(-W(\vec X))$.  -->
 
-\enter
+<!-- \enter -->
 
-Hence, by the Probability Integral Transformation $P_\theta(p_\theta(\mathbf X) \leq \alpha)$. Since 
-$$
-p(\vec x) = \operatorname{sup}_{\theta'\in\Theta_0} p_{\theta'}(\vec x) \geq p_\theta(\vec x)
-$$ 
-for all $\vec x$, we have
-$$
-P_\theta(p(\vec X) \leq \alpha \ ) \leq P_\theta(p_\theta(\vec X) \leq \alpha) \leq \alpha
-$$
-which is true for all $\theta \in \Theta_0$ and for every $0 \leq \alpha \leq 1$.
+<!-- Hence, by the Probability Integral Transformation $P_\theta(p_\theta(\mathbf X) \leq \alpha)$. Since  -->
+<!-- $$ -->
+<!-- p(\vec x) = \operatorname{sup}_{\theta'\in\Theta_0} p_{\theta'}(\vec x) \geq p_\theta(\vec x) -->
+<!-- $$  -->
+<!-- for all $\vec x$, we have -->
+<!-- $$ -->
+<!-- P_\theta(p(\vec X) \leq \alpha \ ) \leq P_\theta(p_\theta(\vec X) \leq \alpha) \leq \alpha -->
+<!-- $$ -->
+<!-- which is true for all $\theta \in \Theta_0$ and for every $0 \leq \alpha \leq 1$. -->
 
-Hence $p(\vec X)$ is a valid $p$-value.
+<!-- Hence $p(\vec X)$ is a valid $p$-value. -->
 
 ---
 
@@ -438,13 +438,13 @@ i.e., $\mathbf{x}$ is in the acceptance region for $H_0:\mu=\mu_0$ if and only i
 - The confidence interval fixes the sample value and asks what parameter values make this sample value most plausible (the confidence interval).
 
 
----
+<!-- --- -->
 
-# Homework
+<!-- # Homework -->
 
--  Hypothesis tests: Read p. $388-399$.
+<!-- -  Hypothesis tests: Read p. $388-399$. -->
 
--  Interval Estimation: Read p. $417-421$.
+<!-- -  Interval Estimation: Read p. $417-421$. -->
 
--   Exercises: TBA.
+<!-- -   Exercises: TBA. -->
 

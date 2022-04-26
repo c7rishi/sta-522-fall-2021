@@ -1,13 +1,13 @@
 ---
 title: |
-  | STA 522, Spring 2021  
+  | STA 522, Spring 2022  
   | Introduction to Theoretical Statistics II
 author: | 
   | Lecture 12
   | 
   | Department of Biostatistics
   | University at Buffalo 
-date: "19 April, 2021"
+date: ""
 output: 
   beamer_presentation:
     toc: false
@@ -48,7 +48,7 @@ knitr::opts_chunk$set(echo = FALSE)
 <!-- \renewcommand{\mathcal}{\mathscr} -->
 
 
-# AGENDA
+## AGENDA
 
 \vspace{0.1in}
 
@@ -388,11 +388,11 @@ $$
 
 
 
----
+<!-- --- -->
 
-# Homework
+<!-- # Homework -->
 
--  Read p. $417-430$.
+<!-- -  Read p. $417-430$. -->
 
--   Exercises: TBA.
+<!-- -   Exercises: TBA. -->
 
