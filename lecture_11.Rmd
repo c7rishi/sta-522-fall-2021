@@ -250,7 +250,7 @@ is actually a UMP unbiased level $\alpha$ test; i.e., it is UMP in the class of 
 # $p$-Values
 
 
-**Defintion:** A \textbf{$p$-value}, $p(\mathbf{X})$, is a test statistic satisfying $0\leq p(\mathbf{x})\leq1$ for every sample point $\mathbf{x}$. Small values of $p(\mathbf{X})$ give evidence that $H_1$ is true. A $p$-value is \textbf{valid} if, for every $\theta\in\Theta_0$ and every $0\leq\alpha\leq1$, 
+**Definition:** A \textbf{$p$-value}, $p(\mathbf{X})$, is a test statistic satisfying $0\leq p(\mathbf{x})\leq1$ for every sample point $\mathbf{x}$. Small values of $p(\mathbf{X})$ give evidence that $H_1$ is true. A $p$-value is \textbf{valid} if, for every $\theta\in\Theta_0$ and every $0\leq\alpha\leq1$, 
 $$P_{\theta}(p(\mathbf{X})\leq\alpha)\leq\alpha.$$
 
 \enter

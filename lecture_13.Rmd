@@ -1,13 +1,13 @@
 ---
 title: |
-  | STA 522, Spring 2021  
+  | STA 522, Spring 2022  
   | Introduction to Theoretical Statistics II
 author: | 
   | Lecture 13
   | 
   | Department of Biostatistics
   | University at Buffalo 
-date: "26 April, 2021"
+date: ""
 output: 
   beamer_presentation:
     toc: false
@@ -48,11 +48,19 @@ knitr::opts_chunk$set(echo = FALSE)
 <!-- \renewcommand{\mathcal}{\mathscr} -->
 
 
-# AGENDA
+## AGENDA
 
 \vspace{0.1in}
 
 - Asymptotic Evaluations
+
+\enter
+
+- Consistency and asymptotic normality of MLEs
+
+\enter
+
+- Asymptotic-based tests: LRT, Score and Wald
 
 
 
@@ -134,80 +142,83 @@ $$\lim_{n\to\infty}{P_{\theta}\left(|\tau(\hat{\theta})-\tau(\theta)|\geq\epsilo
 In other words, $\tau(\hat{\theta})$ is a consistent estimator of $\tau(\theta)$, i.e., MLEs are weakly consistent (converge in probability).
 
 
+<!-- --- -->
+
+<!-- # Asymptotic Variance & Efficiency -->
+
+<!-- **Definition:** For an estimator $T_n$, suppose that $k_n(T_n-\tau(\theta))\xrightarrow{d}\operatorname{N}(0,\sigma^2)$, where $\lbrace k_n\rbrace$ is a sequence of constants. The parameter $\sigma^2$ is called the \textbf{asymptotic variance} or \textbf{variance of the limit distribution} of $T_n$. -->
+
+<!-- \enter \vfill -->
+
+<!-- **Definition:** A sequence of estimators $W_n$ is \textbf{asymptotically efficient} for a parameter $\tau(\theta)$ if and only if -->
+<!-- $$\sqrt{n}(W_n-\tau(\theta))\xrightarrow{d}W\sim\operatorname{N}(0,v(\theta))$$ -->
+<!-- and -->
+<!-- $$v(\theta)= \frac{\left[\tau'(\theta)\right]^2}{I_1(\theta)} = \frac{\left[\tau'(\theta)\right]^2}{\E_{\theta}\left[\left(\frac{\partial}{\partial\theta}\log{f(X\,|\,\theta)}\right)^2\right]};$$ -->
+<!-- that is, the asymptotic variance of $W_n$ (almost) achieves the Cramér–Rao Lower Bound. $I_1(\theta)$ is the _unit_ Fisher information  (i.e., Fisher information computed for _one_ random observation).  -->
+
+
+<!-- --- -->
+
+
+<!-- # Notes on Asymptotic Efficiency -->
+
+<!-- \begin{enumerate}[(a)] -->
+<!-- \item There is no $n$ in the denominator of $v(\theta)$, as it got moved to the left-hand side. -->
+<!-- \vfill -->
+<!-- \item This definition does not mean -->
+<!-- $$W_n\xrightarrow{d}\operatorname{N}(\tau(\theta),{\rm{CRLB}}),$$ -->
+<!-- since -->
+<!-- $${\rm{CRLB}}=\frac{\left[\tau'(\theta)\right]^2}{n\E_{\theta}\left[\left(\frac{\partial}{\partial\theta}\log{f(X\,|\,\theta)}\right)^2\right]}.$$ -->
+<!-- $v(\theta)$ is written without the $n$ because we are letting $n \to \infty$ -->
+
+<!-- \vfill -->
+
+<!-- \item In practical terms, what this does mean is that $W_n$ is approximately normally distributed with mean $\tau(\theta)$ and variance equal to the CRLB, evaluated at $\hat{\theta}$. This is often denoted as $W_n \asim \N\left(\tau(\theta), CRLB(\hat \theta)\right)$. -->
+
+<!-- \end{enumerate} -->
+
+
+<!-- --- -->
+
+<!-- # Asymptotic distribution of a function of a sequence of random variables -->
+
+<!-- ## Theorem 5.5.24 (Delta Method) -->
+<!-- Suppose $Y_n$ is a sequence of random variables  that satisfies $\sqrt{n} (Y_n - \theta) \xrightarrow{d} \N(0, \sigma^2)$. For a given function $g$ and a specific value of $\theta$, suppose that $g'(\theta)$ exists and is not $0$. Then -->
+<!-- $$ -->
+<!-- \sqrt{n} [g(Y_n) - g(\theta)] \xrightarrow{d} \N(0, \sigma^2 [g'(\theta)]^2) -->
+<!-- $$ -->
+<!-- \enter \vfill -->
+<!-- **Heuristic Proof:** The Taylor expansion of $g(Yn)$ around $Y_n = \theta$ is -->
+<!-- $$ -->
+<!-- g(Y_n) = g(\theta) + g'(\theta)(Y_n - \theta) + R_n -->
+<!-- $$ -->
+<!-- where $R_n$  is such that  $\sqrt{n} R_n \xrightarrow{P} 0$ as $n \to \infty$. Therefore, -->
+<!-- $$ -->
+<!-- \sqrt{n} \ [g(Y_n) - g(\theta)] = g'(\theta) \sqrt{n} \ (Y_n - \theta) + \sqrt{n}\ R_n \xrightarrow{d} \N(0, \sigma^2 [g'(\theta)]^2) -->
+<!-- $$ -->
+<!-- by Slutsky's theorem. -->
+
+
 ---
 
-# Asymptotic Variance & Efficiency
 
-**Definition:** For an estimator $T_n$, suppose that $k_n(T_n-\tau(\theta))\xrightarrow{d}\operatorname{N}(0,\sigma^2)$, where $\lbrace k_n\rbrace$ is a sequence of constants. The parameter $\sigma^2$ is called the \textbf{asymptotic variance} or \textbf{variance of the limit distribution} of $T_n$.
+# Asymptotic distribution of MLE and its functions
 
-\enter \vfill
+## Theorem 10.1.12 (Asymptotic distribuiton of MLE) 
 
-**Definition:** A sequence of estimators $W_n$ is \textbf{asymptotically efficient} for a parameter $\tau(\theta)$ if and only if
-$$\sqrt{n}(W_n-\tau(\theta))\xrightarrow{d}W\sim\operatorname{N}(0,v(\theta))$$
-and
-$$v(\theta)= \frac{\left[\tau'(\theta)\right]^2}{I_1(\theta)} = \frac{\left[\tau'(\theta)\right]^2}{\E_{\theta}\left[\left(\frac{\partial}{\partial\theta}\log{f(X\,|\,\theta)}\right)^2\right]};$$
-that is, the asymptotic variance of $W_n$ (almost) achieves the Cramér–Rao Lower Bound. $I_1(\theta)$ is the _unit_ Fisher information  (i.e., Fisher information computed for _one_ random observation). 
+Let $\rs\sim\operatorname{iid}f(x\,|\,\theta)$. Let $\hat{\theta}$ denote the MLE of $\theta$. Under certain regularity conditions (see Miscellanea 10.6.2) on $f(x\,|\,\theta)$ and, hence, on $L(\theta\,|\,\mathbf{x})$,
+$\sqrt{n}(\hat{\theta}-\theta)\xrightarrow{d}\operatorname{N}\left(0,\frac{1}{I_1(\theta)}\right),$ where $I_1(\theta)$ is the unit Fisher information.
 
-
----
-
-
-# Notes on Asymptotic Efficiency
-
-\begin{enumerate}[(a)]
-\item There is no $n$ in the denominator of $v(\theta)$, as it got moved to the left-hand side.
-\vfill
-\item This definition does not mean
-$$W_n\xrightarrow{d}\operatorname{N}(\tau(\theta),{\rm{CRLB}}),$$
-since
-$${\rm{CRLB}}=\frac{\left[\tau'(\theta)\right]^2}{n\E_{\theta}\left[\left(\frac{\partial}{\partial\theta}\log{f(X\,|\,\theta)}\right)^2\right]}.$$
-$v(\theta)$ is written without the $n$ because we are letting $n \to \infty$
-
-\vfill
-
-\item In practical terms, what this does mean is that $W_n$ is approximately normally distributed with mean $\tau(\theta)$ and variance equal to the CRLB, evaluated at $\hat{\theta}$. This is often denoted as $W_n \asim \N\left(\tau(\theta), CRLB(\hat \theta)\right)$.
-
-\end{enumerate}
-
-
----
-
-# Asymptotic distribution of a function of a sequence of random variables
 
 
 ## Theorem 5.5.24 (Delta Method)
 Suppose $Y_n$ is a sequence of random variables  that satisfies $\sqrt{n} (Y_n - \theta) \xrightarrow{d} \N(0, \sigma^2)$. For a given function $g$ and a specific value of $\theta$, suppose that $g'(\theta)$ exists and is not $0$. Then
-$$
-\sqrt{n} [g(Y_n) - g(\theta)] \xrightarrow{d} \N(0, \sigma^2 [g'(\theta)]^2)
-$$
-\enter \vfill
-
-**Heuristic Proof:** The Taylor expansion of $g(Yn)$ around $Y_n = \theta$ is
-$$
-g(Y_n) = g(\theta) + g'(\theta)(Y_n - \theta) + R_n
-$$
-where $R_n$  is such that  $\sqrt{n} R_n \xrightarrow{P} 0$ as $n \to \infty$. Therefore,
-$$
-\sqrt{n} \ [g(Y_n) - g(\theta)] = g'(\theta) \sqrt{n} \ (Y_n - \theta) + \sqrt{n}\ R_n \xrightarrow{d} \N(0, \sigma^2 [g'(\theta)]^2)
-$$
-by Slutsky's theorem.
-
-
----
-
-
-
-## Theorem 10.1.12 (Asymptotic Efficiency of MLEs)
-
-Let $\rs\sim\operatorname{iid}f(x\,|\,\theta)$. Let $\hat{\theta}$ denote the MLE of $\theta$. Under certain regularity conditions (see Miscellanea 10.6.2) on $f(x\,|\,\theta)$ and, hence, on $L(\theta\,|\,\mathbf{x})$,
-$$\sqrt{n}(\hat{\theta}-\theta)\xrightarrow{d}\operatorname{N}\left(0,\frac{1}{I_1(\theta)}\right),$$
-where $I_1(\theta)$ is the unit Fisher information.
-
+$\sqrt{n} [g(Y_n) - g(\theta)] \xrightarrow{d} \N(0, \sigma^2 [g'(\theta)]^2)$
 
 ## Corollary
 Suppose $\tau(\theta)$ is a differentiable function of theta. If $\hat \theta$ denotes the MLE of $\theta$, then $\tau(\hat \theta)$ is the MLE of $\tau(\theta)$. The asymptotic distribution of $\tau(\hat \theta)$ is obtained using the delta method:
-$$\sqrt{n}(\tau(\hat{\theta})-\tau(\theta))\xrightarrow{d} \operatorname{N}(0,v(\theta))$$
-In other words, $\tau(\hat{\theta})$ is a consistent and asymptotically efficient estimator of $\tau(\theta)$. 
+$\sqrt{n}(\tau(\hat{\theta})-\tau(\theta))\xrightarrow{d} \operatorname{N}(0,v(\theta))$. 
+<!-- In other words, $\tau(\hat{\theta})$ is a consistent and asymptotically efficient estimator of $\tau(\theta)$.  -->
 <!-- Note that $\var{[\tau(\hat{\theta})]}={\rm{CRLB}}$. -->
 
 
@@ -238,86 +249,76 @@ In practical terms this means $\hat p \asim \N\left(p, \frac{p(1-p)}{n}\right)$.
 
 
 
----
+<!-- --- -->
 
-# Asymptotic Relative Efficiency (ARE)
+<!-- # Asymptotic Relative Efficiency (ARE) -->
 
-If two estimators $W_n$ and $V_n$ satisfy
-$$
-\begin{aligned}
-\sqrt{n} \ [W_n - \tau(\theta)] &\xrightarrow{d} \N(0, \sigma^2_W) \\
-\sqrt{n} \ [V_n - \tau(\theta)] &\xrightarrow{d}  \N(0, \sigma^2_V)
-\end{aligned}
-$$
-then the asymptotic relative efficiency (ARE) of $V_n$ with respect to $W_n$ is 
-$$
-\on{ARE}(V_n, W_n) = \frac{\sigma^2_W}{\sigma^2_V}
-$$
+<!-- If two estimators $W_n$ and $V_n$ satisfy -->
+<!-- $$ -->
+<!-- \begin{aligned} -->
+<!-- \sqrt{n} \ [W_n - \tau(\theta)] &\xrightarrow{d} \N(0, \sigma^2_W) \\ -->
+<!-- \sqrt{n} \ [V_n - \tau(\theta)] &\xrightarrow{d}  \N(0, \sigma^2_V) -->
+<!-- \end{aligned} -->
+<!-- $$ -->
+<!-- then the asymptotic relative efficiency (ARE) of $V_n$ with respect to $W_n$ is  -->
+<!-- $$ -->
+<!-- \on{ARE}(V_n, W_n) = \frac{\sigma^2_W}{\sigma^2_V} -->
+<!-- $$ -->
 
----
+<!-- --- -->
 
-**Example (AREs of Poisson Estimators):** Suppose that $X_1, X_2, \dots$ are iid $\on{Poisson}(\lambda)$, and we are interested in estimating $\tau(\lambda) = P_\lambda(X = 0) = e^{-\lambda}$. Consider two estimators of $\lambda$, viz., 
+<!-- **Example (AREs of Poisson Estimators):** Suppose that $X_1, X_2, \dots$ are iid $\on{Poisson}(\lambda)$, and we are interested in estimating $\tau(\lambda) = P_\lambda(X = 0) = e^{-\lambda}$. Consider two estimators of $\lambda$, viz.,  -->
 
-(a) $\ds V_n = \frac{1}{n} \sum_{i=1}^n I(X_i = 0) = \frac{1}{n} Y_i  =: \bar Y_n$ and 
-(b) $\ds W_n = \tau(\bar X) = e^{-\bar X_n}$. Note that $\bar X_n$ is the MLE of $\lambda$.
+<!-- (a) $\ds V_n = \frac{1}{n} \sum_{i=1}^n I(X_i = 0) = \frac{1}{n} Y_i  =: \bar Y_n$ and  -->
+<!-- (b) $\ds W_n = \tau(\bar X) = e^{-\bar X_n}$. Note that $\bar X_n$ is the MLE of $\lambda$. -->
 
-and find the ARE of $V_n$ relative to $W_n$. 
+<!-- and find the ARE of $V_n$ relative to $W_n$.  -->
 
-\enter
+<!-- \enter -->
 
-For (a), note that $Y_i = I(X_i = 0) \sim \on{iid~Binomial}(1, \tau(\lambda))$. Therefore, 
-$$
-\E_\lambda(V_n) = e^{-\lambda} \ \text{ and } \ \var_\lambda(V_n) = \frac{e^{-\lambda}(1-e^{-\lambda})}{n} 
-$$
+<!-- For (a), note that $Y_i = I(X_i = 0) \sim \on{iid~Binomial}(1, \tau(\lambda))$. Therefore,  -->
+<!-- $$ -->
+<!-- \E_\lambda(V_n) = e^{-\lambda} \ \text{ and } \ \var_\lambda(V_n) = \frac{e^{-\lambda}(1-e^{-\lambda})}{n}  -->
+<!-- $$ -->
 
-For (b), using delta method approximation we have (HW)
-$$
-\E_\lambda(W_n) \approx e^{-\lambda}   \ \text{ and } \ \var_\lambda(W_n) = \frac{\lambda e^{-2\lambda}}{n}
-$$
+<!-- For (b), using delta method approximation we have (HW) -->
+<!-- $$ -->
+<!-- \E_\lambda(W_n) \approx e^{-\lambda}   \ \text{ and } \ \var_\lambda(W_n) = \frac{\lambda e^{-2\lambda}}{n} -->
+<!-- $$ -->
 
----
+<!-- --- -->
 
-Since 
+<!-- Since  -->
 
-$$
-\begin{aligned}
-\sqrt{n} \ \left[V_n - e^{-\lambda}\right] &\xrightarrow{d}  \N\left(0, e^{-\lambda}(1-e^{-\lambda}) \right) \\
-\sqrt{n} \ \left[W_n - e^{-\lambda}\right] &\xrightarrow{d} \N\left(0, \lambda e^{-2\lambda} \right)
-\end{aligned}
-$$
+<!-- $$ -->
+<!-- \begin{aligned} -->
+<!-- \sqrt{n} \ \left[V_n - e^{-\lambda}\right] &\xrightarrow{d}  \N\left(0, e^{-\lambda}(1-e^{-\lambda}) \right) \\ -->
+<!-- \sqrt{n} \ \left[W_n - e^{-\lambda}\right] &\xrightarrow{d} \N\left(0, \lambda e^{-2\lambda} \right) -->
+<!-- \end{aligned} -->
+<!-- $$ -->
 
-Therefore 
-$$
-\on{ARE}(V_n, W_n) = \frac{\lambda e^{-2\lambda}}{e^{-\lambda}(1-e^{-\lambda})} = \frac{\lambda}{1-e^{-\lambda})}
-$$
-The ARE  is strictly decreasing with a maximum of 1 attained at $\lambda = 0$.
+<!-- Therefore  -->
+<!-- $$ -->
+<!-- \on{ARE}(V_n, W_n) = \frac{\lambda e^{-2\lambda}}{e^{-\lambda}(1-e^{-\lambda})} = \frac{\lambda}{1-e^{-\lambda})} -->
+<!-- $$ -->
+<!-- The ARE  is strictly decreasing with a maximum of 1 attained at $\lambda = 0$. -->
 
-\enter \vfill
+<!-- \enter \vfill -->
 
-Note that the UMVUE for $e^{-\lambda}$ is $U_n = \left(\frac{n-1}{n}\right)^{\sum_{i=1}^n X_i} = \left[\left(1 - \frac{1}{n}\right)^n\right]^{\bar X_n} \approx e^{-\bar X_n} = V_n$ for large $n$. 
+<!-- Note that the UMVUE for $e^{-\lambda}$ is $U_n = \left(\frac{n-1}{n}\right)^{\sum_{i=1}^n X_i} = \left[\left(1 - \frac{1}{n}\right)^n\right]^{\bar X_n} \approx e^{-\bar X_n} = V_n$ for large $n$.  -->
 
 
 
----
+<!-- --- -->
 
 # Asymptotic Distribution of LRT
 
-Suppose $\rs\sim\operatorname{iid~poisson}(\lambda)$, and we want to construct a level $\alpha$ test of
-\begin{align*}
-H_0 & : \lambda=\lambda_0\\[.5em]
-H_1 & : \lambda\neq\lambda_0.
-\end{align*}
-\vskip .2in
-A level $\alpha$ test is obtained using rejection region
+Suppose $\rs\sim\operatorname{iid~poisson}(\lambda)$, and we want to construct a level $\alpha$ test of $H_0 : \lambda=\lambda_0$ against $H_1 : \lambda\neq\lambda_0$. A level $\alpha$ test is obtained using rejection region
 $$R=\lbrace\mathbf{x}\,:\,-2\log{\lambda(\mathbf{x})}>\chi_{1,\alpha}^2\rbrace,$$
 where $\chi_{1,\alpha}^2$ is the $\chi_1^2$ value with area $\alpha$ to its right.
 
 
----
-
 **Example (Poisson Testing):** Suppose that $X_1, X_2, \dots$ are iid $\on{Poisson}(\lambda)$, and we are interested in testing $H_0: \lambda = \lambda_0$ vs. $H_1: \lambda \neq \lambda_0$. 
-
-\enter \vfill
 
 We have 
 $$
@@ -325,8 +326,6 @@ $$
 $$
 where $\hat \lambda = \bar x$ is the MLE of $\lambda$. 
 
-
-\enter \vfill
 
 The asymptotic theory based test would be to reject $H_0$ at level $\alpha$ if $-2 \log \lambda(\vec x) > \lambda_{1, \alpha}$
 
@@ -367,9 +366,9 @@ $$
 $$
 
 
-# Homework
+<!-- # Homework -->
 
--  Read p. $467-481$, $488-495$.
+<!-- -  Read p. $467-481$, $488-495$. -->
 
--   Exercises: TBA.
+<!-- -   Exercises: TBA. -->
 
